@@ -10,6 +10,8 @@
     ./programs/vim.nix
     ./programs/zsh.nix
     ./programs/nnn.nix
+    ./programs/fzf.nix
+    ./programs/bat.nix
   ];
 
   nixpkgs = {
