@@ -12,6 +12,8 @@
     ./programs/nnn.nix
     ./programs/fzf.nix
     ./programs/bat.nix
+    ./programs/ripgrep.nix
+    ./programs/fd.nix
   ];
 
   nixpkgs = {
@@ -36,7 +38,7 @@
   home = {
     username = "inugami";
     homeDirectory = "/home/inugami";
-    packages = with pkgs; [ ];
+    packages = with pkgs; [  ];
   };
 
   programs.home-manager.enable = true;

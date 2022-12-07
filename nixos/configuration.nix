@@ -122,8 +122,6 @@
     jdk17_headless
     unzip
     ngrok
-    fd
-    ripgrep
   ];
 
   # https://nixos.wiki/wiki/FAQ/When_do_I_update_stateVersion
