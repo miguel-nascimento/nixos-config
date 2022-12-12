@@ -1,4 +1,3 @@
-
 { inputs, lib, config, pkgs, ... }: {
   # import other home-manager modules here
   imports = [
@@ -14,6 +13,8 @@
     ./programs/bat.nix
     ./programs/ripgrep.nix
     ./programs/fd.nix
+
+    ./languages/nix.nix
   ];
 
   nixpkgs = {
