@@ -5,6 +5,7 @@
     ./hardware-configuration.nix
     ./modules/deluge.nix
     ./modules/plex.nix
+    ./modules/samba.nix
     # ./modules/retroarch.nix
   ];
 
