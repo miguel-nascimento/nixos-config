@@ -9,18 +9,6 @@
   ];
 
   nixpkgs = {
-    overlays = [
-      # If you want to use overlays exported from other flakes:
-      # neovim-nightly-overlay.overlays.default
-
-      # Or define it inline, for example:
-      # (final: prev: {
-      #   hi = final.hello.overrideAttrs (oldAttrs: {
-      #     patches = [ ./change-hello-to-hi.patch ];
-      #   });
-      # })
-    ];
-
     config = {
       allowUnfree = true;
     };
@@ -55,12 +43,6 @@
   };
 
   networking.hostName = "korone";
-
-  powerManagement = {
-    powertop.enable = true;
-    scsiLinkPolicy = "med_power_with_dipm";
-  };
-
   networking.networkmanager.enable = true; 
   networking.firewall.enable = true;
   networking.firewall.allowPing = true;
@@ -68,17 +50,13 @@
 
   environment.variables.EDITOR = "vim";
 
-  services.logind.lidSwitch = "ignore";
-  boot.loader.systemd-boot.enable = true;
-  boot.loader.efi.canTouchEfiVariables = true;
-
   # Select internationalisation properties.
   time.timeZone = "America/Sao_Paulo";
   i18n.defaultLocale = "pt_BR.UTF-8";
   console = {
     font = "Lat2-Terminus16";
     keyMap = pkgs.lib.mkForce "br-abnt2";
-    useXkbConfig = true; # use xkbOptions in tty.
+    useXkbConfig = true;
   };
 
   # Enable sound.
@@ -122,8 +100,6 @@
     jdk17_headless
     unzip
     ngrok
-    fd
-    ripgrep
   ];
 
   # https://nixos.wiki/wiki/FAQ/When_do_I_update_stateVersion

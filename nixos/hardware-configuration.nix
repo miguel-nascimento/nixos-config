@@ -10,10 +10,20 @@
 
   nixpkgs.hostPlatform = "x86_64-linux";
 
+
   boot.initrd.availableKernelModules = [ "nvme" "xhci_pci" "ahci" "usb_storage" "sd_mod" ];
   boot.initrd.kernelModules = [ ];
   boot.kernelModules = [ "kvm-amd" ];
   boot.extraModulePackages = [ ];
+
+  services.logind.lidSwitch = "ignore";
+  boot.loader.systemd-boot.enable = true;
+  boot.loader.efi.canTouchEfiVariables = true;
+
+  powerManagement = {
+    powertop.enable = true;
+    scsiLinkPolicy = "med_power_with_dipm";
+  };
 
   fileSystems."/" = { 
     device = "/dev/disk/by-label/nixos";
