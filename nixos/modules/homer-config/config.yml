@@ -1,0 +1,54 @@
+title: "Home Server"
+subtitle: "inugami"
+
+header: true
+footer: '<p>Before making a question, ask yourself "what are the likely answers?" and "what will be my next question if I get answer A? What will it be if I get answer B?".</p>' # set false if you want to hide it.
+
+stylesheet:
+  - "assets/custom.css"
+
+# Optional theme customization
+theme: default
+colors:
+  dark:
+    highlight-primary: "#f078ae"
+    highlight-secondary: "rgba(255, 255, 255, 5%)"
+    highlight-hover: "rgba(255, 255, 255, 5%)"
+    background: "#121212"
+    card-background: "rgba(255, 255, 255, 5%)"
+    text: "rgba(255, 255, 255, 87%)"
+    text-header: "rgba(255, 255, 255, 60%)"
+    text-title: "rgba(255, 255, 255, 87%)"
+    text-subtitle: "rgba(255, 255, 255, 60%)"
+    card-shadow: rgba(0, 0, 0, 0.4)
+    link: "#f078ae"
+    link-hover: "#f078ae"
+
+message:
+  style: "is-dark" # See https://bulma.io/documentation/components/message/#colors for styling options.
+  title: "Think about thinking, question the questions, abstract the abstraction."
+  icon: "fa fa-question"
+  content: "Ask questions about questions"
+
+links:
+  - name: "NixOS dotfiles"
+    icon: "fab fa-github"
+    url: "https://github.com/miguel-nascimento/nixos-config"
+    target: "_blank" # optional html a tag target attribute
+  - name: "Notes"
+    icon: "fas fa-book"
+    url: "https://github.com/miguel-nascimento/notes"
+
+
+services:
+  - name: "Applications"
+    icon: "fas fa-cloud"
+    items:
+      - name: "Deluge"
+        logo: "assets/services/deluge.png"
+        keywords: "torrent"
+        url: "http://192.168.0.116:8112/"
+        target: "_blank" # optional html a tag target attribute
+      - name: "Plex"
+        logo: "assets/services/plex.svg"
+        url: "http://192.168.0.116:32400/web/index.html#!/"

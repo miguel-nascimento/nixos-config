@@ -5,6 +5,7 @@
     ./hardware-configuration.nix
     ./modules/deluge.nix
     ./modules/plex.nix
+    ./modules/homer.nix
     ./modules/samba.nix
     # ./modules/retroarch.nix
   ];
@@ -90,6 +91,10 @@
 
   # Vscode SSH Server
   services.vscode-server.enable = true;
+
+  virtualisation.docker.enable = true;
+  virtualisation.docker.rootless.enable = true;
+  virtualisation.oci-containers.backend = "docker";
 
   # List packages installed in system profile. To search, run:
   environment.systemPackages = with pkgs; [
