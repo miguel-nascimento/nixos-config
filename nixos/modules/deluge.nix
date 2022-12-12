@@ -1,4 +1,4 @@
-{ pkgs, ... }:
+_:
 {
   networking.firewall.allowedTCPPorts = [ 8112 ];
   networking.firewall.allowedUDPPorts = [ 8112 ];

@@ -24,7 +24,7 @@ in
     autoStart = true;
     extraFlags = [ "-U" ];
 
-    config = { config, pkgs, ... }: {
+    config = {
       environment.systemPackages = [ homerPkg ];
       services.nginx = {
         enable = true;
