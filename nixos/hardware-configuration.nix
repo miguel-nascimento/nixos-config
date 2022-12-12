@@ -25,7 +25,7 @@
     scsiLinkPolicy = "med_power_with_dipm";
   };
 
-  fileSystems."/" = { 
+  fileSystems."/" = {
     device = "/dev/disk/by-label/nixos";
     fsType = "ext4";
   };
@@ -40,7 +40,7 @@
     fsType = "ext4";
   };
 
-  swapDevices = [ { device = "/dev/disk/by-uuid/b8c5afdb-22ca-4f7c-88a0-f2862919b044"; } ];
+  swapDevices = [{ device = "/dev/disk/by-uuid/b8c5afdb-22ca-4f7c-88a0-f2862919b044"; }];
 
   # Enables DHCP on each ethernet and wireless interface. In case of scripted networking
   # (the default) this is the recommended approach. When using systemd-networkd it's

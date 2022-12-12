@@ -45,7 +45,7 @@
   };
 
   networking.hostName = "korone";
-  networking.networkmanager.enable = true; 
+  networking.networkmanager.enable = true;
   networking.firewall.enable = true;
   networking.firewall.allowPing = true;
   networking.nameservers = [ "8.8.8.8" "8.8.4.4" ];
@@ -74,7 +74,7 @@
 
   users.users.inugami = {
     isNormalUser = true;
-    extraGroups = [ "users" "wheel" "docker" ]; 
+    extraGroups = [ "users" "wheel" "docker" ];
     shell = pkgs.zsh;
     openssh.authorizedKeys.keys = [
       # TODO: Add SSH public key here

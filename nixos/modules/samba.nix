@@ -32,6 +32,6 @@
         "force user" = "inugami";
         "force group" = "users";
       };
+    };
   };
-};
 }

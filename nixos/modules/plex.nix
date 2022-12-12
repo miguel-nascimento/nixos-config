@@ -1,5 +1,5 @@
 { pkgs, ... }:
-let 
+let
   hamaTvPlugin = pkgs.stdenv.mkDerivation {
     name = "Hama.bundle";
     src = pkgs.fetchFromGitHub {

@@ -39,7 +39,7 @@
   home = {
     username = "inugami";
     homeDirectory = "/home/inugami";
-    packages = with pkgs; [  ];
+    packages = with pkgs; [ ];
   };
 
   programs.home-manager.enable = true;

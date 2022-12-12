@@ -1,5 +1,5 @@
 { pkgs, ... }:
-let 
+let
   homerConfig = ./homer-config;
   homerPkg = pkgs.stdenv.mkDerivation {
     name = "homer";
@@ -16,22 +16,22 @@ let
 
     fixupPhase = "cp -r ${homerConfig}/* $out/assets";
   };
-in 
+in
 {
   networking.firewall.allowedTCPPorts = [ 8080 ];
 
   containers.homer = {
-    autoStart = true;                
+    autoStart = true;
     extraFlags = [ "-U" ];
 
     config = { config, pkgs, ... }: {
       environment.systemPackages = [ homerPkg ];
-      services.nginx = {                     
-        enable = true; 
+      services.nginx = {
+        enable = true;
         virtualHosts."homer.local.cetacean.club" = {
           root = "${homerPkg}";
-          listen = [ { port = 8080;  addr="0.0.0.0"; ssl=false; } ];
-        };              
+          listen = [{ port = 8080; addr = "0.0.0.0"; ssl = false; }];
+        };
       };
 
       system.stateVersion = "22.11";
