@@ -77,7 +77,7 @@
     extraGroups = [ "users" "wheel" "docker" ];
     shell = pkgs.zsh;
     openssh.authorizedKeys.keys = [
-      # TODO: Add SSH public key here
+      "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIF6Bo70dehaX/OYMz094D35auxz5G0rdqf/tUj6ICn4a miguel-nascimento"
     ];
   };
 
@@ -85,8 +85,7 @@
     enable = true;
     # Forbid root login through SSH.
     permitRootLogin = "no";
-    # TODO: switch to use keys only.
-    passwordAuthentication = true;
+    passwordAuthentication = false;
   };
 
   # Vscode SSH Server
