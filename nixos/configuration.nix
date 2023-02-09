@@ -45,7 +45,10 @@
   };
 
   networking.hostName = "korone";
-  networking.networkmanager.enable = true;
+  networking.networkmanager = {
+    enable = true;
+    wifi.scanRandMacAddress = false;
+  };
   networking.firewall.enable = true;
   networking.firewall.allowPing = true;
   networking.nameservers = [ "8.8.8.8" "8.8.4.4" ];
@@ -74,7 +77,7 @@
 
   users.users.inugami = {
     isNormalUser = true;
-    extraGroups = [ "users" "wheel" "docker" ];
+    extraGroups = [ "users" "wheel" "docker" "networkmanager" ];
     shell = pkgs.zsh;
     openssh.authorizedKeys.keys = [
       "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIF6Bo70dehaX/OYMz094D35auxz5G0rdqf/tUj6ICn4a miguel-nascimento"
@@ -91,9 +94,7 @@
   # Vscode SSH Server
   services.vscode-server.enable = true;
 
-  virtualisation.docker.enable = true;
-  virtualisation.docker.rootless.enable = true;
-  virtualisation.oci-containers.backend = "docker";
+  virtualisation.oci-containers.backend = "podman";
 
   # List packages installed in system profile. To search, run:
   environment.systemPackages = with pkgs; [
