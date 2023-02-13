@@ -29,7 +29,7 @@ _:
         "guest ok" = "yes";
         "create mask" = "0644";
         "directory mask" = "0755";
-        "force user" = "inugami";
+        "force user" = "miguel";
         "force group" = "users";
       };
     };

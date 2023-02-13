@@ -1,35 +1,52 @@
 {
-  description = "Home Server NixOS";
+  description = "Configuration for my NixOS waifus machines";
 
   inputs = {
     # Nixpkgs
     nixpkgs.url = "github:nixos/nixpkgs/nixos-22.11";
+    hardware.url = "github:nixos/nixos-hardware"; # TODO: maybe I can remove this?
 
     # Home manager
     home-manager.url = "github:nix-community/home-manager";
     home-manager.inputs.nixpkgs.follows = "nixpkgs";
 
-    # TODO: Add any other flake you might need
-    vscode-server.url = "github:msteen/nixos-vscode-server";
+    nixos-wsl.url = "github:nix-community/NixOS-WSL";
 
-    hardware.url = "github:nixos/nixos-hardware";
+    vscode-server.url = "github:msteen/nixos-vscode-server";
   };
 
-  outputs = { nixpkgs, home-manager, ... }@inputs: {
-    nixosConfigurations = {
-      korone = nixpkgs.lib.nixosSystem {
-        specialArgs = { inherit inputs; }; # Pass flake inputs to our config
-        # > Our main nixos configuration file <
-        modules = [ ./nixos/configuration.nix ];
-      };
-    };
+   outputs = { ... }@inputs:
+    let
+      mkHost = import ./lib/mkHost.nix { inherit inputs; };
+    in
+    {
+      nixosConfigurations = {
+        korone = mkHost {
+          system = "x86_64-linux";
+          users = [ "inugami" ];
+          hostname = "korone";
+        };
 
-    homeConfigurations = {
-      "inugami@korone" = home-manager.lib.homeManagerConfiguration {
-        pkgs = nixpkgs.legacyPackages.x86_64-linux;
-        extraSpecialArgs = { inherit inputs; }; # Pass flake inputs to our config
-        modules = [ ./home-manager/home.nix ];
+        pendragon = mkHost {
+          system = "x86_64-linux";
+          users = [ "miguel" ];
+          hostname = "pendragon";
+          modules = [ inputs.nixos-wsl.nixosModules.wsl ];
+        };
       };
-    };
+
+      # homeConfigs = { 
+      #   inugami = home-manager.lib.homeManagerConfiguration {
+      #     system = "x86_64-linux";
+      #     users = [ "inugami" ];
+      #     hostname = "inugami";
+      #   };
+
+      #   miguel = home-manager.lib.homeManagerConfiguration {
+      #     system = "x86_64-linux";
+      #     username = "miguel"
+      #     pkgs 
+      #   };
+      # };
   };
 }

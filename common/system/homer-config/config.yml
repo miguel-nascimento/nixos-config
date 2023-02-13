@@ -1,5 +1,5 @@
 title: "Home Server"
-subtitle: "inugami"
+subtitle: "miguel"
 
 header: true
 footer: '<p>Before making a question, ask yourself "what are the likely answers?" and "what will be my next question if I get answer A? What will it be if I get answer B?".</p>' # set false if you want to hide it.
@@ -38,7 +38,6 @@ links:
   - name: "Notes"
     icon: "fas fa-book"
     url: "https://github.com/miguel-nascimento/notes"
-
 
 services:
   - name: "Applications"
