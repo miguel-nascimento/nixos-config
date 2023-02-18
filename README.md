@@ -7,7 +7,7 @@
 
 ## Cool things
 
-- [plex.nix](./nixos/modules/plex.nix): Anime ready Plex Server with [Hama.bundle](https://github.com/ZeroQI/Hama.bundle) and [Absolute-Series-Scanner](https://github.com/ZeroQI/Absolute-Series-Scanner)
+- [plex.nix](./common/system/plex.nix): Anime ready Plex Server with [Hama.bundle](https://github.com/ZeroQI/Hama.bundle) and [Absolute-Series-Scanner](https://github.com/ZeroQI/Absolute-Series-Scanner)
 
 ## Credits
 
