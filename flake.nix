@@ -15,7 +15,7 @@
     vscode-server.url = "github:msteen/nixos-vscode-server";
   };
 
-   outputs = { ... }@inputs:
+   outputs = { home-manager, nixpkgs, ... }@inputs:
     let
       mkHost = import ./lib/mkHost.nix { inherit inputs; };
     in
@@ -35,18 +35,11 @@
         };
       };
 
-      # homeConfigs = { 
-      #   inugami = home-manager.lib.homeManagerConfiguration {
-      #     system = "x86_64-linux";
-      #     users = [ "inugami" ];
-      #     hostname = "inugami";
-      #   };
-
-      #   miguel = home-manager.lib.homeManagerConfiguration {
-      #     system = "x86_64-linux";
-      #     username = "miguel"
-      #     pkgs 
-      #   };
-      # };
+      homeConfigurations = { 
+        miguel = home-manager.lib.homeManagerConfiguration {
+          modules = [ users/miguel/home.nix ];
+          pkgs = nixpkgs.legacyPackages.x86_64-linux;
+        };
+      };
   };
 }
