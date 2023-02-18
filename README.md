@@ -1,6 +1,9 @@
-# (currently Home Server) NixOS config
+# NixOS config
 
-Yes, I have plans to switch my desktop to NixOS too.
+## Hosts
+
+- korone: NixOS Home Server
+- pendragon: NixOS-WSL
 
 ## Cool things
 
