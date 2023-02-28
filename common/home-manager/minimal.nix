@@ -10,6 +10,7 @@ _: {
     ./programs/bat.nix
     ./programs/ripgrep.nix
     ./programs/fd.nix
+    ./programs/z.nix
 
     ./languages/nix.nix
   ];

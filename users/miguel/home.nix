@@ -1,5 +1,6 @@
 _:
 {
+  programs.home-manager.enable = true;
   imports = [
     ../../common/home-manager/minimal.nix
     ../../common/home-manager/programs/direnv.nix
