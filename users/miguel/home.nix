@@ -4,8 +4,13 @@ _:
   imports = [
     ../../common/home-manager/minimal.nix
     ../../common/home-manager/programs/direnv.nix
+    ../../common/home-manager/programs/navi.nix
+    ../../common/home-manager/programs/keychain.nix
+    
     ../../common/home-manager/languages/typescript.nix
   ];
+
+  nixpkgs.config.allowUnfree = true;
 
   home = {
     username = "miguel";
