@@ -7,6 +7,8 @@ _:
       cm = "commit -m";
     };
 
+    difftastic.enable = true;
+    
     extraConfig = {
       init.defaultBranch = "main";
       pull.rebase = false;
