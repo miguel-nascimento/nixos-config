@@ -39,6 +39,11 @@
         miguel = home-manager.lib.homeManagerConfiguration {
           modules = [ users/miguel/home.nix ];
           pkgs = nixpkgs.legacyPackages.x86_64-linux;
+        }; 
+
+        miguel-m1 = home-manager.lib.homeManagerConfiguration {
+          modules = [ users/miguel-m1/home.nix ];
+          pkgs = nixpkgs.legacyPackages.aarch64-darwin;
         };
       };
   };
