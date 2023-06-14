@@ -3,7 +3,8 @@
   home.packages = with pkgs; [
     yarn
     openssl
-    nodejs-16_x
+    nodejs
+    deno
     nodePackages.node-gyp
   ];
 }

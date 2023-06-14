@@ -11,6 +11,10 @@ _:
       bindkey  "^[[F"   end-of-line
       bindkey  "^[[3~"  delete-char
       export TERM=xterm-256color
+
+      # brew hack, im lazy
+      export PATH="/opt/homebrew/bin:$PATH"
+      export PATH="/Users/miguel/.local/bin:$PATH"
     '';
       #VSCODE_IPC_HOOK_CLI=$( lsof | grep $UID/vscode-ipc | awk '{print $(NF-1)}' | head -n 1 )
 

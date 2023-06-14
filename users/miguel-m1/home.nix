@@ -8,6 +8,7 @@ _:
     ../../common/home-manager/programs/keychain.nix
     
     ../../common/home-manager/languages/typescript.nix
+    ../../common/home-manager/languages/rust.nix
   ];
 
   nixpkgs.config.allowUnfree = true;
