@@ -12,20 +12,20 @@
 
     nixos-wsl.url = "github:nix-community/NixOS-WSL";
 
-    vscode-server.url = "github:msteen/nixos-vscode-server";
+    vscode-server.url = "github:nix-community/nixos-vscode-server";
   };
 
-   outputs = { home-manager, nixpkgs, ... }@inputs:
-    let
-      mkHost = import ./lib/mkHost.nix { inherit inputs; };
-    in
-    {
-      nixosConfigurations = {
-        korone = mkHost {
-          system = "x86_64-linux";
-          users = [ "inugami" ];
-          hostname = "korone";
-        };
+ outputs = { home-manager, nixpkgs, ... }@inputs:
+  let
+    mkHost = import ./lib/mkHost.nix { inherit inputs; };
+  in
+  {
+    nixosConfigurations = {
+      korone = mkHost {
+        system = "x86_64-linux";
+        users = [ "inugami" ];
+        hostname = "korone";
+    };
 
         pendragon = mkHost {
           system = "x86_64-linux";

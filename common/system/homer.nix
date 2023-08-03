@@ -5,7 +5,7 @@ let
     name = "homer";
     src = pkgs.fetchurl {
       url = "https://github.com/bastienwirtz/homer/releases/latest/download/homer.zip";
-      sha256 = "sha256-rOaFjRSg85HDtYD/WJp4vnzBXdDOTazXtNHblMyqC6M=";
+      sha256 = "sha256-oxZjcZH1R+6vPF3ZzFKvupvpkBVHiqM3xjMyPupYEY0=";
     };
 
     nativeBuildInputs = [ pkgs.unzip ];
