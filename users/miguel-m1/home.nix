@@ -17,6 +17,6 @@ _:
     username = "miguel";
     homeDirectory = "/Users/miguel";
     # https://nixos.wiki/wiki/FAQ/When_do_I_update_stateVersion
-    stateVersion = "23.05"; 
+    stateVersion = "22.11"; 
   };
 }
