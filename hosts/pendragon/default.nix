@@ -18,7 +18,7 @@
 
   };
 
-  services.vscode-server.nodejsPackage = pkgs.nodejs-16_x;
+  services.vscode-server.nodejsPackage = pkgs.nodejs-18_x;
 
   environment.systemPackages = with pkgs; [
     vim

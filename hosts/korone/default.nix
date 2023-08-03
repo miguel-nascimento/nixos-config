@@ -9,10 +9,8 @@
   #  ../../common/system/nix-config.nix
   ];
 
-    nixpkgs.config.permittedInsecurePackages = [
-                "nodejs-16.20.1"
-              ];
-    nix = {
+  nixpkgs.config.permittedInsecurePackages = [ "nodejs-16.20.1" ];
+  nix = {
     # This will add each flake input as a registry
     # To make nix3 commands consistent with your flake
     # registry = lib.mapAttrs (_: value: { flake = value; }) inputs;
@@ -68,8 +66,10 @@
   services.openssh = {
     enable = true;
     # Forbid root login through SSH.
-    settings.PermitRootLogin = "no";
-    settings.PasswordAuthentication = true;
+    settings = { 
+      PermitRootLogin = "no";
+      PasswordAuthentication = true;
+    };
   };
 
   virtualisation.oci-containers.backend = "podman";
