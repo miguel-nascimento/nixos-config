@@ -1,6 +1,7 @@
 _: {
   imports = [
     ./programs/git.nix
+    ./programs/lazygit.nix
     ./programs/starship.nix
     ./programs/tmux.nix
     ./programs/vim.nix
