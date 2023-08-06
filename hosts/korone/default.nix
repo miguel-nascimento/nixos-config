@@ -6,6 +6,7 @@
     ../../common/system/samba.nix
     ../../common/system/homer.nix
     ../../common/system/sonarr.nix
+    ../../common/system/tailscale.nix
   #  ../../common/system/nix-config.nix
   ];
 
