@@ -12,6 +12,7 @@ _: {
     ./programs/ripgrep.nix
     ./programs/fd.nix
     ./programs/z.nix
+    ./programs/jq.nix
 
     ./languages/nix.nix
   ];
