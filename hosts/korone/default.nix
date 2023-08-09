@@ -3,6 +3,7 @@
     ./hardware-configuration.nix
     ../../common/system/deluge.nix
     ../../common/system/plex.nix
+    ../../common/system/jellyfin.nix
     ../../common/system/samba.nix
     ../../common/system/homer.nix
     ../../common/system/sonarr.nix
