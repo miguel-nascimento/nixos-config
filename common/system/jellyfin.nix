@@ -31,9 +31,9 @@ let
       cp -R * $out/";
       mkdir -p $out/plugins/${anidbMetadata};
       mkdir -p $out/plugins/${aniSyncPlugin};
+      cp -R ${anidbMetadata}/* $out/plugins/${anidbMetadata}/;
+      cp -R ${aniSyncPlugin}/* $out/plugins/${aniSyncPlugin}/;
     '';
-
-    fixupPhase = "cp -R ${anidbMetadata}/* $out/plugins/${anidbMetadata}/; cp -R ${aniSyncPlugin}/* $out/plugins/${aniSyncPlugin}/;";
   };
 in
 {
