@@ -8,6 +8,7 @@
     ../../common/system/homer.nix
     ../../common/system/sonarr.nix
     ../../common/system/tailscale.nix
+    ../../common/system/nextcloud.nix
   #  ../../common/system/nix-config.nix
   ];
 
