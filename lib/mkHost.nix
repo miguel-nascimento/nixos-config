@@ -1,6 +1,6 @@
 { inputs }:
 let
-  inherit (inputs) nixpkgs home-manager vscode-server;
+  inherit (inputs) nixpkgs home-manager;
 in
 { hostname, system, users, modules ? [ ] }:
 nixpkgs.lib.nixosSystem {
@@ -12,7 +12,6 @@ nixpkgs.lib.nixosSystem {
 
   modules = [
     home-manager.nixosModule
-    vscode-server.nixosModule
     # ../common/system/nix-config.nix
 
     (../hosts + "/${hostname}")
@@ -27,9 +26,8 @@ nixpkgs.lib.nixosSystem {
         config.allowUnfreePredicate = (_: true);
       };
 
-      services.vscode-server.enable = true;
-      services.vscode-server.enableFHS = true;
-      
+      programs.nix-ld.enable = true;
+
       home-manager = {
         useGlobalPkgs = true;
         useUserPackages = true;

@@ -6,13 +6,12 @@
     ../../common/system/jellyfin.nix
     ../../common/system/samba.nix
     ../../common/system/homer.nix
-    ../../common/system/sonarr.nix
+    # ../../common/system/sonarr.nix
     ../../common/system/tailscale.nix
     ../../common/system/nextcloud.nix
   #  ../../common/system/nix-config.nix
   ];
 
-  nixpkgs.config.permittedInsecurePackages = [ "nodejs-16.20.1" ];
   nix = {
     # This will add each flake input as a registry
     # To make nix3 commands consistent with your flake

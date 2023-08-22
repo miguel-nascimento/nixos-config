@@ -11,8 +11,6 @@
     home-manager.inputs.nixpkgs.follows = "nixpkgs";
 
     nixos-wsl.url = "github:nix-community/NixOS-WSL";
-
-    vscode-server.url = "github:nix-community/nixos-vscode-server";
   };
 
  outputs = { home-manager, nixpkgs, ... }@inputs:
