@@ -41,7 +41,7 @@
   };
   networking.firewall.enable = true;
   networking.firewall.allowPing = true;
-  networking.nameservers = [ "8.8.8.8" "8.8.4.4" ];
+  networking.nameservers = [ "1.1.1.1" "1.0.0.1" ];
 
   environment.variables.EDITOR = "vim";
 
