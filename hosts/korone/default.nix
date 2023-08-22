@@ -35,13 +35,15 @@
     '';
   };
 
-  networking.networkmanager = {
-    enable = true;
-    wifi.scanRandMacAddress = false;
+  networking = {
+    networkmanager = {
+      enable = true;
+      wifi.scanRandMacAddress = false;
+      insertNameservers  = [ "1.1.1.1" "1.0.0.1" ];
+    };
+    firewall.enable = true;
+    firewall.allowPing = true;
   };
-  networking.firewall.enable = true;
-  networking.firewall.allowPing = true;
-  networking.nameservers = [ "1.1.1.1" "1.0.0.1" ];
 
   environment.variables.EDITOR = "vim";
 
