@@ -23,26 +23,26 @@
         system = "x86_64-linux";
         users = [ "inugami" ];
         hostname = "korone";
+      };
+
+      pendragon = mkHost {
+        system = "x86_64-linux";
+        users = [ "miguel" ];
+        hostname = "pendragon";
+        modules = [ inputs.nixos-wsl.nixosModules.wsl ];
+      };
     };
 
-        pendragon = mkHost {
-          system = "x86_64-linux";
-          users = [ "miguel" ];
-          hostname = "pendragon";
-          modules = [ inputs.nixos-wsl.nixosModules.wsl ];
-        };
-      };
+    homeConfigurations = { 
+      miguel = home-manager.lib.homeManagerConfiguration {
+        modules = [ users/miguel/home.nix ];
+        pkgs = nixpkgs.legacyPackages.x86_64-linux;
+      }; 
 
-      homeConfigurations = { 
-        miguel = home-manager.lib.homeManagerConfiguration {
-          modules = [ users/miguel/home.nix ];
-          pkgs = nixpkgs.legacyPackages.x86_64-linux;
-        }; 
-
-        miguel-m1 = home-manager.lib.homeManagerConfiguration {
-          modules = [ users/miguel-m1/home.nix ];
-          pkgs = nixpkgs.legacyPackages.aarch64-darwin;
-        };
+      miguel-m1 = home-manager.lib.homeManagerConfiguration {
+        modules = [ users/miguel-m1/home.nix ];
+        pkgs = nixpkgs.legacyPackages.aarch64-darwin;
       };
+    };
   };
 }

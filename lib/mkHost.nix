@@ -14,6 +14,7 @@ nixpkgs.lib.nixosSystem {
     home-manager.nixosModule
     # ../common/system/nix-config.nix
 
+    ../common/system/nix-config.nix
     (../hosts + "/${hostname}")
     {
       networking.hostName = hostname;

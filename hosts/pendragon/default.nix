@@ -15,7 +15,6 @@
 
     # Enable integration with Docker Desktop (needs to be installed)
     # docker-desktop.enable = true;
-
   };
 
   environment.systemPackages = with pkgs; [
