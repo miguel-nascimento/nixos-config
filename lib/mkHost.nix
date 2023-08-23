@@ -12,7 +12,6 @@ nixpkgs.lib.nixosSystem {
 
   modules = [
     home-manager.nixosModule
-    # ../common/system/nix-config.nix
 
     ../common/system/nix-config.nix
     (../hosts + "/${hostname}")
@@ -28,6 +27,15 @@ nixpkgs.lib.nixosSystem {
       };
 
       programs.nix-ld.enable = true;
+      # TODO: find a way to move this to /common/system/minimal.nix
+      environment.systemPackages = with (nixpkgs.legacyPackages.${system}); [
+        cachix
+        vim
+        wget
+        htop
+        unzip
+      ];
+      environment.variables.EDITOR = "vim";
 
       home-manager = {
         useGlobalPkgs = true;

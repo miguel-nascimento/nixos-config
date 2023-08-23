@@ -20,8 +20,6 @@
     firewall.allowPing = true;
   };
 
-  environment.variables.EDITOR = "vim";
-
   # Select internationalisation properties.
   time.timeZone = "America/Sao_Paulo";
   i18n.defaultLocale = "pt_BR.UTF-8";
@@ -52,17 +50,7 @@
   };
 
   virtualisation.oci-containers.backend = "podman";
-  environment.systemPackages = with pkgs; [
-    cachix
-    vim
-    wget
-    acpi
-    rsync
-    htop
-    jdk17_headless
-    unzip
-    ngrok
-  ];
+  environment.systemPackages = with pkgs; [ acpi rsync jdk17_headless ngrok ];
 
   # https://nixos.wiki/wiki/FAQ/When_do_I_update_stateVersion
   system.stateVersion = "22.11";

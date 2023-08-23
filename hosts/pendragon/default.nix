@@ -17,13 +17,7 @@
     # docker-desktop.enable = true;
   };
 
-  environment.systemPackages = with pkgs; [
-    vim
-    wget
-    htop
-    unzip
-    lsof
-  ];
+  environment.systemPackages = with pkgs; [ lsof ];
 
   # Enable nix flakes
   nix.package = pkgs.nixFlakes;
