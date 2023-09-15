@@ -6,5 +6,6 @@
     nodejs-18_x
     deno
     nodePackages.node-gyp
+    unstable.bun
   ];
 }
