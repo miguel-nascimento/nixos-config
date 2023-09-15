@@ -1,4 +1,4 @@
-_:
+{ outputs, ... }:
 {
   programs.home-manager.enable = true;
   imports = [
@@ -11,7 +11,18 @@ _:
     ../../common/home-manager/languages/rust.nix
   ];
 
-  nixpkgs.config.allowUnfree = true;
+  # TODO: would be nice to share the same nixpkgs config as `mkHost.nix`
+  nixpkgs = {
+    # You can add overlays here
+    overlays = [ outputs.overlays.unstable-packages ];
+    # Configure your nixpkgs instance
+    config = {
+      # Disable if you don't want unfree packages
+      allowUnfree = true;
+      # Workaround for https://github.com/nix-community/home-manager/issues/2942
+      allowUnfreePredicate = (_: true);
+    };
+  };
 
   home = {
     username = "miguel";

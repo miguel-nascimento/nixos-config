@@ -1,4 +1,4 @@
-{ inputs }:
+{ inputs, outputs }:
 let
   inherit (inputs) nixpkgs home-manager;
 in
@@ -20,6 +20,7 @@ nixpkgs.lib.nixosSystem {
 
       nixpkgs = {
         # inherit overlays;
+        overlays = [ outputs.overlays.unstable-packages ];
 
         config.allowUnfree = true;
         # Workaround for https://github.com/nix-community/home-manager/issues/2942
@@ -40,6 +41,7 @@ nixpkgs.lib.nixosSystem {
       home-manager = {
         useGlobalPkgs = true;
         useUserPackages = true;
+        extraSpecialArgs = { inherit inputs outputs; };
       };
     }
   ] ++ nixpkgs.lib.forEach users (user: ../users + "/${user}") ++ modules;
