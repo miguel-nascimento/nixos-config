@@ -18,6 +18,10 @@ _:
     '';
       #VSCODE_IPC_HOOK_CLI=$( lsof | grep $UID/vscode-ipc | awk '{print $(NF-1)}' | head -n 1 )
 
+    shellAliases = {
+      ls = "eza";
+      cat = "bat";
+    };
     enableCompletion = true;
     enableAutosuggestions = true;
     autocd = true;
