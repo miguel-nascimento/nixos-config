@@ -13,6 +13,7 @@ _: {
     ./programs/fd.nix
     ./programs/z.nix
     ./programs/jq.nix
+    ./programs/eza.nix
 
     ./languages/nix.nix
   ];
