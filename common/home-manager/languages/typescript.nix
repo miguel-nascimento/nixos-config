@@ -4,8 +4,8 @@
     yarn
     openssl
     nodejs-18_x
-    deno
     nodePackages.node-gyp
+    unstable.deno
     unstable.bun
   ];
 }
