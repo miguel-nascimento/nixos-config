@@ -3,7 +3,7 @@
   home.packages = with pkgs; [
     yarn
     openssl
-    nodejs-18_x
+    nodejs
     nodePackages.node-gyp
     unstable.deno
     unstable.bun
