@@ -14,6 +14,7 @@ _: {
     ./programs/z.nix
     ./programs/jq.nix
     ./programs/eza.nix
+    ./programs/nvim.nix
 
     ./languages/nix.nix
   ];
