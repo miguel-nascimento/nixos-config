@@ -43,6 +43,10 @@ nnoremap("<leader>sf", function()
   require("telescope.builtin").find_files({ hidden = true })
 end, { desc = "[S]earch [F]iles" })
 
+nnoremap("<C-p>", function()
+  require("telescope.builtin").git_files({ hidden = true })
+end, { desc = "Search Git Files in Project" })
+
 -- LSP keybinds
 M.map_lsp_keybinds = function(buffer_number)
   nnoremap(
