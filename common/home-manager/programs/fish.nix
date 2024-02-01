@@ -1,3 +1,9 @@
+# Note on M1:
+# Since I'm not using nix-darwin, need to set the default using
+# $(which fish) >> /etc/shells
+# chsh -s $(which fish)
+# to change the default shell
+# Also, install fisher and nix-env.fish
 _:
 {
   programs.fish = {
