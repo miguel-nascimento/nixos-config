@@ -35,6 +35,15 @@ nnoremap("#", "#zz")
 -- Press 'U' for redo
 nnoremap("U", "<C-r>")
 
+-- Replace action (delete + paste) without using the original content
+xnoremap("<leader>p", "\"_dP")
+
+-- Oil
+nnoremap("<leader>fe", function ()
+  require("oil").open_float()
+end, { desc = "[F]ile [E]xplorer"})
+
+
 -- Turn off highlighted results
 nnoremap("<leader>no", "<cmd>noh<cr>")
 
@@ -43,9 +52,9 @@ nnoremap("<leader>sf", function()
   require("telescope.builtin").find_files({ hidden = true })
 end, { desc = "[S]earch [F]iles" })
 
-nnoremap("<C-p>", function()
+nnoremap("<leader>sp", function()
   require("telescope.builtin").git_files({ hidden = true })
-end, { desc = "Search Git Files in Project" })
+end, { desc = "[S]earch in [P]roject (Git Files)" })
 
 -- LSP keybinds
 M.map_lsp_keybinds = function(buffer_number)
