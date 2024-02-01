@@ -35,18 +35,21 @@ nnoremap("#", "#zz")
 -- Press 'U' for redo
 nnoremap("U", "<C-r>")
 
-
 -- Leader stuff
 -- Replace action (delete + paste) without using the original content
-xnoremap("<leader>p", "\"_dP")
+xnoremap("<leader>p", '"_dP')
 
 -- Oil
-nnoremap("<leader>fe", function ()
+nnoremap("<leader>fe", function()
   require("oil").open_float()
-end, { desc = "[F]ile [E]xplorer"})
+end, { desc = "[F]ile [E]xplorer" })
 
 -- Neotree (I could do this with require instead of cmd argh!)
-nnoremap("<leader>ft", "<cmd>Neotree position=right<cr>", { desc = "[F]ile [T]ree"})
+nnoremap(
+  "<leader>ft",
+  "<cmd>Neotree position=right<cr>",
+  { desc = "[F]ile [T]ree" }
+)
 
 -- Turn off highlighted results
 nnoremap("<leader>no", "<cmd>noh<cr>")
