@@ -66,6 +66,7 @@ return {
             },
           },
         },
+       rust_analyzer = {},
       }
 
       -- nvim-cmp supports additional completion capabilities
