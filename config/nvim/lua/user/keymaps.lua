@@ -35,6 +35,8 @@ nnoremap("#", "#zz")
 -- Press 'U' for redo
 nnoremap("U", "<C-r>")
 
+
+-- Leader stuff
 -- Replace action (delete + paste) without using the original content
 xnoremap("<leader>p", "\"_dP")
 
@@ -43,18 +45,20 @@ nnoremap("<leader>fe", function ()
   require("oil").open_float()
 end, { desc = "[F]ile [E]xplorer"})
 
+-- Neotree (I could do this with require instead of cmd argh!)
+nnoremap("<leader>ft", "<cmd>Neotree position=right<cr>", { desc = "[F]ile [T]ree"})
 
 -- Turn off highlighted results
 nnoremap("<leader>no", "<cmd>noh<cr>")
 
 -- Telescope
-nnoremap("<leader>sf", function()
+nnoremap("<leader>sa", function()
   require("telescope.builtin").find_files({ hidden = true })
-end, { desc = "[S]earch [F]iles" })
+end, { desc = "[S]earch [A]ll Files" })
 
-nnoremap("<leader>sp", function()
+nnoremap("<leader>sf", function()
   require("telescope.builtin").git_files({ hidden = true })
-end, { desc = "[S]earch in [P]roject (Git Files)" })
+end, { desc = "[S]earch Git [F]iles" })
 
 -- LSP keybinds
 M.map_lsp_keybinds = function(buffer_number)
