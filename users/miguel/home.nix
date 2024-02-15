@@ -7,6 +7,7 @@
     ../../common/home-manager/programs/navi.nix
     ../../common/home-manager/programs/keychain.nix
     ../../common/home-manager/languages/libc.nix
+    ../../common/home-manager/languages/docs.nix
     ../../common/home-manager/languages/typescript.nix
     ../../common/home-manager/languages/rust.nix
   ];
