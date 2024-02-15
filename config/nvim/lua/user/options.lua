@@ -7,6 +7,9 @@ vim.opt.expandtab = true
 vim.opt.smartindent = true
 vim.opt.shiftwidth = 2
 
+-- Enable lines
+vim.opt.nu = true
+
 -- Enable incremental searching
 vim.opt.incsearch = true
 vim.opt.hlsearch = true
@@ -30,7 +33,7 @@ vim.opt.ignorecase = true
 vim.opt.smartcase = true
 
 -- Set completeopt to have a better completion experience
--- vim.opt.completeopt = { "menuone", "noselect" } -- ?
+vim.opt.completeopt = { "menu", "menuone" }
 
 -- Enable persistent undo history
 vim.opt.undofile = true
