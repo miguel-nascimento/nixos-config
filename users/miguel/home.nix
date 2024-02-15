@@ -6,7 +6,7 @@
     ../../common/home-manager/programs/direnv.nix
     ../../common/home-manager/programs/navi.nix
     ../../common/home-manager/programs/keychain.nix
-    ../../common/home-manager/languages/lib.nix
+    ../../common/home-manager/languages/libc.nix
     ../../common/home-manager/languages/typescript.nix
     ../../common/home-manager/languages/rust.nix
   ];
@@ -28,6 +28,6 @@
     username = "miguel";
     homeDirectory = "/home/miguel";
     # https://nixos.wiki/wiki/FAQ/When_do_I_update_stateVersion
-    stateVersion = "22.11"; 
+    stateVersion = "22.11";
   };
 }
