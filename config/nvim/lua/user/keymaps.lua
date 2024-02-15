@@ -63,6 +63,15 @@ nnoremap("<leader>sf", function()
   require("telescope.builtin").git_files({ hidden = true })
 end, { desc = "[S]earch Git [F]iles" })
 
+nnoremap("<leader>sb", function()
+  require("telescope.builtin").buffers({ hidden = true })
+end, { desc = "[S]earch [B]uffers" })
+
+
+nnoremap("<leader>sc", function()
+  require("telescope.builtin").live_grep({ hidden = true })
+end, { desc = "[S]earch [C]ode" })
+
 -- LSP keybinds
 M.map_lsp_keybinds = function(buffer_number)
   nnoremap(
