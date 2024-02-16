@@ -1,29 +1,55 @@
-_:
+{ pkgs, ... }:
 {
   programs.tmux = {
     enable = true;
-    
+    keyMode = "vi";
     mouse = true;
+    clock24 = true;
     shortcut = "a";
-    extraConfig = ''
-      set -g status-right ' #{?client_prefix,#[reverse]<Prefix>#[noreverse] ,}"#{=21:pane_title}" %H:%M %d-%B-%Y'
-      set -g default-terminal "tmux-256color"
-      set -ag terminal-overrides ",xterm-256color:RGB"
+    baseIndex = 1; # 0 is very far
 
-      # --> Catppuccin (Macchiato)
-      thm_bg="#24273a"
-      thm_fg="#cad3f5"
-      thm_cyan="#91d7e3"
-      thm_black="#1e2030"
-      thm_gray="#363a4f"
-      thm_magenta="#c6a0f6"
-      thm_pink="#f5bde6"
-      thm_red="#ed8796"
-      thm_green="#a6da95"
-      thm_yellow="#eed49f"
-      thm_blue="#8aadf4"
-      thm_orange="#f5a97f"
-      thm_black4="#5b6078"
+    # TODO: ressurect, fingers, continuum?
+    plugins = with pkgs; [
+      { 
+        # btw nixpkgs catppuccin is outdated :D
+        plugin = tmuxPlugins.catppuccin;
+        extraConfig = ''
+          set -g @catppuccin_flavour 'macchiato'
+          set -g @catppuccin_window_right_separator "█ "
+          set -g @catppuccin_window_number_position "right"
+          set -g @catppuccin_window_middle_separator " | "
+
+          set -g @catppuccin_window_default_fill "none"
+          set -g @catppuccin_window_current_fill "all"
+
+          set -g @catppuccin_status_modules_right "application date_time"
+          set -g @catppuccin_status_left_separator "|"
+          set -g @catppuccin_status_right_separator "█"
+
+          set -g @catppuccin_date_time_text "%Y-%m-%d %H:%M:%S"
+        '';
+      }
+    ];
+    extraConfig = ''
+      set -g visual-bell on
+      bind V copy-mode
+      bind -T copy-mode-vi V send-keys -X cancel
+
+      unbind -T copy-mode-vi v
+
+      bind -T copy-mode-vi v \
+      send-keys -X begin-selection
+
+      bind -T copy-mode-vi 'C-v' \
+      send-keys -X rectangle-toggle
+
+      bind -T copy-mode-vi y \
+      send-keys -X copy-pipe-and-cancel "pbcopy"
+
+      bind -T copy-mode-vi MouseDragEnd1Pane \
+      send-keys -X copy-pipe-and-cancel "pbcopy"
+
+      set-option -g renumber-windows on
     '';
   };
 }
