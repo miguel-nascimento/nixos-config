@@ -55,18 +55,18 @@ nnoremap(
 nnoremap("<leader>no", "<cmd>noh<cr>")
 
 -- Telescope
-nnoremap("<leader>sa", function()
-  require("telescope.builtin").find_files({ hidden = true })
-end, { desc = "[S]earch [A]ll Files" })
-
 nnoremap("<leader>sf", function()
+  -- Fine to find_files due to the `file_ignore_patterns` in telescope config
+  require("telescope.builtin").find_files({ hidden = true })
+end, { desc = "[S]earch [F]iles" })
+
+nnoremap("<leader>sp", function()
   require("telescope.builtin").git_files({ hidden = true })
-end, { desc = "[S]earch Git [F]iles" })
+end, { desc = "[S]earch [P]roject Files (Git Files)" })
 
 nnoremap("<leader>sb", function()
   require("telescope.builtin").buffers({ hidden = true })
 end, { desc = "[S]earch [B]uffers" })
-
 
 nnoremap("<leader>sc", function()
   require("telescope.builtin").live_grep({ hidden = true })
