@@ -67,6 +67,7 @@ return {
           },
         },
         rust_analyzer = {},
+        -- TODO: add more Rust stuff! https://github.com/mrcjkb/rustaceanvim
       }
 
       -- nvim-cmp supports additional completion capabilities
@@ -74,11 +75,7 @@ return {
       local default_capabilities =
         require("cmp_nvim_lsp").default_capabilities(capabilities)
 
-      ---@diagnostic disable-next-line: unused-local
-      local on_attach = function(_client, buffer_number)
-        -- Pass the current buffer to map lsp keybinds
-        map_lsp_keybinds(buffer_number)
-
+      local on_attach = function(client, buffer_number)
         -- Create a command `:Format` local to the LSP buffer
         vim.api.nvim_buf_create_user_command(
           buffer_number,
@@ -94,6 +91,25 @@ return {
           end,
           { desc = "LSP: Format current buffer with LSP" }
         )
+
+        -- https://github.com/nvimtools/none-ls.nvim/wiki/Formatting-on-save
+        local augroup = vim.api.nvim_create_augroup("LspFormatting", {})
+        if client.supports_method("textDocument/formatting") then
+          vim.api.nvim_clear_autocmds({
+            group = augroup,
+            buffer = buffer_number,
+          })
+          vim.api.nvim_create_autocmd("BufWritePre", {
+            group = augroup,
+            buffer = buffer_number,
+            callback = function()
+              vim.lsp.buf.format({ async = false })
+            end,
+          })
+        end
+
+        -- Pass the current buffer to map lsp keybinds
+        map_lsp_keybinds(buffer_number)
       end
 
       -- Iterate over our servers and set them up
@@ -116,6 +132,7 @@ return {
           -- formatting
           formatting.prettierd,
           formatting.stylua,
+          formatting.rustfmt,
 
           -- diagnostics
           diagnostics.eslint_d.with({
@@ -129,6 +146,10 @@ return {
           }),
 
           -- code actions
+          -- Gitsign action: I would love to use it, but it always mess with
+          -- code actions order. I want the LSP first, them null-ls.
+          -- I will probably face the same issue with eslint.
+          -- code_actions.gitsigns,
           code_actions.eslint_d.with({
             condition = function(utils)
               return utils.root_has_file({
