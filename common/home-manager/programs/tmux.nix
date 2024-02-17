@@ -31,6 +31,9 @@
       }
     ];
     extraConfig = ''
+      set -g default-terminal "screen-256color"
+      set-option -sa terminal-overrides ",xterm-256color:RGB"
+
       set -g visual-bell on
       bind V copy-mode
       bind -T copy-mode-vi V send-keys -X cancel
