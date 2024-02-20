@@ -76,19 +76,21 @@ return {
         require("cmp_nvim_lsp").default_capabilities(capabilities)
 
       local on_attach = function(client, buffer_number)
+        local format_fn = function(_)
+          vim.lsp.buf.format({
+            filter = function(format_client)
+              -- Use Prettier to format TS/JS if it's available
+              return format_client.name ~= "tsserver"
+                or not null_ls.is_registered("prettier")
+            end,
+          })
+        end
+
         -- Create a command `:Format` local to the LSP buffer
         vim.api.nvim_buf_create_user_command(
           buffer_number,
           "Format",
-          function(_)
-            vim.lsp.buf.format({
-              filter = function(format_client)
-                -- Use Prettier to format TS/JS if it's available
-                return format_client.name ~= "tsserver"
-                  or not null_ls.is_registered("prettier")
-              end,
-            })
-          end,
+          format_fn,
           { desc = "LSP: Format current buffer with LSP" }
         )
 
@@ -102,9 +104,7 @@ return {
           vim.api.nvim_create_autocmd("BufWritePre", {
             group = augroup,
             buffer = buffer_number,
-            callback = function()
-              vim.lsp.buf.format({ async = false })
-            end,
+            callback = format_fn,
           })
         end
 

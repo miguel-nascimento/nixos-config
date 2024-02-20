@@ -36,9 +36,6 @@ nnoremap("#", "#zz")
 nnoremap("U", "<C-r>")
 
 -- Leader stuff
--- Replace action (delete + paste) without using the original content
-xnoremap("<leader>p", '"_dP')
-
 -- Oil
 nnoremap("<leader>fe", function()
   require("oil").open_float()
