@@ -5,9 +5,10 @@ _:
 
     aliases = {
       cm = "commit -m";
+      lg = "log --format='%Cred%h%Creset %s %Cgreen(%cr) %C(blue)<%an>%Creset%C(yellow)%d%Creset' --no-merges";
     };
 
-    difftastic.enable = true;
+    delta.enable = true;
     
     extraConfig = {
       init.defaultBranch = "main";
