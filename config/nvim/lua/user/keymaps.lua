@@ -61,13 +61,17 @@ nnoremap("<leader>sp", function()
   require("telescope.builtin").git_files({ hidden = true })
 end, { desc = "[S]earch [P]roject Files (Git Files)" })
 
-nnoremap("<leader>sb", function()
+nnoremap("<leader><leader>", function()
   require("telescope.builtin").buffers({ hidden = true })
-end, { desc = "[S]earch [B]uffers" })
+end, { desc = "[ ] Find existing buffers" })
 
 nnoremap("<leader>sc", function()
   require("telescope.builtin").live_grep({ hidden = true })
 end, { desc = "[S]earch [C]ode" })
+
+nnoremap("<leader>sw", function()
+  require("telescope.builtin").grep_string({ hidden = true })
+end, { desc = "[S]earch Current [W]ord" })
 
 -- LSP keybinds
 M.map_lsp_keybinds = function(buffer_number)
@@ -94,7 +98,7 @@ M.map_lsp_keybinds = function(buffer_number)
     { desc = "LSP: [G]oto [R]eferences", buffer = buffer_number }
   )
   nnoremap(
-    "gi",
+    "gI",
     require("telescope.builtin").lsp_implementations,
     { desc = "LSP: [G]oto [I]mplementation", buffer = buffer_number }
   )
@@ -122,7 +126,7 @@ M.map_lsp_keybinds = function(buffer_number)
     { desc = "LSP: [G]oto [D]eclaration", buffer = buffer_number }
   )
   nnoremap(
-    "td",
+    "<leader>D",
     vim.lsp.buf.type_definition,
     { desc = "LSP: [T]ype [D]efinition", buffer = buffer_number }
   )
