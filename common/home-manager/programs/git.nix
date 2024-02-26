@@ -8,7 +8,10 @@ _:
       lg = "log --format='%Cred%h%Creset %s %Cgreen(%cr) %C(blue)<%an>%Creset%C(yellow)%d%Creset' --no-merges";
     };
 
-    delta.enable = true;
+    delta = { 
+      enable = true;
+      options.side-by-side = true;
+    };
     
     extraConfig = {
       init.defaultBranch = "main";
