@@ -18,7 +18,7 @@
  outputs = { self, nixpkgs, home-manager, ... }@inputs:
   let
     inherit (self) outputs;
-    mkHost = import ./lib/mkHost.nix { inherit inputs; };
+    mkHost = import ./lib/mkHost.nix { inherit inputs outputs; };
   in 
   rec {
     overlays = import ./overlays { inherit inputs; };

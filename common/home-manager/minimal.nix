@@ -17,5 +17,7 @@ _: {
     ./programs/nvim.nix
 
     ./languages/nix.nix
+    ./languages/libc.nix
+    ./languages/docs.nix
   ];
 }
