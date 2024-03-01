@@ -17,7 +17,8 @@ _: {
     ./programs/nvim.nix
 
     ./languages/nix.nix
-    ./languages/libc.nix
+     # TODO: create a nvim.nix and move libc.nix to it
+    ./languages/libc.nix # needed due to nvim
     ./languages/docs.nix
   ];
 }
