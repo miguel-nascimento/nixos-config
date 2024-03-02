@@ -8,6 +8,7 @@ in {
   imports = [ 
     ../languages/lua.nix
   ];
+  home.packages = with pkgs; [ gcc ]; # telescope requires this iirc
   programs.neovim = {
     enable = true;
     package = pkgs.unstable.neovim-unwrapped; # should I use the unwrapped one?
