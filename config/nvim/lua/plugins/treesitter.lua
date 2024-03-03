@@ -1,29 +1,29 @@
 return {
   {
-    "nvim-treesitter/nvim-treesitter",
+    'nvim-treesitter/nvim-treesitter',
     dependencies = {
-      "nvim-treesitter/nvim-treesitter-textobjects",
+      'nvim-treesitter/nvim-treesitter-textobjects',
     },
     build = function()
-      require("nvim-treesitter.install").update({ with_sync = true })()
+      require('nvim-treesitter.install').update { with_sync = true }()
     end,
-    event = { "BufEnter" },
+    event = { 'BufEnter' },
     config = function()
-      require("nvim-treesitter.configs").setup({
+      require('nvim-treesitter.configs').setup {
         ensure_installed = {
-          "tsx",
-          "typescript",
-          "bash",
-          "html",
-          "javascript",
-          "css",
-          "lua",
-          "json",
-          "markdown",
-          "prisma",
-          "vim",
-          "c",
-          "nix",
+          'tsx',
+          'typescript',
+          'bash',
+          'html',
+          'javascript',
+          'css',
+          'lua',
+          'json',
+          'markdown',
+          'prisma',
+          'vim',
+          'c',
+          'nix',
         },
         sync_install = false,
         highlight = {
@@ -48,7 +48,7 @@ return {
         -- 	},
         -- },
         -- TODO: textobjects
-      })
+      }
     end,
   },
 }

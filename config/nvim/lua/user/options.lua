@@ -18,22 +18,22 @@ vim.opt.hlsearch = true
 vim.opt.wrap = false
 
 -- Set leader key to space (?)
-vim.g.mapleader = " "
-vim.g.maplocalleader = " "
+vim.g.mapleader = ' '
+vim.g.maplocalleader = ' '
 
 -- Better splitting
 vim.opt.splitbelow = true
 vim.opt.splitright = true
 
 -- Enable mouse mode
-vim.opt.mouse = "a"
+vim.opt.mouse = 'a'
 
 -- Enable ignorecase + smartcase for better searching
 vim.opt.ignorecase = true
 vim.opt.smartcase = true
 
 -- Set completeopt to have a better completion experience
-vim.opt.completeopt = { "menu", "menuone" }
+vim.opt.completeopt = { 'menu', 'menuone' }
 
 -- Enable persistent undo history
 vim.opt.undofile = true
@@ -42,10 +42,10 @@ vim.opt.undofile = true
 vim.opt.termguicolors = true
 
 -- Enable the sign column to prevent the screen from jumping
-vim.opt.signcolumn = "yes"
+vim.opt.signcolumn = 'yes'
 
 -- Enable access to System Clipboard
-vim.opt.clipboard = "unnamed,unnamedplus"
+vim.opt.clipboard = 'unnamed,unnamedplus'
 
 -- Enable cursor line highlight
 vim.opt.cursorline = true

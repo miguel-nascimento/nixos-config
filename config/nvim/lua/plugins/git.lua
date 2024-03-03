@@ -1,11 +1,15 @@
 return {
-  { "tpope/vim-fugitive", event = "VeryLazy" },
-  { "tpope/vim-rhubarb", event = "VeryLazy" },
+  -- Hmm I dont think I'm using Fugitive that much. But I will keep it here
+  -- When I need it, I will have it.
+  { 'tpope/vim-fugitive', event = 'VeryLazy' },
+  { 'tpope/vim-rhubarb', event = 'VeryLazy' },
   {
-    "lewis6991/gitsigns.nvim",
-    event = "VeryLazy",
+    'lewis6991/gitsigns.nvim',
+    event = 'VeryLazy',
     config = function()
-      require("gitsigns").setup()
+      require('gitsigns').setup()
     end,
   },
+  -- I should add Toggleterm.nvim and use lazygit on it
+  -- or just use tmux xD
 }

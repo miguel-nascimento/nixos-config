@@ -1,18 +1,18 @@
 return {
   {
-    "echasnovski/mini.ai",
+    'echasnovski/mini.ai',
     version = false,
-    event = { "BufReadPost", "BufNewFile", "BufWritePre" },
+    event = { 'BufReadPost', 'BufNewFile', 'BufWritePre' },
     config = function()
-      require("mini.ai").setup()
+      require('mini.ai').setup()
     end,
   },
   {
-    "echasnovski/mini.surround",
+    'echasnovski/mini.surround',
     version = false,
-    event = { "BufReadPost", "BufNewFile", "BufWritePre" },
+    event = { 'BufReadPost', 'BufNewFile', 'BufWritePre' },
     config = function()
-      require("mini.surround").setup()
+      require('mini.surround').setup()
     end,
   },
 }
