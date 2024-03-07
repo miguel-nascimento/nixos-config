@@ -22,6 +22,7 @@ return {
           'markdown',
           'prisma',
           'vim',
+          'vimdoc',
           'c',
           'nix',
         },
