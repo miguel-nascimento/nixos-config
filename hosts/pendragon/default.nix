@@ -6,18 +6,12 @@
 
   wsl = {
     enable = true;
-    wslConf.automount.root = "/mnt";
     defaultUser = "miguel";
     startMenuLaunchers = true;
-
-    # Enable native Docker support
-    docker-native.enable = true;
-
-    # Enable integration with Docker Desktop (needs to be installed)
-    # docker-desktop.enable = true;
   };
 
   environment.systemPackages = with pkgs; [ lsof ];
+  programs.zsh.enable = true;
 
   # Enable nix flakes
   nix.package = pkgs.nixFlakes;

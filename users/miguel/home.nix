@@ -13,17 +13,17 @@
   ];
 
   # TODO: would be nice to share the same nixpkgs config as `mkHost.nix`
-  nixpkgs = {
+  # nixpkgs = {
     # You can add overlays here
-    overlays = [ outputs.overlays.unstable-packages ];
+  #  overlays = [ outputs.overlays.unstable-packages ];
     # Configure your nixpkgs instance
-    config = {
+  #  config = {
       # Disable if you don't want unfree packages
-      allowUnfree = true;
+  #    allowUnfree = true;
       # Workaround for https://github.com/nix-community/home-manager/issues/2942
-      allowUnfreePredicate = (_: true);
-    };
-  };
+  #    allowUnfreePredicate = (_: true);
+  #  };
+  # };
 
   home = {
     username = "miguel";
