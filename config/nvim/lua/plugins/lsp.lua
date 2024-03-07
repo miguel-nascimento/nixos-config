@@ -128,30 +128,30 @@ return {
           formatting.rustfmt,
 
           -- diagnostics
-          diagnostics.eslint_d.with {
-            condition = function(utils)
-              return utils.root_has_file {
-                '.eslintrc.js',
-                '.eslintrc.cjs',
-                '.eslintrc.json',
-              }
-            end,
-          },
+          -- diagnostics.eslint_d.with {
+          --   condition = function(utils)
+          --     return utils.root_has_file {
+          --       '.eslintrc.js',
+          --       '.eslintrc.cjs',
+          --       '.eslintrc.json',
+          --     }
+          --   end,
+          -- },
 
           -- code actions
           -- Gitsign action: I would love to use it, but it always mess with
           -- code actions order. I want the LSP first, them null-ls.
           -- I will probably face the same issue with eslint.
           -- code_actions.gitsigns,
-          code_actions.eslint_d.with {
-            condition = function(utils)
-              return utils.root_has_file {
-                '.eslintrc.js',
-                '.eslintrc.cjs',
-                '.eslintrc.json',
-              }
-            end,
-          },
+          -- code_actions.eslint_d.with {
+          --   condition = function(utils)
+          --     return utils.root_has_file {
+          --       '.eslintrc.js',
+          --       '.eslintrc.cjs',
+          --       '.eslintrc.json',
+          --     }
+          --   end,
+          -- },
         },
       }
     end,
