@@ -5,6 +5,7 @@
     # Nixpkgs
     nixpkgs.url = "github:nixos/nixpkgs/nixos-23.11";
     nixpkgs-unstable.url = "github:nixos/nixpkgs/nixos-unstable";
+    agenix.url = "github:ryantm/agenix";
 
     hardware.url = "github:nixos/nixos-hardware"; # TODO: maybe I can remove this?
 
@@ -28,13 +29,17 @@
         system = "x86_64-linux";
         users = [ "inugami" ];
         hostname = "korone";
+        modules = [ inputs.agenix.nixosModules.default ];
       };
 
       pendragon = mkHost {
         system = "x86_64-linux";
         users = [ "miguel" ];
         hostname = "pendragon";
-        modules = [ inputs.nixos-wsl.nixosModules.wsl ];
+        modules = [ 
+          inputs.nixos-wsl.nixosModules.wsl
+          inputs.agenix.nixosModules.default
+        ];
       };
     };
 

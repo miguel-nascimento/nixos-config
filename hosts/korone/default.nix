@@ -50,7 +50,10 @@
   };
 
   virtualisation.oci-containers.backend = "podman";
-  environment.systemPackages = with pkgs; [ acpi rsync jdk17_headless ngrok ];
+  environment.systemPackages = with pkgs; 
+    [ acpi rsync jdk17_headless ngrok ]
+    ++ 
+    [inputs.agenix.packages.${system}.agenix];
 
   # https://nixos.wiki/wiki/FAQ/When_do_I_update_stateVersion
   system.stateVersion = "22.11";

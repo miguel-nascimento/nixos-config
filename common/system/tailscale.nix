@@ -1,6 +1,8 @@
 
-{ config, pkgs, ... }:
+{ self, config, pkgs, ... }:
 {
+  age.secrets.tailscale.file = "${self}/tailscale.age";
+
   # make the tailscale command usable to users
   environment.systemPackages = [ pkgs.tailscale ];
   # enable the tailscale service
@@ -29,7 +31,7 @@
       fi
 
       # otherwise authenticate with tailscale
-      ${tailscale}/bin/tailscale up -authkey tskey-examplekeyhere
+      ${tailscale}/bin/tailscale up -authkey ${config.age.secrets.tailscale.file}
     '';
   };
 
