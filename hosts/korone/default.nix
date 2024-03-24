@@ -1,4 +1,4 @@
-{ inputs, lib, config, pkgs, ... }: {
+{ inputs, pkgs, ... }: {
   imports = [
     ./hardware-configuration.nix
     ../../common/system/deluge.nix
@@ -7,7 +7,6 @@
     ../../common/system/samba.nix
     ../../common/system/homer.nix
     ../../common/system/tailscale.nix
-    ../../common/system/nextcloud.nix
   ];
 
   networking = {
