@@ -6,7 +6,7 @@ _: {
     ./programs/tmux.nix
     ./programs/vim.nix
     ./programs/zsh.nix
-    ./programs/nnn.nix
+    ./programs/yazi.nix
     ./programs/fzf.nix
     ./programs/bat.nix
     ./programs/ripgrep.nix
