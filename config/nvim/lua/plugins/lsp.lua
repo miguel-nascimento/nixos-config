@@ -67,6 +67,7 @@ return {
           },
         },
         rust_analyzer = {},
+        gopls = {},
         -- TODO: add more Rust stuff! https://github.com/mrcjkb/rustaceanvim
       }
 
@@ -126,6 +127,9 @@ return {
           formatting.prettierd,
           formatting.stylua,
           formatting.rustfmt,
+          formatting.gofumpt,
+          formatting.goimports,
+          formatting.goimports_reviser,
 
           -- diagnostics
           -- diagnostics.eslint_d.with {
