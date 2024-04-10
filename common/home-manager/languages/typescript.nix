@@ -7,5 +7,6 @@
     nodePackages.node-gyp
     unstable.deno
     unstable.bun
+    prettierd
   ];
 }
