@@ -79,10 +79,10 @@ return {
           expandable_indicator = true,
           format = lspkind.cmp_format {
             mode = 'symbol_text',
-            maxwidth = 50,
+            maxwidth = 80,
             ellipsis_char = '...',
             symbol_map = {
-              supermaven = '',
+              Supermaven = '',
             },
           },
         },
