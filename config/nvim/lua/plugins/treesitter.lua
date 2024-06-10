@@ -25,6 +25,8 @@ return {
           'vimdoc',
           'c',
           'nix',
+          'go',
+          'gomod',
         },
         sync_install = false,
         highlight = {

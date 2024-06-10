@@ -9,6 +9,7 @@
     ../../common/home-manager/languages/docs.nix
     ../../common/home-manager/languages/typescript.nix
     ../../common/home-manager/languages/rust.nix
+    ../../common/home-manager/languages/go.nix
   ];
 
   # TODO: would be nice to share the same nixpkgs config as `mkHost.nix`

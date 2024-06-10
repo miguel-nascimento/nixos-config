@@ -1,11 +1,13 @@
 { pkgs, ... }:
 {
   home.packages = with pkgs; [
-    yarn
+    unstable.yarn-berry
+    nodePackages.pnpm
     openssl
-    nodejs
+    nodejs_20
     nodePackages.node-gyp
     unstable.deno
     unstable.bun
+    prettierd
   ];
 }

@@ -47,8 +47,6 @@ nnoremap('<leader>ft', '<cmd>Neotree position=right<cr>', { desc = '[F]ile [T]re
 nnoremap('<leader>no', '<cmd>noh<cr>')
 
 -- Diagnostic keymaps
-nnoremap('[d', vim.diagnostic.goto_prev, { desc = 'Go to previous [D]iagnostic message' })
-nnoremap(']d', vim.diagnostic.goto_next, { desc = 'Go to next [D]iagnostic message' })
 nnoremap('<leader>e', vim.diagnostic.open_float, { desc = 'Show diagnostic [E]rror messages' })
 nnoremap('<leader>q', vim.diagnostic.setloclist, { desc = 'Open diagnostic [Q]uickfix list' })
 
@@ -99,6 +97,10 @@ M.map_lsp_keybinds = function(buffer_number)
   -- Lesser used LSP functionality
   nnoremap('gD', vim.lsp.buf.declaration, { desc = 'LSP: [G]oto [D]eclaration', buffer = buffer_number })
   nnoremap('<leader>D', vim.lsp.buf.type_definition, { desc = 'LSP: [T]ype [D]efinition', buffer = buffer_number })
+  nnoremap('<leader>ih', function()
+    local prev_state = vim.lsp.inlay_hint.is_enabled { bufnr = buffer_number }
+    vim.lsp.inlay_hint.enable(not prev_state)
+  end, { desc = 'LSP: [I]nline [H]ints', buffer = buffer_number })
 end
 
 -- Visual --

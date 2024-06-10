@@ -1,22 +1,12 @@
 return {
   {
-    'zbirenbaum/copilot.lua',
+    'supermaven-inc/supermaven-nvim',
     event = { 'BufEnter' },
     config = function()
-      require('copilot').setup {
-        suggestion = {
-          enabled = false,
-        },
-        panel = { enabled = false },
+      require('supermaven-nvim').setup {
+        disable_inline_completion = true, -- disables inline completion for use with cmp
+        disable_keymaps = true,
       }
-    end,
-  },
-  {
-    'zbirenbaum/copilot-cmp',
-    event = { 'BufEnter' },
-    dependencies = { 'zbirenbaum/copilot.lua' },
-    config = function()
-      require('copilot_cmp').setup()
     end,
   },
 }

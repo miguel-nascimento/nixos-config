@@ -15,6 +15,7 @@ _: {
     ./programs/jq.nix
     ./programs/eza.nix
     ./programs/nvim.nix
+    ./programs/croc.nix
 
     ./languages/nix.nix
     ./languages/docs.nix

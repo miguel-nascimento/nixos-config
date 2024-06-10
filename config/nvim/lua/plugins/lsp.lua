@@ -12,12 +12,14 @@ return {
       'hrsh7th/cmp-nvim-lsp',
       -- Install none-ls for diagnostics, code actions, and formatting
       'nvimtools/none-ls.nvim',
+      'nvimtools/none-ls-extras.nvim',
       -- Install neodev for better nvim configuration and plugin authoring via lsp configurations
       'folke/neodev.nvim',
       -- Neoconf so we can share config with co-workers (config-as-json) 🫂
       'folke/neoconf.nvim',
       -- Progress/Status update for LSP
       { 'j-hui/fidget.nvim', tag = 'v1.0.0' },
+      'pmizio/typescript-tools.nvim',
     },
     config = function()
       local null_ls = require 'null-ls'
@@ -59,6 +61,7 @@ return {
         tailwindcss = {
           -- filetypes = { "reason" },
         },
+        eslint_d = {},
         tsserver = {
           settings = {
             experimental = {
@@ -67,6 +70,7 @@ return {
           },
         },
         rust_analyzer = {},
+        gopls = {},
         -- TODO: add more Rust stuff! https://github.com/mrcjkb/rustaceanvim
       }
 
@@ -85,7 +89,8 @@ return {
         end
 
         -- Create a command `:Format` local to the LSP buffer
-        vim.api.nvim_buf_create_user_command(buffer_number, 'Format', format_fn, { desc = 'LSP: Format current buffer with LSP' })
+        vim.api.nvim_buf_create_user_command(buffer_number, 'Format', format_fn,
+          { desc = 'LSP: Format current buffer with LSP' })
 
         -- https://github.com/nvimtools/none-ls.nvim/wiki/Formatting-on-save
         local augroup = vim.api.nvim_create_augroup('LspFormatting', {})
@@ -107,12 +112,18 @@ return {
 
       -- Iterate over our servers and set them up
       for name, config in pairs(servers) do
-        require('lspconfig')[name].setup {
-          capabilities = default_capabilities,
-          filetypes = config.filetypes,
-          on_attach = on_attach,
-          settings = config.settings,
-        }
+        if name == 'tsserver' then
+          require('typescript-tools').setup {
+            on_attach = on_attach,
+          }
+        else
+          require('lspconfig')[name].setup {
+            capabilities = default_capabilities,
+            filetypes = config.filetypes,
+            on_attach = on_attach,
+            settings = config.settings,
+          }
+        end
       end
 
       -- Configure LSP linting, formatting, diagnostics, and code actions
@@ -126,9 +137,22 @@ return {
           formatting.prettierd,
           formatting.stylua,
           formatting.rustfmt,
-
-          -- diagnostics
-          -- diagnostics.eslint_d.with {
+          formatting.gofumpt,
+          formatting.goimports,
+          formatting.goimports_reviser,
+          require("none-ls.diagnostics.eslint"),
+          require("none-ls.code_actions.eslint")
+          -- -- diagnostics
+          -- require('none-ls.diagnostics.eslint_d').with {
+          --   condition = function(utils)
+          --     return utils.root_has_file {
+          --       '.eslintrc.js',
+          --       '.eslintrc.cjs',
+          --       '.eslintrc.json',
+          --     }
+          --   end,
+          -- },
+          -- require('none-ls.code_actions.eslint_d').with {
           --   condition = function(utils)
           --     return utils.root_has_file {
           --       '.eslintrc.js',
