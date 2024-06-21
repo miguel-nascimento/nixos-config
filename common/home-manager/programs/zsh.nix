@@ -17,6 +17,9 @@ _:
       export PATH="/Users/miguel/.local/bin:$PATH"
     '';
       #VSCODE_IPC_HOOK_CLI=$( lsof | grep $UID/vscode-ipc | awk '{print $(NF-1)}' | head -n 1 )
+    envExtra = ''
+        export PATH="/Users/miguel/.foundry/bin:$PATH"
+    '';
 
     shellAliases = {
       ls = "eza";
