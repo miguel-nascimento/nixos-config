@@ -5,7 +5,7 @@ vim.opt.expandtab = true
 
 -- Enable auto indenting and set it to spaces
 vim.opt.smartindent = true
-vim.opt.shiftwidth = 2
+vim.opt.shiftwidth = 4
 
 -- Enable lines
 vim.opt.nu = true

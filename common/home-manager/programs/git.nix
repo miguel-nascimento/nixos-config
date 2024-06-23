@@ -22,4 +22,8 @@ _:
     userEmail = "miguelgomes13@live.com";
     userName = "Miguel Nascimento";
   };
+  
+  programs.gh = { 
+    enable = true;
+  };
 }
