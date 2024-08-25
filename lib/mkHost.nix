@@ -39,6 +39,7 @@ nixpkgs.lib.nixosSystem {
       environment.variables.EDITOR = "vim";
 
       home-manager = {
+        backupFileExtension = "hm-backup";
         useGlobalPkgs = true;
         useUserPackages = true;
         extraSpecialArgs = { inherit inputs outputs; };
