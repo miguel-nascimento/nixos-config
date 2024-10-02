@@ -5,7 +5,15 @@ return {
     opts = {},
     dependencies = { 'nvim-tree/nvim-web-devicons' },
     config = function()
-      require('oil').setup {}
+      require('oil').setup {
+        view_options = {
+          show_hidden = true,
+          skip_confirm_for_simple_edits = true,
+          is_always_hidden = function(name, _)
+            return name == '..' or name == '.git'
+          end,
+        },
+      }
     end,
   },
   -- Neo tree -- oil is good to move stuff, but comfy view - I know what I'm safe when I see a treeview
