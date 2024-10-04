@@ -4,7 +4,7 @@
     statix
     vulnix
     deadnix
-    nil
-    nixpkgs-fmt
+    nixd
+    nixfmt-rfc-style
   ];
 }
