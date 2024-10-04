@@ -1,8 +1,4 @@
-{
-  inputs,
-  pkgs,
-  ...
-}:
+{ inputs, pkgs, ... }:
 {
   imports = [
     ./hardware-configuration.nix
@@ -57,10 +53,14 @@
   };
 
   virtualisation.oci-containers.backend = "podman";
-  environment.systemPackages = with pkgs; 
-    [ acpi jdk22_headless ngrok ]
-    ++ 
-    [inputs.agenix.packages.${system}.agenix];
+  environment.systemPackages =
+    with pkgs;
+    [
+      acpi
+      jdk22_headless
+      ngrok
+    ]
+    ++ [ inputs.agenix.packages.${system}.agenix ];
 
   # https://nixos.wiki/wiki/FAQ/When_do_I_update_stateVersion
   system.stateVersion = "22.11";
