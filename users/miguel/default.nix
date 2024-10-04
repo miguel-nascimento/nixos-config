@@ -2,7 +2,12 @@
 {
   users.users.miguel = {
     isNormalUser = true;
-    extraGroups = [ "users" "wheel" "docker" "networkmanager" ];
+    extraGroups = [
+      "users"
+      "wheel"
+      "docker"
+      "networkmanager"
+    ];
     shell = pkgs.zsh;
 
     openssh.authorizedKeys.keys = [

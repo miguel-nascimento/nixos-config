@@ -1,5 +1,4 @@
-_:
-{
+_: {
   programs.git = {
     enable = true;
 
@@ -8,11 +7,11 @@ _:
       lg = "log --format='%Cred%h%Creset %s %Cgreen(%cr) %C(blue)<%an>%Creset%C(yellow)%d%Creset' --no-merges";
     };
 
-    delta = { 
+    delta = {
       enable = true;
       options.side-by-side = true;
     };
-    
+
     extraConfig = {
       init.defaultBranch = "main";
       pull.rebase = false;
@@ -22,8 +21,8 @@ _:
     userEmail = "miguelgomes13@live.com";
     userName = "Miguel Nascimento";
   };
-  
-  programs.gh = { 
+
+  programs.gh = {
     enable = true;
   };
 }

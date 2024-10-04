@@ -30,7 +30,13 @@ in
         enable = true;
         virtualHosts."homer.local.cetacean.club" = {
           root = "${homerPkg}";
-          listen = [{ port = 8080; addr = "0.0.0.0"; ssl = false; }];
+          listen = [
+            {
+              port = 8080;
+              addr = "0.0.0.0";
+              ssl = false;
+            }
+          ];
         };
       };
 

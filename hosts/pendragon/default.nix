@@ -1,8 +1,11 @@
-{ inputs, pkgs, system, ... }:
 {
-  imports = [
-    inputs.nixos-wsl.nixosModules.wsl
-  ];
+  inputs,
+  pkgs,
+  system,
+  ...
+}:
+{
+  imports = [ inputs.nixos-wsl.nixosModules.wsl ];
 
   wsl = {
     enable = true;
@@ -10,7 +13,10 @@
     startMenuLaunchers = true;
   };
 
-  environment.systemPackages = [ pkgs.lsof inputs.agenix.packages.${system}.agenix ];
+  environment.systemPackages = [
+    pkgs.lsof
+    inputs.agenix.packages.${system}.agenix
+  ];
   programs.zsh.enable = true;
 
   # Enable nix flakes

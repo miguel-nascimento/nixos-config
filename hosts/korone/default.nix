@@ -1,4 +1,11 @@
-{ inputs, lib, config, pkgs, ... }: {
+{
+  inputs,
+  lib,
+  config,
+  pkgs,
+  ...
+}:
+{
   imports = [
     ./hardware-configuration.nix
     ../../common/system/deluge.nix
@@ -14,7 +21,10 @@
     networkmanager = {
       enable = true;
       wifi.scanRandMacAddress = false;
-      insertNameservers  = [ "1.1.1.1" "1.0.0.1" ];
+      insertNameservers = [
+        "1.1.1.1"
+        "1.0.0.1"
+      ];
     };
     firewall.enable = true;
     firewall.allowPing = true;
@@ -43,17 +53,21 @@
   services.openssh = {
     enable = true;
     # Forbid root login through SSH.
-    settings = { 
+    settings = {
       PermitRootLogin = "no";
       PasswordAuthentication = true;
     };
   };
 
   virtualisation.oci-containers.backend = "podman";
-  environment.systemPackages = with pkgs; 
-    [ acpi jdk17_headless ngrok ]
-    ++ 
-    [inputs.agenix.packages.${system}.agenix];
+  environment.systemPackages =
+    with pkgs;
+    [
+      acpi
+      jdk17_headless
+      ngrok
+    ]
+    ++ [ inputs.agenix.packages.${system}.agenix ];
 
   # https://nixos.wiki/wiki/FAQ/When_do_I_update_stateVersion
   system.stateVersion = "22.11";

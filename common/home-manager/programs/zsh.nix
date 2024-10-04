@@ -1,5 +1,4 @@
-_:
-{
+_: {
   programs.zsh = {
     enable = true;
     dotDir = ".config/zsh";
@@ -16,9 +15,9 @@ _:
       export PATH="/opt/homebrew/bin:$PATH"
       export PATH="/Users/miguel/.local/bin:$PATH"
     '';
-      #VSCODE_IPC_HOOK_CLI=$( lsof | grep $UID/vscode-ipc | awk '{print $(NF-1)}' | head -n 1 )
+    #VSCODE_IPC_HOOK_CLI=$( lsof | grep $UID/vscode-ipc | awk '{print $(NF-1)}' | head -n 1 )
     envExtra = ''
-        export PATH="/Users/miguel/.foundry/bin:$PATH"
+      export PATH="/Users/miguel/.foundry/bin:$PATH"
     '';
 
     shellAliases = {
