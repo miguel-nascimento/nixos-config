@@ -1,4 +1,9 @@
-{ inputs, pkgs, ... }: {
+{
+  inputs,
+  pkgs,
+  ...
+}:
+{
   imports = [
     ./hardware-configuration.nix
     ../../common/system/deluge.nix
@@ -13,7 +18,10 @@
     networkmanager = {
       enable = true;
       wifi.scanRandMacAddress = false;
-      insertNameservers  = [ "1.1.1.1" "1.0.0.1" ];
+      insertNameservers = [
+        "1.1.1.1"
+        "1.0.0.1"
+      ];
     };
     firewall.enable = true;
     firewall.allowPing = true;
@@ -42,7 +50,7 @@
   services.openssh = {
     enable = true;
     # Forbid root login through SSH.
-    settings = { 
+    settings = {
       PermitRootLogin = "no";
       PasswordAuthentication = true;
     };

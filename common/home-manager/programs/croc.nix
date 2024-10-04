@@ -1,6 +1,4 @@
 { pkgs, ... }:
 {
-  home.packages = with pkgs; [
-    croc
-  ];
+  home.packages = with pkgs; [ croc ];
 }

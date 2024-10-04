@@ -1,6 +1,4 @@
 { pkgs, ... }:
 {
-  home.packages = with pkgs; [
-    fd
-  ];
+  home.packages = with pkgs; [ fd ];
 }

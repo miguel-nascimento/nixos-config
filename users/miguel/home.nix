@@ -14,13 +14,13 @@
 
   # TODO: would be nice to share the same nixpkgs config as `mkHost.nix`
   # nixpkgs = {
-    # You can add overlays here
+  # You can add overlays here
   #  overlays = [ outputs.overlays.unstable-packages ];
-    # Configure your nixpkgs instance
+  # Configure your nixpkgs instance
   #  config = {
-      # Disable if you don't want unfree packages
+  # Disable if you don't want unfree packages
   #    allowUnfree = true;
-      # Workaround for https://github.com/nix-community/home-manager/issues/2942
+  # Workaround for https://github.com/nix-community/home-manager/issues/2942
   #    allowUnfreePredicate = (_: true);
   #  };
   # };

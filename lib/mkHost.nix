@@ -2,7 +2,12 @@
 let
   inherit (inputs) nixpkgs home-manager;
 in
-{ hostname, system, users, modules ? [ ] }:
+{
+  hostname,
+  system,
+  users,
+  modules ? [ ],
+}:
 nixpkgs.lib.nixosSystem {
   inherit system;
 
@@ -39,9 +44,12 @@ nixpkgs.lib.nixosSystem {
       environment.variables.EDITOR = "vim";
 
       home-manager = {
+        backupFileExtension = "hm-backup";
         useGlobalPkgs = true;
         useUserPackages = true;
-        extraSpecialArgs = { inherit inputs outputs; };
+        extraSpecialArgs = {
+          inherit inputs outputs;
+        };
       };
     }
   ] ++ nixpkgs.lib.forEach users (user: ../users + "/${user}") ++ modules;

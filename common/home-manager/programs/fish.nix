@@ -4,8 +4,7 @@
 # chsh -s $(which fish)
 # to change the default shell
 # Also, install fisher and nix-env.fish
-_:
-{
+_: {
   programs.fish = {
     enable = true;
     # shellInit = ''

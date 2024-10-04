@@ -4,9 +4,9 @@ _:
     # make shares visible for windows 10 clients
     enable = true;
     openFirewall = true;
+    networking.firewall.allowedTCPPorts = [ 5357 ];
+    networking.firewall.allowedUDPPorts = [ 3702 ];
   };
-  # networking.firewall.allowedTCPPorts = [ 5357 ];
-  # networking.firewall.allowedUDPPorts = [ 3702 ];
 
   services.samba = {
     openFirewall = true;

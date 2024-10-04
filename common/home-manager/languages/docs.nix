@@ -5,4 +5,3 @@
     man-pages-posix
   ];
 }
-

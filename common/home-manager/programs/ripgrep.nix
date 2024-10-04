@@ -1,8 +1,6 @@
 { pkgs, ... }:
 {
-  home.packages = with pkgs; [
-    ripgrep
-  ];
+  home.packages = with pkgs; [ ripgrep ];
 
   # Colors like the Silver Searcher (ag)
   xdg.configFile."ripgrep/rc".text = ''

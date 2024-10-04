@@ -56,7 +56,6 @@ return {
           },
         },
         marksman = {},
-        nil_ls = {},
         prismals = {},
         tailwindcss = {
           -- filetypes = { "reason" },
@@ -71,6 +70,15 @@ return {
         },
         rust_analyzer = {},
         gopls = {},
+        nixd = {
+          settings = {
+            nixd = {
+              formatting = {
+                command = { 'nixfmt' },
+              },
+            },
+          },
+        },
         -- TODO: add more Rust stuff! https://github.com/mrcjkb/rustaceanvim
       }
 
@@ -89,8 +97,7 @@ return {
         end
 
         -- Create a command `:Format` local to the LSP buffer
-        vim.api.nvim_buf_create_user_command(buffer_number, 'Format', format_fn,
-          { desc = 'LSP: Format current buffer with LSP' })
+        vim.api.nvim_buf_create_user_command(buffer_number, 'Format', format_fn, { desc = 'LSP: Format current buffer with LSP' })
 
         -- https://github.com/nvimtools/none-ls.nvim/wiki/Formatting-on-save
         local augroup = vim.api.nvim_create_augroup('LspFormatting', {})
@@ -140,8 +147,8 @@ return {
           formatting.gofumpt,
           formatting.goimports,
           formatting.goimports_reviser,
-          require("none-ls.diagnostics.eslint"),
-          require("none-ls.code_actions.eslint")
+          require 'none-ls.diagnostics.eslint',
+          require 'none-ls.code_actions.eslint',
           -- -- diagnostics
           -- require('none-ls.diagnostics.eslint_d').with {
           --   condition = function(utils)
