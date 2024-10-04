@@ -50,7 +50,7 @@
 
   virtualisation.oci-containers.backend = "podman";
   environment.systemPackages = with pkgs; 
-    [ acpi jdk17_headless ngrok ]
+    [ acpi jdk22_headless ngrok ]
     ++ 
     [inputs.agenix.packages.${system}.agenix];
 
