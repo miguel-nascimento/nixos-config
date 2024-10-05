@@ -11,6 +11,8 @@
     enable = true;
     defaultUser = "miguel";
     startMenuLaunchers = true;
+    useWindowsDriver = true;
+    docker-desktop.enable = true;
   };
 
   environment.systemPackages = [
@@ -18,7 +20,7 @@
     inputs.agenix.packages.${system}.agenix
   ];
   programs.zsh.enable = true;
-
+  virtualisation.docker.enable = true;
   # Enable nix flakes
   nix.package = pkgs.nixFlakes;
   nix.extraOptions = ''
