@@ -1,10 +1,9 @@
-_:
-{
+_: {
   programs.keychain = {
     enable = true;
     enableZshIntegration = true;
     enableFishIntegration = true;
-    agents = ["ssh"];
+    agents = [ "ssh" ];
     keys = [ "id_ed25519" ];
   };
 }

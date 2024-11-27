@@ -13,8 +13,29 @@ return {
       -- Install none-ls for diagnostics, code actions, and formatting
       'nvimtools/none-ls.nvim',
       'nvimtools/none-ls-extras.nvim',
-      -- Install neodev for better nvim configuration and plugin authoring via lsp configurations
-      'folke/neodev.nvim',
+      -- Install lazydev for better nvim configuration and plugin authoring via lsp configurations
+      {
+        'folke/lazydev.nvim',
+        ft = 'lua', -- only load on lua files
+        opts = {
+          library = {
+            -- See the configuration section for more details
+            -- Load luvit types when the `vim.uv` word is found
+            { path = 'luvit-meta/library', words = { 'vim%.uv' } },
+          },
+        },
+      },
+      { 'Bilal2453/luvit-meta', lazy = true }, -- optional `vim.uv` typings
+      { -- optional completion source for require statements and module annotations
+        'hrsh7th/nvim-cmp',
+        opts = function(_, opts)
+          opts.sources = opts.sources or {}
+          table.insert(opts.sources, {
+            name = 'lazydev',
+            group_index = 0, -- set group index to 0 to skip loading LuaLS completions
+          })
+        end,
+      },
       -- Neoconf so we can share config with co-workers (config-as-json) 🫂
       'folke/neoconf.nvim',
       -- Progress/Status update for LSP
@@ -24,9 +45,6 @@ return {
     config = function()
       local null_ls = require 'null-ls'
       local map_lsp_keybinds = require('user.keymaps').map_lsp_keybinds -- Has to load keymaps before pluginslsp
-
-      -- Use neodev to configure lua_ls in nvim directories - must load before lspconfig
-      require('neodev').setup()
 
       -- Setup mason so it can manage 3rd party LSP servers
       require('mason').setup()
@@ -56,7 +74,6 @@ return {
           },
         },
         marksman = {},
-        nil_ls = {},
         prismals = {},
         tailwindcss = {
           -- filetypes = { "reason" },
@@ -71,6 +88,15 @@ return {
         },
         rust_analyzer = {},
         gopls = {},
+        nixd = {
+          settings = {
+            nixd = {
+              formatting = {
+                command = { 'nixfmt' },
+              },
+            },
+          },
+        },
         -- TODO: add more Rust stuff! https://github.com/mrcjkb/rustaceanvim
       }
 
@@ -89,8 +115,7 @@ return {
         end
 
         -- Create a command `:Format` local to the LSP buffer
-        vim.api.nvim_buf_create_user_command(buffer_number, 'Format', format_fn,
-          { desc = 'LSP: Format current buffer with LSP' })
+        vim.api.nvim_buf_create_user_command(buffer_number, 'Format', format_fn, { desc = 'LSP: Format current buffer with LSP' })
 
         -- https://github.com/nvimtools/none-ls.nvim/wiki/Formatting-on-save
         local augroup = vim.api.nvim_create_augroup('LspFormatting', {})
@@ -140,8 +165,8 @@ return {
           formatting.gofumpt,
           formatting.goimports,
           formatting.goimports_reviser,
-          require("none-ls.diagnostics.eslint"),
-          require("none-ls.code_actions.eslint")
+          require 'none-ls.diagnostics.eslint',
+          require 'none-ls.code_actions.eslint',
           -- -- diagnostics
           -- require('none-ls.diagnostics.eslint_d').with {
           --   condition = function(utils)

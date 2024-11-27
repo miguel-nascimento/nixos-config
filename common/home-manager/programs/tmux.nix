@@ -10,7 +10,7 @@
 
     # TODO: ressurect, fingers, continuum?
     plugins = with pkgs; [
-      { 
+      {
         # btw nixpkgs catppuccin is outdated :D
         plugin = tmuxPlugins.catppuccin;
         extraConfig = ''
@@ -37,8 +37,8 @@
       {
         plugin = tmuxPlugins.continuum;
         extraConfig = ''
-            set -g @continuum-restore 'on'
-            set -g @continuum-save-interval '60' # minutes
+          set -g @continuum-restore 'on'
+          set -g @continuum-save-interval '60' # minutes
         '';
       }
     ];
