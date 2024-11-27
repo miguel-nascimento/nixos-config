@@ -4,5 +4,6 @@
     go
     gopls
     cmake
+    unstable.buf
   ];
 }
