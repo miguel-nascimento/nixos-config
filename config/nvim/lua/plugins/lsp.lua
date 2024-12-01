@@ -97,6 +97,7 @@ return {
             },
           },
         },
+        ocamllsp = {},
         -- TODO: add more Rust stuff! https://github.com/mrcjkb/rustaceanvim
       }
 
@@ -165,6 +166,7 @@ return {
           formatting.gofumpt,
           formatting.goimports,
           formatting.goimports_reviser,
+          formatting.ocamlformat,
           require 'none-ls.diagnostics.eslint',
           require 'none-ls.code_actions.eslint',
           -- -- diagnostics
