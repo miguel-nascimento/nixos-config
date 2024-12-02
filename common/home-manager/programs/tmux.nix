@@ -29,7 +29,6 @@
           set -g @catppuccin_date_time_text "%Y-%m-%d %H:%M:%S"
         '';
       }
-      { plugin = tmuxPlugins.vim-tmux-navigator; }
       {
         plugin = tmuxPlugins.resurrect;
         extraConfig = "set -g @resurrect-strategy-nvim 'session'";
