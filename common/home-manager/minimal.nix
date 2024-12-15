@@ -19,5 +19,6 @@ _: {
 
     ./languages/nix.nix
     ./languages/docs.nix
+    ./languages/python.nix
   ];
 }
