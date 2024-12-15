@@ -22,7 +22,7 @@
   programs.zsh.enable = true;
   virtualisation.docker.enable = true;
   # Enable nix flakes
-  nix.package = pkgs.nixFlakes;
+  nix.package = pkgs.nixVersions.latest;
   nix.extraOptions = ''
     experimental-features = nix-command flakes
   '';
