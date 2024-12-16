@@ -32,8 +32,6 @@
     useXkbConfig = true;
   };
 
-  # Enable sound.
-  sound.enable = true;
   hardware.pulseaudio.enable = true;
 
   # Bluetooth
@@ -41,7 +39,7 @@
   services.blueman.enable = false;
 
   # Touchpad support
-  services.xserver.libinput.enable = true;
+  services.libinput.enable = true;
 
   services.openssh = {
     enable = true;
@@ -57,7 +55,7 @@
     with pkgs;
     [
       acpi
-      jdk22_headless
+      jdk23_headless
       ngrok
     ]
     ++ [ inputs.agenix.packages.${system}.agenix ];
