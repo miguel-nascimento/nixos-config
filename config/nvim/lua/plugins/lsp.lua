@@ -5,6 +5,7 @@ return {
     event = { 'BufReadPost' },
     cmd = { 'LspInfo', 'LspInstall', 'LspUninstall', 'Mason' },
     dependencies = {
+      'saghen/blink.cmp',
       -- Plugin and UI to automatically install LSPs to stdpath
       'williamboman/mason.nvim',
       'williamboman/mason-lspconfig.nvim',
@@ -20,7 +21,7 @@ return {
           library = {
             -- See the configuration section for more details
             -- Load luvit types when the `vim.uv` word is found
-            { path = 'luvit-meta/library', words = { 'vim%.uv' } },
+            { path = '${3rd}/luv/library', words = { 'vim%.uv' } },
           },
         },
       },

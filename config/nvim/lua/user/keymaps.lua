@@ -103,6 +103,8 @@ M.map_lsp_keybinds = function(buffer_number)
   end, { desc = 'LSP: [I]nline [H]ints', buffer = buffer_number })
 end
 
+-- TODO: git keybindings
+
 -- Visual --
 -- Disable Space bar since it'll be used as the leader key
 vnoremap('<space>', '<nop>')
