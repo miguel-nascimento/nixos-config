@@ -9,7 +9,6 @@ return {
       'williamboman/mason.nvim',
       'williamboman/mason-lspconfig.nvim',
 
-      'hrsh7th/cmp-nvim-lsp',
       -- Install none-ls for diagnostics, code actions, and formatting
       'nvimtools/none-ls.nvim',
       'nvimtools/none-ls-extras.nvim',
@@ -26,16 +25,6 @@ return {
         },
       },
       { 'Bilal2453/luvit-meta', lazy = true }, -- optional `vim.uv` typings
-      { -- optional completion source for require statements and module annotations
-        'hrsh7th/nvim-cmp',
-        opts = function(_, opts)
-          opts.sources = opts.sources or {}
-          table.insert(opts.sources, {
-            name = 'lazydev',
-            group_index = 0, -- set group index to 0 to skip loading LuaLS completions
-          })
-        end,
-      },
       -- Neoconf so we can share config with co-workers (config-as-json) 🫂
       'folke/neoconf.nvim',
       -- Progress/Status update for LSP
@@ -101,9 +90,8 @@ return {
         -- TODO: add more Rust stuff! https://github.com/mrcjkb/rustaceanvim
       }
 
-      -- nvim-cmp supports additional completion capabilities
-      local capabilities = vim.lsp.protocol.make_client_capabilities()
-      local default_capabilities = require('cmp_nvim_lsp').default_capabilities(capabilities)
+      -- local default_capabilities = vim.lsp.protocol.make_client_capabilities()
+      local capabilities = require('blink.cmp').get_lsp_capabilities()
 
       local on_attach = function(client, buffer_number)
         local format_fn = function(_)
@@ -144,7 +132,7 @@ return {
           }
         else
           require('lspconfig')[name].setup {
-            capabilities = default_capabilities,
+            capabilities = capabilities,
             filetypes = config.filetypes,
             on_attach = on_attach,
             settings = config.settings,
