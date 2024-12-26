@@ -12,7 +12,20 @@ return {
     -- 'enter' for mappings similar to 'super-tab' but with 'enter' to accept
     -- see the "default configuration" section below for full documentation on how to define
     -- your own keymap.
-    keymap = { preset = 'enter' },
+    keymap = {
+      preset = 'enter',
+      cmdline = {
+        preset = 'super-tab',
+      },
+    },
+    completion = {
+      -- dont show automatically for cmdline (:Commands)
+      menu = {
+        auto_show = function(ctx)
+          return ctx.mode ~= 'cmdline'
+        end,
+      },
+    },
     appearance = {
       use_nvim_cmp_as_default = true,
       nerd_font_variant = 'mono',
@@ -20,14 +33,9 @@ return {
     -- default list of enabled providers defined so that you can extend it
     -- elsewhere in your config, without redefining it, via `opts_extend`
     sources = {
-      -- add lazydev to your completion providers
-      completion = {
-        enabled_providers = { 'lsp', 'path', 'snippets', 'buffer', 'lazydev' },
-      },
+      default = { 'lsp', 'path', 'snippets', 'buffer', 'lazydev' },
       providers = {
-        -- dont show LuaLS require statements when lazydev has items
-        lsp = { fallback_for = { 'lazydev' } },
-        lazydev = { name = 'LazyDev', module = 'lazydev.integrations.blink' },
+        lazydev = { name = 'LazyDev', module = 'lazydev.integrations.blink', fallbacks = { 'lsp' } },
       },
     },
     signature = { enabled = true },

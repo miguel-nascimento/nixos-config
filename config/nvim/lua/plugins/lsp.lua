@@ -1,4 +1,6 @@
--- Kindly stolen from dmulroy nvim kickstart.nix <3
+-- TODO:
+--     require 'none-ls.diagnostics.eslint',
+--     require 'none-ls.code_actions.eslint',
 return {
   {
     'neovim/nvim-lspconfig',
@@ -33,7 +35,6 @@ return {
       'pmizio/typescript-tools.nvim',
     },
     config = function()
-      local null_ls = require 'null-ls'
       local map_lsp_keybinds = require('user.keymaps').map_lsp_keybinds -- Has to load keymaps before pluginslsp
 
       -- Setup mason so it can manage 3rd party LSP servers
@@ -68,7 +69,6 @@ return {
         tailwindcss = {
           -- filetypes = { "reason" },
         },
-        eslint_d = {},
         tsserver = {
           settings = {
             experimental = {
@@ -88,39 +88,14 @@ return {
           },
         },
         ocamllsp = {},
+        basedpyright = {},
         -- TODO: add more Rust stuff! https://github.com/mrcjkb/rustaceanvim
       }
 
       -- local default_capabilities = vim.lsp.protocol.make_client_capabilities()
       local capabilities = require('blink.cmp').get_lsp_capabilities()
 
-      local on_attach = function(client, buffer_number)
-        local format_fn = function(_)
-          vim.lsp.buf.format {
-            filter = function(format_client)
-              -- Use Prettier to format TS/JS if it's available
-              return format_client.name ~= 'tsserver' or not null_ls.is_registered 'prettier'
-            end,
-          }
-        end
-
-        -- Create a command `:Format` local to the LSP buffer
-        vim.api.nvim_buf_create_user_command(buffer_number, 'Format', format_fn, { desc = 'LSP: Format current buffer with LSP' })
-
-        -- https://github.com/nvimtools/none-ls.nvim/wiki/Formatting-on-save
-        local augroup = vim.api.nvim_create_augroup('LspFormatting', {})
-        if client.supports_method 'textDocument/formatting' then
-          vim.api.nvim_clear_autocmds {
-            group = augroup,
-            buffer = buffer_number,
-          }
-          vim.api.nvim_create_autocmd('BufWritePre', {
-            group = augroup,
-            buffer = buffer_number,
-            callback = format_fn,
-          })
-        end
-
+      local on_attach = function(_, buffer_number)
         -- Pass the current buffer to map lsp keybinds
         map_lsp_keybinds(buffer_number)
       end
@@ -140,60 +115,54 @@ return {
           }
         end
       end
-
-      -- Configure LSP linting, formatting, diagnostics, and code actions
-      local formatting = null_ls.builtins.formatting
-      local diagnostics = null_ls.builtins.diagnostics
-      local code_actions = null_ls.builtins.code_actions
-
-      null_ls.setup {
-        sources = {
-          -- formatting
-          formatting.prettierd,
-          formatting.stylua,
-          formatting.rustfmt,
-          formatting.gofumpt,
-          formatting.goimports,
-          formatting.goimports_reviser,
-          formatting.ocamlformat,
-          require 'none-ls.diagnostics.eslint',
-          require 'none-ls.code_actions.eslint',
-          -- -- diagnostics
-          -- require('none-ls.diagnostics.eslint_d').with {
-          --   condition = function(utils)
-          --     return utils.root_has_file {
-          --       '.eslintrc.js',
-          --       '.eslintrc.cjs',
-          --       '.eslintrc.json',
-          --     }
-          --   end,
-          -- },
-          -- require('none-ls.code_actions.eslint_d').with {
-          --   condition = function(utils)
-          --     return utils.root_has_file {
-          --       '.eslintrc.js',
-          --       '.eslintrc.cjs',
-          --       '.eslintrc.json',
-          --     }
-          --   end,
-          -- },
-
-          -- code actions
-          -- Gitsign action: I would love to use it, but it always mess with
-          -- code actions order. I want the LSP first, them null-ls.
-          -- I will probably face the same issue with eslint.
-          -- code_actions.gitsigns,
-          -- code_actions.eslint_d.with {
-          --   condition = function(utils)
-          --     return utils.root_has_file {
-          --       '.eslintrc.js',
-          --       '.eslintrc.cjs',
-          --       '.eslintrc.json',
-          --     }
-          --   end,
-          -- },
+    end,
+  },
+  {
+    'stevearc/conform.nvim',
+    event = { 'BufWritePre' },
+    cmd = { 'ConformInfo' },
+    -- This will provide type hinting with LuaLS
+    ---@module "conform"
+    ---@type conform.setupOpts
+    opts = {
+      formatters_by_ft = {
+        lua = { 'stylua' },
+        rust = { 'rustfmt' },
+        python = { 'ruff_format', 'ruff_organize_imports' },
+        javascript = { 'prettierd' },
+        javascriptreact = { 'prettierd', 'prettier', stop_after_first = true },
+        markdown = { 'prettierd', 'prettier', stop_after_first = true },
+        typescript = { 'prettierd', 'prettier', stop_after_first = true },
+        typescriptreact = { 'prettierd', 'prettier', stop_after_first = true },
+        ocaml = { 'ocamlformat' },
+        go = { 'gofumpt', 'goimports', 'goimports_reviser' },
+      },
+      default_format_opts = {
+        lsp_format = 'fallback',
+      },
+      format_on_save = { timeout_ms = 500 },
+      formatters = {
+        prettierd = {
+          condition = function()
+            return vim.loop.fs_realpath '.prettierrc.js' ~= nil or vim.loop.fs_realpath '.prettierrc.mjs' ~= nil
+          end,
         },
-      }
+      },
+    },
+    init = function()
+      vim.api.nvim_create_user_command('Format', function(args)
+        local range = nil
+        if args.count ~= -1 then
+          local end_line = vim.api.nvim_buf_get_lines(0, args.line2 - 1, args.line2, true)[1]
+          range = {
+            start = { args.line1, 0 },
+            ['end'] = { args.line2, end_line:len() },
+          }
+        end
+        require('conform').format { async = true, lsp_format = 'fallback', range = range }
+      end, { range = true })
+      -- If you want the formatexpr, here is the place to set it
+      vim.o.formatexpr = "v:lua.require'conform'.formatexpr()"
     end,
   },
 }
