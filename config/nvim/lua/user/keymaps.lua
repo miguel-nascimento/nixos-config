@@ -48,7 +48,8 @@ nnoremap('<leader>no', '<cmd>noh<cr>')
 
 -- Diagnostic keymaps
 nnoremap('<leader>e', vim.diagnostic.open_float, { desc = 'Show diagnostic [E]rror messages' })
-nnoremap('<leader>q', vim.diagnostic.setloclist, { desc = 'Open diagnostic [Q]uickfix list' })
+-- nnoremap('<leader>q', vim.diagnostic.setloclist, { desc = 'Open diagnostic [Q]uickfix list' })
+-- nnoremap('<leader>q', require('quicker').toggle { loclist = true }, { desc = 'Open diagnostic [Q]uickfix list' })
 
 -- Telescope
 nnoremap('<leader>sf', function()

@@ -5,9 +5,9 @@ _: {
     # Configuration written to ~/.config/starship.toml
     settings = {
       add_newline = false;
-      time = {  
-          format = "🕙 [$time]($style) ";
-          disabled = false;
+      time = {
+        format = "🕙 [$time]($style) ";
+        disabled = true;
       };
     };
   };
