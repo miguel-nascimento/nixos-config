@@ -95,9 +95,36 @@ return {
       -- local default_capabilities = vim.lsp.protocol.make_client_capabilities()
       local capabilities = require('blink.cmp').get_lsp_capabilities()
 
-      local on_attach = function(_, buffer_number)
+      local on_attach = function(client, buffer_number)
         -- Pass the current buffer to map lsp keybinds
         map_lsp_keybinds(buffer_number)
+
+        local handle_inline_hint = function()
+          if client.server_capabilities.inlayHintProvider then
+            local inlay_hints_group = vim.api.nvim_create_augroup('InlineHint', { clear = true })
+            vim.api.nvim_create_autocmd('InsertEnter', {
+              group = inlay_hints_group,
+              buffer = buffer_number,
+              callback = function()
+                vim.lsp.inlay_hint.enable(false, { bufnr = buffer_number })
+              end,
+            })
+            vim.api.nvim_create_autocmd('InsertLeave', {
+              group = inlay_hints_group,
+              buffer = buffer_number,
+              callback = function()
+                vim.lsp.inlay_hint.enable(true, { bufnr = buffer_number })
+              end,
+            })
+
+            -- Initial inlay hint display.
+            local mode = vim.api.nvim_get_mode().mode
+            if mode == 'n' or mode == 'v' then
+              vim.lsp.inlay_hint.enable(true, { bufnr = buffer_number })
+            end
+          end
+        end
+        handle_inline_hint()
       end
 
       -- Iterate over our servers and set them up
