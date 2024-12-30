@@ -5,7 +5,7 @@ return {
       {
         '<leader>q',
         function()
-          require('quicker').toggle()
+          require('quicker').toggle { focus = true }
         end,
         desc = 'quicker.nvim',
       },
