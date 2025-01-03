@@ -59,12 +59,6 @@ return {
       }
     end,
   },
-  -- indent-blankline
-  {
-    'lukas-reineke/indent-blankline.nvim',
-    event = { 'BufReadPost', 'BufWritePost', 'BufNewFile' },
-    main = 'ibl',
-  },
   -- icons
   { 'nvim-tree/nvim-web-devicons', lazy = true },
   -- theme
