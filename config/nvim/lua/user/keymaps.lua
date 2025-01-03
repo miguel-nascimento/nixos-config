@@ -60,6 +60,10 @@ nnoremap('<leader>sp', function()
   require('telescope.builtin').git_files { hidden = true }
 end, { desc = '[S]earch [P]roject Files (Git Files)' })
 
+nnoremap('<leader>sh', function()
+  require('telescope.builtin').help_tags { hidden = true }
+end, { desc = '[S]earch [H]elp' })
+
 nnoremap('<leader><leader>', function()
   require('telescope.builtin').buffers { hidden = true }
 end, { desc = '[ ] Find existing buffers' })
