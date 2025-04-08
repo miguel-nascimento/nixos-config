@@ -21,5 +21,9 @@
       system = final.system;
       config.allowUnfree = true;
     };
+    staging = import inputs.nixpkgs-staging {
+      system = final.system;
+      config.allowUnfree = true;
+    };
   };
 }
