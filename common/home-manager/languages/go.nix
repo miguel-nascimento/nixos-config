@@ -5,5 +5,7 @@
     gopls
     cmake
     unstable.buf
+    unstable.protobuf
+    unstable.protoc-gen-go
   ];
 }

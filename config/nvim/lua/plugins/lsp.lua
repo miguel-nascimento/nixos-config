@@ -89,6 +89,7 @@ return {
         },
         ocamllsp = {},
         basedpyright = {},
+        zls = {},
         -- TODO: add more Rust stuff! https://github.com/mrcjkb/rustaceanvim
       }
 
@@ -163,6 +164,7 @@ return {
         typescriptreact = { 'prettierd', 'prettier', stop_after_first = true },
         ocaml = { 'ocamlformat' },
         go = { 'gofumpt', 'goimports', 'goimports_reviser' },
+        zig = { 'zigfmt' },
       },
       default_format_opts = {
         lsp_format = 'fallback',

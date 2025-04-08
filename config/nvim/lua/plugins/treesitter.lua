@@ -27,6 +27,7 @@ return {
           'nix',
           'go',
           'gomod',
+          'zig',
         },
         sync_install = false,
         highlight = {
