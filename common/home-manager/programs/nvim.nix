@@ -1,23 +1,31 @@
-{ pkgs, ... }:
+{
+  pkgs,
+  ...
+}:
 let
   myVimConfigAsPlugin = pkgs.vimUtils.buildVimPlugin {
     name = "user";
     src = ../../../config/nvim;
+    nvimSkipModules = [ "init" "user" "user.lazy" ];
   };
+  # TODO: delete when https://github.com/NixOS/nixpkgs/issues/402998 is closed
+  neovim-unwrapped = pkgs.unstable.neovim-unwrapped.overrideAttrs (old: {
+    meta = old.meta or { } // {
+      maintainers = [ ];
+    };
+  });
 in
 {
   imports = [ ../languages/lua.nix ];
   home.packages = with pkgs; [ gcc ]; # telescope requires this iirc
   programs.neovim = {
     enable = true;
-    package = pkgs.unstable.neovim-unwrapped; # should I use the unwrapped one?
+    package = neovim-unwrapped;
     plugins = [ myVimConfigAsPlugin ];
     extraLuaConfig = ''
       require('user')
     '';
     defaultEditor = true;
-    withNodeJs = true;
-    withPython3 = true;
     withRuby = true;
   };
 }

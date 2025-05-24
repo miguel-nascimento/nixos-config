@@ -1,6 +1,7 @@
 _: {
   imports = [
     ./programs/git.nix
+    ./programs/jj.nix
     ./programs/lazygit.nix
     ./programs/starship.nix
     ./programs/tmux.nix
@@ -16,7 +17,6 @@ _: {
     ./programs/eza.nix
     ./programs/nvim.nix
     ./programs/croc.nix
-
     ./languages/nix.nix
     ./languages/docs.nix
     ./languages/python.nix
