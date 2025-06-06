@@ -7,6 +7,7 @@ _: {
     ./programs/tmux.nix
     ./programs/vim.nix
     ./programs/zsh.nix
+    ./programs/atuin.nix
     ./programs/yazi.nix
     ./programs/fzf.nix
     ./programs/bat.nix
