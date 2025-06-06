@@ -2,7 +2,7 @@ _: {
   programs.zsh = {
     enable = true;
     dotDir = ".config/zsh";
-    initExtra = ''
+    initContent = ''
       bindkey -M emacs "^[[3;5~" kill-word
       bindkey -M emacs "^H" backward-kill-word
       bindkey "''${key[Up]}" up-line-or-search
