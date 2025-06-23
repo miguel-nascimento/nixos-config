@@ -12,6 +12,7 @@
     ../../common/home-manager/languages/go.nix
     ../../common/home-manager/programs/just.nix
     ../../common/home-manager/programs/ai.nix
+    ../../common/home-manager/programs/graphite.nix
   ];
 
   # TODO: would be nice to share the same nixpkgs config as `mkHost.nix`
