@@ -1,12 +1,17 @@
 {
   pkgs,
+  inputs,
   ...
 }:
 let
   myVimConfigAsPlugin = pkgs.vimUtils.buildVimPlugin {
     name = "user";
-    src = ../../../config/nvim;
-    nvimSkipModules = [ "init" "user" "user.lazy" ];
+    src = "${inputs.self}/config/nvim";
+    nvimSkipModules = [
+      "init"
+      "user"
+      "user.lazy"
+    ];
   };
   # TODO: delete when https://github.com/NixOS/nixpkgs/issues/402998 is closed
   neovim-unwrapped = pkgs.unstable.neovim-unwrapped.overrideAttrs (old: {

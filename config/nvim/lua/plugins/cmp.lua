@@ -12,11 +12,13 @@ return {
     -- 'enter' for mappings similar to 'super-tab' but with 'enter' to accept
     -- see the "default configuration" section below for full documentation on how to define
     -- your own keymap.
-    keymap = {
-      preset = 'enter',
-      cmdline = {
+    cmdline = {
+      keymap = {
         preset = 'super-tab',
       },
+    },
+    keymap = {
+      preset = 'enter',
     },
     completion = {
       -- dont show automatically for cmdline (:Commands)
@@ -40,7 +42,7 @@ return {
     },
     signature = { enabled = true },
   },
-  -- -- allows extending the providers array elsewhere in your config
-  -- -- without having to redefine it
+  -- allows extending the providers array elsewhere in your config
+  -- without having to redefine it
   opts_extend = { 'sources.default' },
 }
