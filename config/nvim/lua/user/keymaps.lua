@@ -50,15 +50,7 @@ nnoremap('<leader>no', '<cmd>noh<cr>')
 nnoremap('<leader>e', vim.diagnostic.open_float, { desc = 'Show diagnostic [E]rror messages' })
 -- quickfix keymaps are in plugins/quickfix.lua
 
--- Telescope
-nnoremap('<leader>sf', function()
-  -- Fine to find_files due to the `file_ignore_patterns` in telescope config
-  require('telescope.builtin').find_files { hidden = true }
-end, { desc = '[S]earch [F]iles' })
-
-nnoremap('<leader>sp', function()
-  require('telescope.builtin').git_files { hidden = true }
-end, { desc = '[S]earch [P]roject Files (Git Files)' })
+-- File search keybindings are in plugins/fff.lua
 
 nnoremap('<leader>sh', function()
   require('telescope.builtin').help_tags { hidden = true }
