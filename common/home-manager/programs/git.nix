@@ -16,6 +16,10 @@ _: {
       init.defaultBranch = "main";
       pull.rebase = false;
       push.autoSetupRemote = true;
+
+      # Worktree configuration
+      fetch.prune = true; # Automatically prune deleted remote branches
+      worktree.guessRemote = true; # Auto-setup tracking for new worktrees
     };
 
     userEmail = "miguelgomes13@live.com";
