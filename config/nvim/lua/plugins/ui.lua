@@ -71,7 +71,40 @@ return {
         -- ...
       }
 
-      vim.cmd 'colorscheme github_dark_default'
+      -- Function to detect if system is in light mode (macOS only)
+      local function is_light_mode()
+        -- Only check system theme on macOS
+        if vim.fn.has 'mac' == 0 then
+          return false -- default to dark mode on non-macOS systems
+        end
+
+        local handle = io.popen 'defaults read -g AppleInterfaceStyle 2>/dev/null'
+        if handle then
+          local result = handle:read '*a'
+          handle:close()
+          -- If AppleInterfaceStyle is not set or doesn't contain 'Dark', it's light mode
+          return result:match 'Dark' == nil
+        end
+        return false -- default to dark mode if detection fails
+      end
+
+      -- Function to set theme based on system appearance
+      local function set_theme_from_system()
+        if is_light_mode() then
+          vim.cmd 'colorscheme github_light_default'
+        else
+          vim.cmd 'colorscheme github_dark_default'
+        end
+      end
+
+      -- Set initial theme
+      set_theme_from_system()
+
+      -- Create autocommand to check theme when Neovim gains focus
+      vim.api.nvim_create_autocmd({ 'FocusGained', 'VimEnter' }, {
+        group = vim.api.nvim_create_augroup('SystemThemeSync', { clear = true }),
+        callback = set_theme_from_system,
+      })
     end,
   },
 }
