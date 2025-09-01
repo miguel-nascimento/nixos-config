@@ -14,6 +14,7 @@ _: {
       # brew hack, im lazy
       export PATH="/opt/homebrew/bin:$PATH"
       export PATH="/Users/miguel/.local/bin:$PATH"
+      export PATH="$HOME/.cargo/bin:$PATH"
     '';
     #VSCODE_IPC_HOOK_CLI=$( lsof | grep $UID/vscode-ipc | awk '{print $(NF-1)}' | head -n 1 )
     envExtra = ''
