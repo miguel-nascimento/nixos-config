@@ -24,6 +24,8 @@ _: {
     shellAliases = {
       ls = "eza";
       cat = "bat";
+      claude = "bunx @anthropic-ai/claude-code";
+      codex = "bunx @openai/codex";
     };
     enableCompletion = true;
     autosuggestion.enable = true;

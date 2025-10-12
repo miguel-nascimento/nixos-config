@@ -11,7 +11,6 @@
     ../../common/home-manager/languages/rust.nix
     ../../common/home-manager/languages/go.nix
     ../../common/home-manager/programs/just.nix
-    ../../common/home-manager/programs/ai.nix
     ../../common/home-manager/programs/graphite.nix
   ];
 
