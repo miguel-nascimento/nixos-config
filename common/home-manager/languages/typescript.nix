@@ -7,7 +7,7 @@
     unstable.nodejs_20
     unstable.nodePackages.node-gyp
     unstable.deno
-    unstable.bun
+    staging.bun
     unstable.prettierd
   ];
 }
