@@ -4,6 +4,7 @@ _: {
 
     aliases = {
       cm = "commit -m";
+      sw = "switch";
       lg = "log --format='%Cred%h%Creset %s %Cgreen(%cr) %C(blue)<%an>%Creset%C(yellow)%d%Creset' --no-merges";
     };
 
