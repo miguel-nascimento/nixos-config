@@ -19,6 +19,7 @@ _: {
     #VSCODE_IPC_HOOK_CLI=$( lsof | grep $UID/vscode-ipc | awk '{print $(NF-1)}' | head -n 1 )
     envExtra = ''
       export PATH="/Users/miguel/.foundry/bin:$PATH"
+      export NIXPKGS_ALLOW_UNFREE=1
     '';
 
     shellAliases = {

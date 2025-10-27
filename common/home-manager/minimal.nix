@@ -18,6 +18,7 @@ _: {
     ./programs/eza.nix
     ./programs/nvim.nix
     ./programs/croc.nix
+    ./programs/ngrok.nix
     ./languages/nix.nix
     ./languages/docs.nix
     ./languages/python.nix

@@ -32,5 +32,9 @@
     homeDirectory = "/Users/miguel";
     # https://nixos.wiki/wiki/FAQ/When_do_I_update_stateVersion
     stateVersion = "22.11";
+
+    sessionVariables = {
+      NIXPKGS_ALLOW_UNFREE = "1";
+    };
   };
 }
