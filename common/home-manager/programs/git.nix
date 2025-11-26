@@ -21,6 +21,10 @@ _: {
       # Worktree configuration
       fetch.prune = true; # Automatically prune deleted remote branches
       worktree.guessRemote = true; # Auto-setup tracking for new worktrees
+
+      # Rerere configuration
+      rerere.enabled = true;
+      rerere.autoUpdate = true;
     };
 
     userEmail = "miguelgomes13@live.com";
