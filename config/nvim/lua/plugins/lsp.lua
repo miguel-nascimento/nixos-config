@@ -66,9 +66,7 @@ return {
         },
         marksman = {},
         prismals = {},
-        tailwindcss = {
-          -- filetypes = { "reason" },
-        },
+        tailwindcss = {},
         rust_analyzer = {},
         gopls = {},
         nixd = {

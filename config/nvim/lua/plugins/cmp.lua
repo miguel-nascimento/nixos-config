@@ -13,20 +13,12 @@ return {
     -- see the "default configuration" section below for full documentation on how to define
     -- your own keymap.
     cmdline = {
-      keymap = {
-        preset = 'super-tab',
-      },
+      keymap = { preset = 'inherit' },
+      completion = { menu = { auto_show = false } },
     },
-    keymap = {
-      preset = 'enter',
-    },
+    keymap = { preset = 'default' },
     completion = {
-      -- dont show automatically for cmdline (:Commands)
-      menu = {
-        auto_show = function(ctx)
-          return ctx.mode ~= 'cmdline'
-        end,
-      },
+      menu = { auto_show = true },
     },
     appearance = {
       use_nvim_cmp_as_default = true,
