@@ -1,11 +1,11 @@
 {
-  self,
+  inputs,
   config,
   pkgs,
   ...
 }:
 {
-  age.secrets.tailscale.file = ../../secrets/tailscale.age;
+  age.secrets.tailscale.file = "${inputs.self}/secrets/tailscale.age";
 
   # make the tailscale command usable to users
   environment.systemPackages = [ pkgs.tailscale ];

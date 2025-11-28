@@ -26,10 +26,10 @@
     }@inputs:
     let
       inherit (self) outputs;
-      mkHost = import ./lib/mkHost.nix { inherit inputs outputs; };
+      mkHost = import "${self}/lib/mkHost.nix" { inherit inputs outputs; };
     in
     {
-      overlays = import ./overlays { inherit inputs; };
+      overlays = import "${self}/overlays" { inherit inputs; };
 
       nixosConfigurations = {
         korone = mkHost {
@@ -52,7 +52,7 @@
 
       homeConfigurations = {
         miguel = home-manager.lib.homeManagerConfiguration {
-          modules = [ users/miguel/home.nix ];
+          modules = [ "${self}/users/miguel/home.nix" ];
           pkgs = nixpkgs.legacyPackages.x86_64-linux;
           extraSpecialArgs = {
             inherit inputs outputs;
@@ -60,7 +60,7 @@
         };
 
         miguel-m1 = home-manager.lib.homeManagerConfiguration {
-          modules = [ users/miguel-m1/home.nix ];
+          modules = [ "${self}/users/miguel-m1/home.nix" ];
           pkgs = nixpkgs.legacyPackages.aarch64-darwin;
           extraSpecialArgs = {
             inherit inputs outputs;

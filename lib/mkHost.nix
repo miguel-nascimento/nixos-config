@@ -1,6 +1,6 @@
 { inputs, outputs }:
 let
-  inherit (inputs) nixpkgs home-manager;
+  inherit (inputs) nixpkgs home-manager self;
 in
 {
   hostname,
@@ -18,8 +18,8 @@ nixpkgs.lib.nixosSystem {
   modules = [
     home-manager.nixosModule
 
-    ../common/system/nix-config.nix
-    (../hosts + "/${hostname}")
+    "${self}/common/system/nix-config.nix"
+    "${self}/hosts/${hostname}"
     {
       networking.hostName = hostname;
 
@@ -52,5 +52,5 @@ nixpkgs.lib.nixosSystem {
         };
       };
     }
-  ] ++ nixpkgs.lib.forEach users (user: ../users + "/${user}") ++ modules;
+  ] ++ nixpkgs.lib.forEach users (user: "${self}/users/${user}") ++ modules;
 }

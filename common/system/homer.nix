@@ -1,6 +1,6 @@
-{ pkgs, ... }:
+{ pkgs, inputs, ... }:
 let
-  homerConfig = ./homer-config;
+  homerConfig = "${inputs.self}/common/system/homer-config";
   homerPkg = pkgs.stdenv.mkDerivation {
     name = "homer";
     src = pkgs.fetchurl {
