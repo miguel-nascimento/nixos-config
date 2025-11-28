@@ -5,7 +5,7 @@
     ../../common/home-manager/minimal.nix
     ../../common/home-manager/programs/direnv.nix
     ../../common/home-manager/programs/navi.nix
-    ../../common/home-manager/programs/keychain.nix
+    ../../common/home-manager/programs/fish.nix
     ../../common/home-manager/languages/docs.nix
     ../../common/home-manager/languages/typescript.nix
     ../../common/home-manager/languages/rust.nix
@@ -13,6 +13,7 @@
     ../../common/home-manager/languages/java.nix
     ../../common/home-manager/programs/just.nix
     ../../common/home-manager/programs/graphite.nix
+    ../../common/home-manager/programs/hyperfine.nix
   ];
 
   # TODO: would be nice to share the same nixpkgs config as `mkHost.nix`
@@ -37,5 +38,16 @@
     sessionVariables = {
       NIXPKGS_ALLOW_UNFREE = "1";
     };
+  };
+
+  # macOS SSH with Keychain integration
+  programs.ssh = {
+    enable = true;
+    addKeysToAgent = "yes";
+    extraConfig = ''
+      Host *
+        UseKeychain yes
+        IdentityFile ~/.ssh/id_ed25519
+    '';
   };
 }
