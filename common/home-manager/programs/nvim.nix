@@ -1,36 +1,25 @@
+# Note: Using buildVimPlugin to package the lua config is good for reproducibility
+# and immutability, but it's just.. bleh terrible for iteration! Every config change
+# requires a home-manager switch. Instead, we symlink the config directory directly.
+#
+# We also avoid programs.neovim since it creates a wrapper that rebuilds on every switch.
+# Just install neovim as a plain package.
 {
   pkgs,
-  inputs,
+  config,
   ...
 }:
-let
-  myVimConfigAsPlugin = pkgs.vimUtils.buildVimPlugin {
-    name = "user";
-    src = "${inputs.self}/config/nvim";
-    nvimSkipModules = [
-      "init"
-      "user"
-      "user.lazy"
-    ];
-  };
-  # TODO: delete when https://github.com/NixOS/nixpkgs/issues/402998 is closed
-  neovim-unwrapped = pkgs.unstable.neovim-unwrapped.overrideAttrs (old: {
-    meta = old.meta or { } // {
-      maintainers = [ ];
-    };
-  });
-in
 {
   imports = [ ../languages/lua.nix ];
-  home.packages = with pkgs; [ gcc ]; # telescope requires this iirc
-  programs.neovim = {
-    enable = true;
-    package = neovim-unwrapped;
-    plugins = [ myVimConfigAsPlugin ];
-    extraLuaConfig = ''
-      require('user')
-    '';
-    defaultEditor = true;
-    withRuby = true;
-  };
+
+  home.packages = with pkgs; [
+    unstable.neovim
+    gcc # telescope requires this iirc
+  ];
+
+  home.sessionVariables.EDITOR = "nvim";
+
+  # Use config.lib.file.mkOutOfStoreSymlink to create a symlink to the actual
+  # source directory, not a copy in the Nix store.
+  xdg.configFile."nvim".source = config.lib.file.mkOutOfStoreSymlink "/Users/miguel/dev/nixos-config/config/nvim";
 }

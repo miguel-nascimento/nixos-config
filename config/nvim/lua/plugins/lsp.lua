@@ -48,7 +48,7 @@ return {
       -- Setup neoconf to have config-as-json support
       require('neoconf').setup()
 
-      -- LSP servers to install (see list here: https://github.com/williamboman/mason-lspconfig.nvim#available-lsp-servers )
+      -- LSP servers to configure (see list here: https://github.com/williamboman/mason-lspconfig.nvim#available-lsp-servers )
       local servers = {
         bashls = {},
         -- clangd = {},
@@ -69,13 +69,6 @@ return {
         tailwindcss = {
           -- filetypes = { "reason" },
         },
-        tsserver = {
-          settings = {
-            experimental = {
-              enableProjectDiagnostics = true,
-            },
-          },
-        },
         rust_analyzer = {},
         gopls = {},
         nixd = {
@@ -93,7 +86,6 @@ return {
         -- TODO: add more Rust stuff! https://github.com/mrcjkb/rustaceanvim
       }
 
-      -- local default_capabilities = vim.lsp.protocol.make_client_capabilities()
       local capabilities = require('blink.cmp').get_lsp_capabilities()
 
       local on_attach = function(client, buffer_number)
@@ -128,21 +120,22 @@ return {
         handle_inline_hint()
       end
 
-      -- Iterate over our servers and set them up
+      -- Configure and enable LSP servers using vim.lsp.config (neovim 0.11+)
       for name, config in pairs(servers) do
-        if name == 'tsserver' then
-          require('typescript-tools').setup {
-            on_attach = on_attach,
-          }
-        else
-          require('lspconfig')[name].setup {
-            capabilities = capabilities,
-            filetypes = config.filetypes,
-            on_attach = on_attach,
-            settings = config.settings,
-          }
-        end
+        vim.lsp.config(name, {
+          capabilities = capabilities,
+          filetypes = config.filetypes,
+          on_attach = on_attach,
+          settings = config.settings,
+        })
+        vim.lsp.enable(name)
       end
+
+      -- typescript-tools uses its own setup
+      require('typescript-tools').setup {
+        on_attach = on_attach,
+        capabilities = capabilities,
+      }
     end,
   },
   {
