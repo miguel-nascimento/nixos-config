@@ -1,5 +1,6 @@
 { pkgs, ... }:
 {
+  home.packages = with pkgs; [ jjui ];
   programs.jujutsu = {
     enable = true;
     package = pkgs.unstable.jujutsu;
@@ -11,7 +12,6 @@
       ui = {
         default-command = "status";
         pager = "delta";
-        diff.format = "git";
         graph.style = "curved";
       };
       snapshot = {
@@ -36,17 +36,32 @@
         "node working_copy" = "green";
         "node conflict" = "red";
         "node immutable" = "red";
-        "node normal" = { bold = false; };
-        "node" = { bold = false; };
+        "node normal" = {
+          bold = false;
+        };
+        "node" = {
+          bold = false;
+        };
       };
       git = {
         write-change-id-header = true;
       };
       aliases = {
-        d = ["diff"];
-        l = ["log"];
-        ll = ["log" "-r" ".."];
-        tug = ["bookmark" "move" "--from" "heads(::@- & bookmarks())" "--to" "@-"];
+        d = [ "diff" ];
+        l = [ "log" ];
+        ll = [
+          "log"
+          "-r"
+          ".."
+        ];
+        tug = [
+          "bookmark"
+          "move"
+          "--from"
+          "heads(::@- & bookmarks())"
+          "--to"
+          "@-"
+        ];
       };
       revsets = {
         log = "current_work";
@@ -60,23 +75,23 @@
       template-aliases = {
         "format_short_id(id)" = "id.shortest()";
         "abbreviate_timestamp_suffix(s, suffix, abbr)" = ''
-            if(
-                s.ends_with(suffix),
-                s.remove_suffix(suffix) ++ label("timestamp", abbr)
-            )
+          if(
+              s.ends_with(suffix),
+              s.remove_suffix(suffix) ++ label("timestamp", abbr)
+          )
         '';
         "abbreviate_relative_timestamp(s)" = ''
-            coalesce(
-                abbreviate_timestamp_suffix(s, " millisecond", "ms"),
-                abbreviate_timestamp_suffix(s, " second", "s"),
-                abbreviate_timestamp_suffix(s, " minute", "m"),
-                abbreviate_timestamp_suffix(s, " hour", "h"),
-                abbreviate_timestamp_suffix(s, " day", "d"),
-                abbreviate_timestamp_suffix(s, " week", "w"),
-                abbreviate_timestamp_suffix(s, " month", "mo"),
-                abbreviate_timestamp_suffix(s, " year", "y"),
-                s
-            )
+          coalesce(
+              abbreviate_timestamp_suffix(s, " millisecond", "ms"),
+              abbreviate_timestamp_suffix(s, " second", "s"),
+              abbreviate_timestamp_suffix(s, " minute", "m"),
+              abbreviate_timestamp_suffix(s, " hour", "h"),
+              abbreviate_timestamp_suffix(s, " day", "d"),
+              abbreviate_timestamp_suffix(s, " week", "w"),
+              abbreviate_timestamp_suffix(s, " month", "mo"),
+              abbreviate_timestamp_suffix(s, " year", "y"),
+              s
+          )
         '';
         "format_timestamp(timestamp)" = ''
           coalesce(
