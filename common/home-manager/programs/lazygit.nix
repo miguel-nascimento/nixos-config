@@ -6,7 +6,7 @@ _: {
       gui.showIcons = true;
       git.paging = {
         colorArgs = "always";
-        pager = "delta --paging=never --commit-style box";
+        pager = "delta --paging=never --commit-style box --light";
       };
     };
   };

@@ -10,7 +10,12 @@ _: {
 
     delta = {
       enable = true;
-      options.side-by-side = true;
+      options = {
+        side-by-side = true;
+        detect-dark-light = "auto";
+        dark-syntax-theme = "GitHub";
+        light-syntax-theme = "GitHub";
+      };
     };
 
     extraConfig = {
