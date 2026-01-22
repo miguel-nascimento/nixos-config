@@ -1,4 +1,6 @@
-_: {
+{ pkgs, ... }: {
+  home.packages = [ pkgs.unstable.git-wt ];
+
   programs.git = {
     enable = true;
 

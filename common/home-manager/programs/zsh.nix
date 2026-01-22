@@ -14,6 +14,9 @@ _: {
       bindkey  "^[[3~"  delete-char
       export TERM=xterm-256color
 
+      # git-wt shell integration (auto-cd on worktree switch)
+      eval "$(git-wt --init zsh)"
+
       # brew hack, im lazy
       export PATH="/opt/homebrew/bin:$PATH"
       export PATH="/Users/miguel/.local/bin:$PATH"
@@ -85,8 +88,6 @@ _: {
     shellAliases = {
       ls = "eza";
       cat = "bat";
-      claude = "bunx @anthropic-ai/claude-code";
-      codex = "bunx @openai/codex";
     };
     enableCompletion = true;
     completionInit = ''
