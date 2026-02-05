@@ -4,7 +4,7 @@
     unstable.yarn-berry
     unstable.nodePackages.pnpm
     unstable.openssl
-    unstable.nodejs_24
+    unstable.nodejs_20
     unstable.nodePackages.node-gyp
     unstable.deno
     staging.bun

@@ -32,10 +32,18 @@
       # Rerere configuration
       rerere.enabled = true;
       rerere.autoUpdate = true;
+
+      # git-wt configuration
+      wt.copy = "scripts/run-harmony/.env";
     };
 
     userEmail = "miguelgomes13@live.com";
     userName = "Miguel Nascimento";
+
+    signing = {
+      key = "3C5F43ADECC84547";
+      signByDefault = true;
+    };
   };
 
   programs.gh = {

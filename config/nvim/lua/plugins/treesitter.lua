@@ -20,6 +20,7 @@ return {
           'lua',
           'json',
           'markdown',
+          'markdown_inline',
           'prisma',
           'vim',
           'vimdoc',

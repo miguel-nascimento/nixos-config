@@ -1,6 +1,3 @@
--- TODO:
---     require 'none-ls.diagnostics.eslint',
---     require 'none-ls.code_actions.eslint',
 return {
   {
     'neovim/nvim-lspconfig',
@@ -134,6 +131,15 @@ return {
         on_attach = on_attach,
         capabilities = capabilities,
       }
+
+      -- Setup none-ls for eslint diagnostics and code actions
+      local null_ls = require 'null-ls'
+      null_ls.setup {
+        sources = {
+          require 'none-ls.diagnostics.eslint_d',
+          require 'none-ls.code_actions.eslint_d',
+        },
+      }
     end,
   },
   {
@@ -164,7 +170,24 @@ return {
       formatters = {
         prettierd = {
           condition = function()
-            return vim.loop.fs_realpath '.prettierrc.js' ~= nil or vim.loop.fs_realpath '.prettierrc.mjs' ~= nil
+            local prettier_configs = {
+              '.prettierrc',
+              '.prettierrc.json',
+              '.prettierrc.yml',
+              '.prettierrc.yaml',
+              '.prettierrc.js',
+              '.prettierrc.mjs',
+              '.prettierrc.cjs',
+              'prettier.config.js',
+              'prettier.config.mjs',
+              'prettier.config.cjs',
+            }
+            for _, config in ipairs(prettier_configs) do
+              if vim.loop.fs_realpath(config) ~= nil then
+                return true
+              end
+            end
+            return false
           end,
         },
       },

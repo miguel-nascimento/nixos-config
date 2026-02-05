@@ -6,6 +6,7 @@
     ../../common/home-manager/programs/direnv.nix
     ../../common/home-manager/programs/navi.nix
     ../../common/home-manager/programs/keychain.nix
+    ../../common/home-manager/programs/ai.nix
     ../../common/home-manager/languages/libc.nix
     ../../common/home-manager/languages/docs.nix
     ../../common/home-manager/languages/typescript.nix
