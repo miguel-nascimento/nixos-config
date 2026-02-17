@@ -60,10 +60,6 @@ nnoremap('<leader><leader>', function()
   require('telescope.builtin').buffers { hidden = true }
 end, { desc = '[ ] Find existing buffers' })
 
-nnoremap('<leader>sc', function()
-  require('telescope.builtin').live_grep { hidden = true }
-end, { desc = '[S]earch [C]ode' })
-
 nnoremap('<leader>sw', function()
   require('telescope.builtin').grep_string { hidden = true }
 end, { desc = '[S]earch Current [W]ord' })

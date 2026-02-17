@@ -20,6 +20,13 @@ return {
         end,
         desc = '[S]earch [P]roject Files (Git Files)',
       },
+      {
+        '<leader>sc',
+        function()
+          require('fff').live_grep()
+        end,
+        desc = '[S]earch [C]ode',
+      },
     },
   },
 }

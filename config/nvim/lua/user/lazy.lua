@@ -15,6 +15,10 @@ vim.opt.rtp:prepend(lazypath)
 
 local lazy = require 'lazy'
 
-lazy.setup {
+lazy.setup({
   { import = 'plugins' }, -- what { import = "plugins" } means? prob getting from the folder
-}
+}, {
+  git = {
+    timeout = 600, -- 10 minutes
+  },
+})
