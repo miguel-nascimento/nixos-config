@@ -1,4 +1,5 @@
-{ pkgs, ... }: {
+{ pkgs, ... }:
+{
   home.packages = [ pkgs.unstable.git-wt ];
 
   programs.git = {
@@ -32,9 +33,6 @@
       # Rerere configuration
       rerere.enabled = true;
       rerere.autoUpdate = true;
-
-      # git-wt configuration
-      wt.copy = "scripts/run-harmony/.env";
     };
 
     userEmail = "miguelgomes13@live.com";
