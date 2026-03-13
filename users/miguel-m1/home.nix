@@ -12,6 +12,7 @@
     ../../common/home-manager/languages/rust.nix
     ../../common/home-manager/languages/go.nix
     ../../common/home-manager/languages/java.nix
+    ../../common/home-manager/languages/zig.nix
     ../../common/home-manager/programs/just.nix
     ../../common/home-manager/programs/graphite.nix
     ../../common/home-manager/programs/hyperfine.nix
