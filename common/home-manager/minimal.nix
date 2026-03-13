@@ -17,6 +17,7 @@ _: {
     ./programs/jq.nix
     ./programs/eza.nix
     ./programs/nvim.nix
+    ./programs/ast-grep.nix
     ./programs/croc.nix
     ./programs/ngrok.nix
     ./languages/nix.nix
