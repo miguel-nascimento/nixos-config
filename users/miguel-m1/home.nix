@@ -1,4 +1,18 @@
-{ outputs, ... }:
+{ outputs, inputs, pkgs, ... }:
+let
+  qmd = inputs.qmd.packages.aarch64-darwin.default.overrideAttrs (old: {
+    nativeBuildInputs = old.nativeBuildInputs ++ (with pkgs; [
+      xcbuild
+      apple-sdk_15
+    ]);
+
+    # Upstream flake references src/qmd.ts but the entry point moved to src/cli/qmd.ts
+    installPhase = builtins.replaceStrings
+      [ "src/qmd.ts" ]
+      [ "src/cli/qmd.ts" ]
+      old.installPhase;
+  });
+in
 {
   programs.home-manager.enable = true;
   imports = [
@@ -36,6 +50,8 @@
     homeDirectory = "/Users/miguel";
     # https://nixos.wiki/wiki/FAQ/When_do_I_update_stateVersion
     stateVersion = "22.11";
+
+    packages = [ qmd ];
 
     sessionVariables = {
       NIXPKGS_ALLOW_UNFREE = "1";

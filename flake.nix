@@ -15,6 +15,8 @@
     home-manager.inputs.nixpkgs.follows = "nixpkgs";
 
     nixos-wsl.url = "github:nix-community/NixOS-WSL";
+
+    qmd.url = "github:tobi/qmd";
   };
 
   outputs =
