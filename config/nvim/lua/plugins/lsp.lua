@@ -11,7 +11,6 @@ return {
 
       -- Install none-ls for diagnostics, code actions, and formatting
       'nvimtools/none-ls.nvim',
-      'nvimtools/none-ls-extras.nvim',
       -- Install lazydev for better nvim configuration and plugin authoring via lsp configurations
       {
         'folke/lazydev.nvim',
@@ -126,20 +125,15 @@ return {
         vim.lsp.enable(name)
       end
 
+      -- oxlint for linting JS/TS (replaces eslint)
+      vim.lsp.enable('oxlint')
+
       -- typescript-tools uses its own setup
       require('typescript-tools').setup {
         on_attach = on_attach,
         capabilities = capabilities,
       }
 
-      -- Setup none-ls for eslint diagnostics and code actions
-      local null_ls = require 'null-ls'
-      null_ls.setup {
-        sources = {
-          require 'none-ls.diagnostics.eslint_d',
-          require 'none-ls.code_actions.eslint_d',
-        },
-      }
     end,
   },
   {
@@ -154,11 +148,10 @@ return {
         lua = { 'stylua' },
         rust = { 'rustfmt' },
         python = { 'ruff_format', 'ruff_organize_imports' },
-        javascript = { 'prettierd' },
-        javascriptreact = { 'prettierd', 'prettier', stop_after_first = true },
-        markdown = { 'prettierd', 'prettier', stop_after_first = true },
-        typescript = { 'prettierd', 'prettier', stop_after_first = true },
-        typescriptreact = { 'prettierd', 'prettier', stop_after_first = true },
+        javascript = { 'oxfmt' },
+        javascriptreact = { 'oxfmt' },
+        typescript = { 'oxfmt' },
+        typescriptreact = { 'oxfmt' },
         ocaml = { 'ocamlformat' },
         go = { 'gofumpt', 'goimports', 'goimports_reviser' },
         zig = { 'zigfmt' },
@@ -167,30 +160,6 @@ return {
         lsp_format = 'fallback',
       },
       format_on_save = { timeout_ms = 500 },
-      formatters = {
-        prettierd = {
-          condition = function()
-            local prettier_configs = {
-              '.prettierrc',
-              '.prettierrc.json',
-              '.prettierrc.yml',
-              '.prettierrc.yaml',
-              '.prettierrc.js',
-              '.prettierrc.mjs',
-              '.prettierrc.cjs',
-              'prettier.config.js',
-              'prettier.config.mjs',
-              'prettier.config.cjs',
-            }
-            for _, config in ipairs(prettier_configs) do
-              if vim.loop.fs_realpath(config) ~= nil then
-                return true
-              end
-            end
-            return false
-          end,
-        },
-      },
     },
     init = function()
       vim.api.nvim_create_user_command('Format', function(args)

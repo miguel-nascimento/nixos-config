@@ -8,6 +8,7 @@
     unstable.nodePackages.node-gyp
     unstable.deno
     staging.bun
-    unstable.prettierd
+    unstable.oxlint
+    unstable.oxfmt
   ];
 }
