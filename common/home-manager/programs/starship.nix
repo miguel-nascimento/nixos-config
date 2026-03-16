@@ -9,6 +9,11 @@ _: {
         format = "🕙 [$time]($style) ";
         disabled = true;
       };
+      env_var.ZMX_SESSION = {
+        symbol = " ";
+        style = "bold yellow";
+        format = "[$symbol$env_value]($style) ";
+      };
     };
   };
 }

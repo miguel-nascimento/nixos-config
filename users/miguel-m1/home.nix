@@ -1,5 +1,19 @@
 { outputs, inputs, pkgs, ... }:
 let
+  zmx = pkgs.stdenv.mkDerivation {
+    pname = "zmx";
+    version = "0.4.0";
+    src = pkgs.fetchurl {
+      url = "https://zmx.sh/a/zmx-0.4.0-macos-aarch64.tar.gz";
+      sha256 = "5b9bfd7358e904f1b5238421ddf5a87ab1445f483cb8e29e3d46519922c4bd8a";
+    };
+    sourceRoot = ".";
+    dontConfigure = true;
+    dontBuild = true;
+    installPhase = ''
+      install -Dm755 zmx $out/bin/zmx
+    '';
+  };
   qmd = inputs.qmd.packages.aarch64-darwin.default.overrideAttrs (old: {
     nativeBuildInputs = old.nativeBuildInputs ++ (with pkgs; [
       xcbuild
@@ -51,12 +65,14 @@ in
     # https://nixos.wiki/wiki/FAQ/When_do_I_update_stateVersion
     stateVersion = "22.11";
 
-    packages = [ qmd ];
+    packages = [ qmd zmx ];
 
     sessionVariables = {
       NIXPKGS_ALLOW_UNFREE = "1";
     };
   };
+
+  programs.zsh.shellAliases.tailscale = "/Applications/Tailscale.app/Contents/MacOS/Tailscale";
 
   # macOS SSH with Keychain integration
   programs.ssh = {

@@ -15,6 +15,9 @@ _: {
     # TODO: add colorscheme mono smoke here
     interactiveShellInit = ''
       set fish_greeting # Disable greeting
+      if type -q zmx
+        zmx completions fish | source
+      end
     '';
     shellAliases = {
       ls = "eza";
