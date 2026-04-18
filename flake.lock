@@ -78,10 +78,10 @@
     },
     "hardware": {
       "locked": {
-        "lastModified": 1772972630,
+        "lastModified": 1775490113,
         "owner": "nixos",
         "repo": "nixos-hardware",
-        "rev": "3966ce987e1a9a164205ac8259a5fe8a64528f72",
+        "rev": "c775c2772ba56e906cbeb4e0b2db19079ef11ff7",
         "type": "github"
       },
       "original": {
@@ -137,10 +137,10 @@
         "nixpkgs": "nixpkgs_2"
       },
       "locked": {
-        "lastModified": 1773414018,
+        "lastModified": 1774972752,
         "owner": "nix-community",
         "repo": "NixOS-WSL",
-        "rev": "d2fd7da4565797cf7e18b9b0a8b1044fbada8ff8",
+        "rev": "d97e078f4788cddb8d11c3c99f72a4bb9ddec221",
         "type": "github"
       },
       "original": {
@@ -167,10 +167,10 @@
     },
     "nixpkgs-staging": {
       "locked": {
-        "lastModified": 1773429964,
+        "lastModified": 1775845089,
         "owner": "nixos",
         "repo": "nixpkgs",
-        "rev": "1a58c7090cd9eb39dfc1f811f8e930dab2b64adf",
+        "rev": "80dd94e004a3d16086aad2644f7bd1eced01bb5d",
         "type": "github"
       },
       "original": {
@@ -182,10 +182,10 @@
     },
     "nixpkgs-unstable": {
       "locked": {
-        "lastModified": 1773282481,
+        "lastModified": 1775710090,
         "owner": "nixos",
         "repo": "nixpkgs",
-        "rev": "fe416aaedd397cacb33a610b33d60ff2b431b127",
+        "rev": "4c1018dae018162ec878d42fec712642d214fdfa",
         "type": "github"
       },
       "original": {
@@ -197,11 +197,11 @@
     },
     "nixpkgs_2": {
       "locked": {
-        "lastModified": 1770019141,
-        "narHash": "sha256-VKS4ZLNx4PNrABoB0L8KUpc1fE7CLpQXQs985tGfaCU=",
+        "lastModified": 1773734432,
+        "narHash": "sha256-IF5ppUWh6gHGHYDbtVUyhwy/i7D261P7fWD1bPefOsw=",
         "owner": "NixOS",
         "repo": "nixpkgs",
-        "rev": "cb369ef2efd432b3cdf8622b0ffc0a97a02f3137",
+        "rev": "cda48547b432e8d3b18b4180ba07473762ec8558",
         "type": "github"
       },
       "original": {
@@ -248,10 +248,10 @@
         "nixpkgs": "nixpkgs_4"
       },
       "locked": {
-        "lastModified": 1773490238,
+        "lastModified": 1775697596,
         "owner": "tobi",
         "repo": "qmd",
-        "rev": "2b8f329d7e4419af736a50e917057f685ad41110",
+        "rev": "171e9e3e656b63cbdb00edd64437471dc0b252cc",
         "type": "github"
       },
       "original": {
