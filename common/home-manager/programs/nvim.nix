@@ -17,7 +17,10 @@
     gcc # telescope requires this iirc
   ];
 
-  home.sessionVariables.EDITOR = "nvim";
+  home.sessionVariables = {
+    EDITOR = "nvim";
+    MANPAGER = "nvim +Man!";
+  };
 
   # Use config.lib.file.mkOutOfStoreSymlink to create a symlink to the actual
   # source directory, not a copy in the Nix store.
