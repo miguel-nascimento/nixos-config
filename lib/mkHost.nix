@@ -16,7 +16,7 @@ nixpkgs.lib.nixosSystem {
   };
 
   modules = [
-    home-manager.nixosModule
+    home-manager.nixosModules.home-manager
 
     "${self}/common/system/nix-config.nix"
     "${self}/hosts/${hostname}"

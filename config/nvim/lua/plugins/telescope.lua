@@ -41,8 +41,10 @@ return {
         },
       }
 
-      -- Enable telescope fzf native, if installed
-      require('telescope').load_extension 'fzf'
+      -- Enable telescope fzf native, if installed.
+      -- If the native extension failed to build or was not installed yet, keep
+      -- Telescope usable instead of aborting Neovim startup.
+      pcall(require('telescope').load_extension, 'fzf')
     end,
   },
 }

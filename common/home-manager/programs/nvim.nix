@@ -9,12 +9,16 @@
   config,
   ...
 }:
+let
+  nvimConfigPath = "${config.home.homeDirectory}/dev/nixos-config/config/nvim";
+in
 {
   imports = [ ../languages/lua.nix ];
 
   home.packages = with pkgs; [
     unstable.neovim
-    gcc # telescope requires this iirc
+    gcc # telescope-fzf-native needs a C compiler
+    gnumake # telescope-fzf-native build command is `make`
   ];
 
   home.sessionVariables = {
@@ -24,5 +28,5 @@
 
   # Use config.lib.file.mkOutOfStoreSymlink to create a symlink to the actual
   # source directory, not a copy in the Nix store.
-  xdg.configFile."nvim".source = config.lib.file.mkOutOfStoreSymlink "/Users/miguel/dev/nixos-config/config/nvim";
+  xdg.configFile."nvim".source = config.lib.file.mkOutOfStoreSymlink nvimConfigPath;
 }

@@ -3,7 +3,10 @@ _: {
     enable = true;
     enableZshIntegration = true;
     enableFishIntegration = true;
-    agents = [ "ssh" ];
+    agents = [
+      "ssh"
+      "gpg"
+    ];
     keys = [ "id_ed25519" ];
   };
 }

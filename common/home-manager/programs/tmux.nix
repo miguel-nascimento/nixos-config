@@ -23,7 +23,9 @@
     ];
     extraConfig = ''
       set -g default-terminal "tmux-256color"
-      set -as terminal-features ",xterm-ghostty:RGB"
+      set -s extended-keys on
+      set -s extended-keys-format csi-u
+      set -as terminal-features ",xterm-ghostty:RGB:extkeys"
       set -as terminal-overrides ",xterm-ghostty:Tc"
 
       set -g visual-bell on
