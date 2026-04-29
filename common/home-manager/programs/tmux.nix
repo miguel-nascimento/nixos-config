@@ -48,6 +48,23 @@
 
       set-option -g renumber-windows on
 
+      # Put the status bar at the bottom and force a full gray palette.
+      set -g status-position bottom
+      set -g status-style "bg=#2b2b2b,fg=#c9c9c9"
+      set -g message-style "bg=#3a3a3a,fg=#e6e6e6"
+      set -g message-command-style "bg=#3a3a3a,fg=#e6e6e6"
+      set -g mode-style "bg=#5a5a5a,fg=#f5f5f5"
+      set -g pane-border-style "fg=#4a4a4a"
+      set -g pane-active-border-style "fg=#8a8a8a"
+      set -g status-left-style "bg=#2b2b2b,fg=#c9c9c9"
+      set -g status-right-style "bg=#2b2b2b,fg=#c9c9c9"
+      set -g window-status-style "bg=#2b2b2b,fg=#9a9a9a"
+      set -g window-status-current-style "bg=#444444,fg=#f0f0f0,bold"
+      set -g window-status-format " #[bg=#2b2b2b,fg=#9a9a9a]#I:#W #[default]"
+      set -g window-status-current-format " #[bg=#444444,fg=#f0f0f0,bold]#I:#W #[default]"
+      set -g status-left ""
+      set -g status-right ""
+
       bind h select-pane -L
       bind j select-pane -D
       bind k select-pane -U
