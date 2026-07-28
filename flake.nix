@@ -17,6 +17,7 @@
     nixos-wsl.url = "github:nix-community/NixOS-WSL";
 
     qmd.url = "github:tobi/qmd";
+    herdr.url = "github:ogulcancelik/herdr";
   };
 
   outputs =

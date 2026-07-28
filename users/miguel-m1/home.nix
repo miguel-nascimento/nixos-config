@@ -35,6 +35,7 @@ in
     ../../common/home-manager/programs/navi.nix
     ../../common/home-manager/programs/fish.nix
     ../../common/home-manager/programs/ai.nix
+    ../../common/home-manager/programs/herdr.nix
     ../../common/home-manager/languages/docs.nix
     ../../common/home-manager/languages/typescript.nix
     ../../common/home-manager/languages/rust.nix
