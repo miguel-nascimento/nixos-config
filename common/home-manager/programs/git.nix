@@ -5,6 +5,8 @@
   programs.git = {
     enable = true;
 
+    lfs.enable = true;
+
     aliases = {
       cm = "commit -m";
       sw = "switch";

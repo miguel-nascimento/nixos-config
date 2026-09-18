@@ -1,4 +1,9 @@
-{ outputs, inputs, pkgs, ... }:
+{
+  outputs,
+  inputs,
+  pkgs,
+  ...
+}:
 let
   zmx = pkgs.stdenv.mkDerivation {
     pname = "zmx";
@@ -15,16 +20,15 @@ let
     '';
   };
   qmd = inputs.qmd.packages.aarch64-darwin.default.overrideAttrs (old: {
-    nativeBuildInputs = old.nativeBuildInputs ++ (with pkgs; [
-      xcbuild
-      apple-sdk_15
-    ]);
+    nativeBuildInputs =
+      old.nativeBuildInputs
+      ++ (with pkgs; [
+        xcbuild
+        apple-sdk_15
+      ]);
 
     # Upstream flake references src/qmd.ts but the entry point moved to src/cli/qmd.ts
-    installPhase = builtins.replaceStrings
-      [ "src/qmd.ts" ]
-      [ "src/cli/qmd.ts" ]
-      old.installPhase;
+    installPhase = builtins.replaceStrings [ "src/qmd.ts" ] [ "src/cli/qmd.ts" ] old.installPhase;
   });
 in
 {
@@ -43,7 +47,6 @@ in
     ../../common/home-manager/languages/java.nix
     ../../common/home-manager/languages/zig.nix
     ../../common/home-manager/programs/just.nix
-    ../../common/home-manager/programs/graphite.nix
     ../../common/home-manager/programs/hyperfine.nix
   ];
 
@@ -66,7 +69,10 @@ in
     # https://nixos.wiki/wiki/FAQ/When_do_I_update_stateVersion
     stateVersion = "22.11";
 
-    packages = [ qmd zmx ];
+    packages = [
+      qmd
+      zmx
+    ];
 
     sessionVariables = {
       NIXPKGS_ALLOW_UNFREE = "1";
