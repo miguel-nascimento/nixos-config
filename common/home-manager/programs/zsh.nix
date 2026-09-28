@@ -19,8 +19,9 @@ _: {
 
       # brew hack, im lazy
       export PATH="/opt/homebrew/bin:$PATH"
-      export PATH="/Users/miguel/.local/bin:$PATH"
+      export PATH="$HOME/.local/bin:$PATH"
       export PATH="$HOME/.cargo/bin:$PATH"
+      export PATH="$HOME/.bun/bin:$PATH"
 
       # GitHub PR helper function
       gpr() {
@@ -81,7 +82,7 @@ _: {
     '';
     #VSCODE_IPC_HOOK_CLI=$( lsof | grep $UID/vscode-ipc | awk '{print $(NF-1)}' | head -n 1 )
     envExtra = ''
-      export PATH="/Users/miguel/.foundry/bin:$PATH"
+      export PATH="$HOME/.foundry/bin:$PATH"
       export NIXPKGS_ALLOW_UNFREE=1
     '';
 
