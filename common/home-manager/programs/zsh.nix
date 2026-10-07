@@ -1,10 +1,10 @@
-_: {
+{ config, ... }: {
   # Suppress "Last login:" message on macOS
   home.file.".hushlogin".text = "";
 
   programs.zsh = {
     enable = true;
-    dotDir = ".config/zsh";
+    dotDir = "${config.xdg.configHome}/zsh";
     initContent = ''
       bindkey -M emacs "^[[3;5~" kill-word
       bindkey -M emacs "^H" backward-kill-word

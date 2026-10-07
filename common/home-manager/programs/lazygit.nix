@@ -4,10 +4,12 @@ _: {
     settings = {
       os.editPreset = "nvim-remote";
       gui.showIcons = true;
-      git.paging = {
-        colorArgs = "always";
-        pager = "delta --paging=never --commit-style box --light";
-      };
+      git.pagers = [
+        {
+          colorArgs = "always";
+          pager = "delta --paging=never --commit-style box --light";
+        }
+      ];
     };
   };
 }

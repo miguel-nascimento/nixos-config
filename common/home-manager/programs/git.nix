@@ -7,23 +7,13 @@
 
     lfs.enable = true;
 
-    aliases = {
+    settings.alias = {
       cm = "commit -m";
       sw = "switch";
       lg = "log --format='%Cred%h%Creset %s %Cgreen(%cr) %C(blue)<%an>%Creset%C(yellow)%d%Creset' --no-merges";
     };
 
-    delta = {
-      enable = true;
-      options = {
-        side-by-side = true;
-        detect-dark-light = "auto";
-        dark-syntax-theme = "GitHub";
-        light-syntax-theme = "GitHub";
-      };
-    };
-
-    extraConfig = {
+    settings = {
       init.defaultBranch = "main";
       pull.rebase = false;
       push.autoSetupRemote = true;
@@ -37,12 +27,23 @@
       rerere.autoUpdate = true;
     };
 
-    userEmail = "miguelgomes13@live.com";
-    userName = "Miguel Nascimento";
+    settings.user.email = "miguelgomes13@live.com";
+    settings.user.name = "Miguel Nascimento";
 
     signing = {
       key = "3C5F43ADECC84547";
       signByDefault = true;
+    };
+  };
+
+  programs.delta = {
+    enable = true;
+    enableGitIntegration = true;
+    options = {
+      side-by-side = true;
+      detect-dark-light = "auto";
+      dark-syntax-theme = "GitHub";
+      light-syntax-theme = "GitHub";
     };
   };
 

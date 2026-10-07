@@ -1,7 +1,7 @@
 { inputs, lib, pkgs, ... }:
 {
   home.packages = [
-    inputs.herdr.packages.${pkgs.system}.herdr
+    inputs.herdr.packages.${pkgs.stdenv.hostPlatform.system}.herdr
   ];
 
   # Herdr starts zsh as a login shell. On macOS, path_helper can move the
