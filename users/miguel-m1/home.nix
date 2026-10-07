@@ -48,6 +48,7 @@ in
     ../../common/home-manager/languages/zig.nix
     ../../common/home-manager/programs/just.nix
     ../../common/home-manager/programs/hyperfine.nix
+    ../../common/home-manager/programs/video.nix
   ];
 
   # TODO: would be nice to share the same nixpkgs config as `mkHost.nix`
