@@ -25,16 +25,28 @@
       # Rerere configuration
       rerere.enabled = true;
       rerere.autoUpdate = true;
+
+      # Speed up status in repos with many files/worktrees
+      core.fsmonitor = pkgs.stdenv.isDarwin; # builtin daemon is macOS/Windows only
+      core.untrackedCache = true;
+      feature.manyFiles = true;
+
+      gpg.ssh.allowedSignersFile = "~/.config/git/allowed_signers";
     };
 
     settings.user.email = "miguelgomes13@live.com";
     settings.user.name = "Miguel Nascimento";
 
     signing = {
-      key = "3C5F43ADECC84547";
+      format = "ssh";
+      key = "~/.ssh/id_ed25519.pub";
       signByDefault = true;
     };
   };
+
+  xdg.configFile."git/allowed_signers".text = ''
+    miguelgomes13@live.com ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIF6Bo70dehaX/OYMz094D35auxz5G0rdqf/tUj6ICn4a
+  '';
 
   programs.delta = {
     enable = true;
