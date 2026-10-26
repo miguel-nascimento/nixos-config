@@ -1,13 +1,13 @@
 return {
   {
     'neovim/nvim-lspconfig',
-    event = { 'BufReadPost' },
+    event = { 'BufReadPost', 'BufNewFile' },
     cmd = { 'LspInfo', 'LspInstall', 'LspUninstall', 'Mason' },
     dependencies = {
       'saghen/blink.cmp',
       -- Plugin and UI to automatically install LSPs to stdpath
-      'williamboman/mason.nvim',
-      'williamboman/mason-lspconfig.nvim',
+      'mason-org/mason.nvim',
+      'mason-org/mason-lspconfig.nvim',
 
       -- Install none-ls for diagnostics, code actions, and formatting
       'nvimtools/none-ls.nvim',
@@ -27,7 +27,7 @@ return {
       -- Neoconf so we can share config with co-workers (config-as-json) 🫂
       'folke/neoconf.nvim',
       -- Progress/Status update for LSP
-      { 'j-hui/fidget.nvim', tag = 'v1.0.0' },
+      { 'j-hui/fidget.nvim', opts = {} },
       'pmizio/typescript-tools.nvim',
     },
     config = function()
@@ -35,11 +35,6 @@ return {
 
       -- Setup mason so it can manage 3rd party LSP servers
       require('mason').setup()
-
-      -- Configure mason to auto install servers
-      require('mason-lspconfig').setup {
-        automatic_installation = true,
-      }
 
       -- Setup neoconf to have config-as-json support
       require('neoconf').setup()
@@ -56,7 +51,7 @@ return {
             Lua = {
               workspace = { checkThirdParty = false },
               telemetry = { enabled = false },
-              globals = { 'vim' },
+              diagnostics = { globals = { 'vim' } },
             },
           },
         },
@@ -80,6 +75,23 @@ return {
         -- TODO: add more Rust stuff! https://github.com/mrcjkb/rustaceanvim
       }
 
+      -- Nix supplies nixd, gopls, zls and ocamllsp; Mason supplies the remaining servers.
+      require('mason-lspconfig').setup {
+        ensure_installed = {
+          'bashls',
+          'cssls',
+          'html',
+          'jsonls',
+          'lua_ls',
+          'marksman',
+          'prismals',
+          'tailwindcss',
+          'rust_analyzer',
+          'basedpyright',
+        },
+        automatic_enable = false,
+      }
+
       local capabilities = require('blink.cmp').get_lsp_capabilities()
 
       local on_attach = function(client, buffer_number)
@@ -88,7 +100,7 @@ return {
 
         local handle_inline_hint = function()
           if client.server_capabilities.inlayHintProvider then
-            local inlay_hints_group = vim.api.nvim_create_augroup('InlineHint', { clear = true })
+            local inlay_hints_group = vim.api.nvim_create_augroup('InlineHint' .. buffer_number, { clear = true })
             vim.api.nvim_create_autocmd('InsertEnter', {
               group = inlay_hints_group,
               buffer = buffer_number,
@@ -126,14 +138,53 @@ return {
       end
 
       -- oxlint for linting JS/TS (replaces eslint)
-      vim.lsp.enable('oxlint')
+      vim.lsp.enable 'oxlint'
 
-      -- typescript-tools uses its own setup
+      local function native_typescript_root(bufnr)
+        local root = vim.fs.root(bufnr, function(name, path)
+          return name == 'node_modules' and vim.fn.filereadable(vim.fs.joinpath(path, 'node_modules/typescript/package.json')) == 1
+        end)
+        if not root then
+          return nil
+        end
+
+        local package_path = vim.fs.joinpath(root, 'node_modules/typescript/package.json')
+        local ok, package = pcall(function()
+          return vim.json.decode(table.concat(vim.fn.readfile(package_path), '\n'))
+        end)
+        local major = ok and type(package) == 'table' and type(package.version) == 'string' and tonumber(package.version:match '^(%d+)')
+        local tsc = vim.fs.joinpath(root, 'node_modules/.bin/tsc')
+        if major and major >= 7 and vim.fn.executable(tsc) == 1 then
+          return root
+        end
+      end
+
+      vim.lsp.config('tsc', {
+        capabilities = capabilities,
+        on_attach = on_attach,
+        root_dir = function(bufnr, on_dir)
+          local root = native_typescript_root(bufnr)
+          if root then
+            on_dir(root)
+          end
+        end,
+        cmd = function(dispatchers, config)
+          local tsc = vim.fs.joinpath(config.root_dir, 'node_modules/.bin/tsc')
+          return vim.lsp.rpc.start({ tsc, '--lsp', '--stdio' }, dispatchers)
+        end,
+      })
+      vim.lsp.enable 'tsc'
+
+      -- typescript-tools uses its own setup for TypeScript 5 and 6.
       require('typescript-tools').setup {
         on_attach = on_attach,
         capabilities = capabilities,
+        root_dir = function(bufnr, on_dir)
+          if not native_typescript_root(bufnr) then
+            on_dir(require('typescript-tools.utils').get_root_dir(bufnr))
+          end
+        end,
       }
-
     end,
   },
   {
@@ -153,7 +204,7 @@ return {
         typescript = { 'oxfmt' },
         typescriptreact = { 'oxfmt' },
         ocaml = { 'ocamlformat' },
-        go = { 'gofumpt', 'goimports', 'goimports_reviser' },
+        go = { 'gofumpt', 'goimports', 'goimports-reviser' },
         zig = { 'zigfmt' },
       },
       default_format_opts = {

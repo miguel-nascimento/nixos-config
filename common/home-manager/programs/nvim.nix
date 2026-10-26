@@ -17,6 +17,10 @@ in
 
   home.packages = with pkgs; [
     unstable.neovim
+    unstable.tree-sitter # parser generation for nvim-treesitter
+    unstable.elan # Lean toolchains, including lake
+    unstable.ocamlformat
+    unstable.ocamlPackages.ocaml-lsp
     gcc # telescope-fzf-native needs a C compiler
     gnumake # telescope-fzf-native build command is `make`
   ];
