@@ -66,6 +66,13 @@
         m4-pro = mkDarwin {
           hostname = "m4-pro";
           user = "miguel";
+          # Stays home, reached over Tailscale, so it never sleeps
+          modules = [
+            {
+              power.sleep.computer = "never";
+              power.sleep.display = 10;
+            }
+          ];
         };
         m5 = mkDarwin {
           hostname = "m5";
