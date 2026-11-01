@@ -18,9 +18,8 @@
     remapCapsLockToEscape = true;
   };
 
-  # Tap to click
+  # Tap to click; postActivation also sets it where System Settings looks
   system.defaults.trackpad.Clicking = true;
-  system.defaults.NSGlobalDomain."com.apple.mouse.tapBehavior" = 1;
 
   # Homebrew itself, installed and pinned by nix
   nix-homebrew = {
@@ -54,6 +53,7 @@
   system.activationScripts.postActivation.text = ''
     launchctl asuser "$(id -u -- ${user})" sudo --user=${user} -- defaults write com.apple.symbolichotkeys AppleSymbolicHotKeys \
       -dict-add 64 "<dict><key>enabled</key><false/><key>value</key><dict><key>parameters</key><array><integer>32</integer><integer>49</integer><integer>1048576</integer></array><key>type</key><string>standard</string></dict></dict>"
+    launchctl asuser "$(id -u -- ${user})" sudo --user=${user} -- defaults -currentHost write -g com.apple.mouse.tapBehavior -int 1
     launchctl asuser "$(id -u -- ${user})" sudo --user=${user} -- /System/Library/PrivateFrameworks/SystemAdministration.framework/Resources/activateSettings -u
   '';
 
