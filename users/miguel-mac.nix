@@ -34,21 +34,23 @@ in
 {
   programs.home-manager.enable = true;
   imports = [
-    ../../common/home-manager/minimal.nix
-    ../../common/home-manager/programs/direnv.nix
-    ../../common/home-manager/programs/navi.nix
-    ../../common/home-manager/programs/fish.nix
-    ../../common/home-manager/programs/ai.nix
-    ../../common/home-manager/programs/herdr.nix
-    ../../common/home-manager/languages/docs.nix
-    ../../common/home-manager/languages/typescript.nix
-    ../../common/home-manager/languages/rust.nix
-    ../../common/home-manager/languages/go.nix
-    ../../common/home-manager/languages/java.nix
-    ../../common/home-manager/languages/zig.nix
-    ../../common/home-manager/programs/just.nix
-    ../../common/home-manager/programs/hyperfine.nix
-    ../../common/home-manager/programs/video.nix
+    ../common/home-manager/minimal.nix
+    ../common/home-manager/programs/direnv.nix
+    ../common/home-manager/programs/navi.nix
+    ../common/home-manager/programs/fish.nix
+    ../common/home-manager/programs/ai.nix
+    ../common/home-manager/programs/herdr.nix
+    ../common/home-manager/languages/docs.nix
+    ../common/home-manager/languages/typescript.nix
+    ../common/home-manager/languages/rust.nix
+    ../common/home-manager/languages/go.nix
+    ../common/home-manager/languages/java.nix
+    ../common/home-manager/languages/zig.nix
+    ../common/home-manager/programs/just.nix
+    ../common/home-manager/programs/hyperfine.nix
+    ../common/home-manager/programs/video.nix
+    ../common/home-manager/programs/ghostty.nix
+    ../common/home-manager/programs/mac-setup.nix
   ];
 
   # TODO: would be nice to share the same nixpkgs config as `mkHost.nix`
