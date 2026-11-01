@@ -50,7 +50,6 @@ in
     ../common/home-manager/programs/hyperfine.nix
     ../common/home-manager/programs/video.nix
     ../common/home-manager/programs/ghostty.nix
-    ../common/home-manager/programs/mac-setup.nix
   ];
 
   # TODO: would be nice to share the same nixpkgs config as `mkHost.nix`
