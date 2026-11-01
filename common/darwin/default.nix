@@ -18,6 +18,10 @@
     remapCapsLockToEscape = true;
   };
 
+  # Tap to click
+  system.defaults.trackpad.Clicking = true;
+  system.defaults.NSGlobalDomain."com.apple.mouse.tapBehavior" = 1;
+
   # Homebrew itself, installed and pinned by nix
   nix-homebrew = {
     enable = true;
