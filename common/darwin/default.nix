@@ -9,7 +9,21 @@
   };
 
   system.primaryUser = user;
-  users.users.${user}.home = "/Users/${user}";
+  users.users.${user} = {
+    home = "/Users/${user}";
+    openssh.authorizedKeys.keys = [
+      "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIF6Bo70dehaX/OYMz094D35auxz5G0rdqf/tUj6ICn4a miguel-nascimento"
+    ];
+  };
+
+  # Remote Login, key only, so the Macs can ssh/rsync to each other over Tailscale
+  services.openssh = {
+    enable = true;
+    extraConfig = ''
+      PasswordAuthentication no
+      KbdInteractiveAuthentication no
+    '';
+  };
 
   security.pam.services.sudo_local.touchIdAuth = true;
 
