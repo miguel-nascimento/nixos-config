@@ -14,6 +14,10 @@
     home-manager.url = "github:nix-community/home-manager/release-26.05";
     home-manager.inputs.nixpkgs.follows = "nixpkgs";
 
+    nix-darwin.url = "github:nix-darwin/nix-darwin/nix-darwin-26.05";
+    nix-darwin.inputs.nixpkgs.follows = "nixpkgs";
+    nix-homebrew.url = "github:zhaofengli/nix-homebrew";
+
     nixos-wsl.url = "github:nix-community/NixOS-WSL";
 
     qmd.url = "github:tobi/qmd";
@@ -30,6 +34,7 @@
     let
       inherit (self) outputs;
       mkHost = import "${self}/lib/mkHost.nix" { inherit inputs outputs; };
+      mkDarwin = import "${self}/lib/mkDarwin.nix" { inherit inputs outputs; };
     in
     {
       overlays = import "${self}/overlays" { inherit inputs; };
@@ -53,6 +58,21 @@
         };
       };
 
+      darwinConfigurations = {
+        m1-air = mkDarwin {
+          hostname = "m1-air";
+          user = "miguel";
+        };
+        m4-pro = mkDarwin {
+          hostname = "m4-pro";
+          user = "miguel";
+        };
+        m5 = mkDarwin {
+          hostname = "m5";
+          user = "miguel";
+        };
+      };
+
       homeConfigurations = {
         miguel = home-manager.lib.homeManagerConfiguration {
           modules = [ "${self}/users/miguel/home.nix" ];
@@ -62,13 +82,6 @@
           };
         };
 
-        miguel-m1 = home-manager.lib.homeManagerConfiguration {
-          modules = [ "${self}/users/miguel-m1/home.nix" ];
-          pkgs = nixpkgs.legacyPackages.aarch64-darwin;
-          extraSpecialArgs = {
-            inherit inputs outputs;
-          };
-        };
       };
     };
 }

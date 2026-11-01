@@ -18,6 +18,7 @@ local lazy = require 'lazy'
 lazy.setup({
   { import = 'plugins' }, -- what { import = "plugins" } means? prob getting from the folder
 }, {
+  rocks = { enabled = false }, -- No configured plugins use LuaRocks.
   git = {
     timeout = 600, -- 10 minutes
   },

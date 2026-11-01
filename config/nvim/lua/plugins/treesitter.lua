@@ -1,59 +1,47 @@
 return {
   {
     'nvim-treesitter/nvim-treesitter',
+    branch = 'main',
+    lazy = false,
+    build = ':TSUpdate',
     dependencies = {
-      'nvim-treesitter/nvim-treesitter-textobjects',
+      { 'nvim-treesitter/nvim-treesitter-textobjects', branch = 'main' },
     },
-    build = function()
-      require('nvim-treesitter.install').update { with_sync = true }()
-    end,
-    event = { 'BufEnter' },
     config = function()
-      require('nvim-treesitter.configs').setup {
-        ensure_installed = {
-          'tsx',
-          'typescript',
-          'bash',
-          'html',
-          'javascript',
-          'css',
-          'lua',
-          'json',
-          'markdown',
-          'markdown_inline',
-          'prisma',
-          'vim',
-          'vimdoc',
-          'c',
-          'nix',
-          'go',
-          'gomod',
-          'zig',
-        },
-        sync_install = false,
-        highlight = {
-          enable = true,
-        },
-        indent = {
-          enable = true,
-        },
-        autopairs = {
-          enable = true,
-        },
-        autotag = {
-          enable = true,
-        },
-        -- incremental_selection = {
-        -- 	enable = true,
-        -- 	keymaps = {
-        -- 		init_selection = '<c-space>',
-        -- 		node_incremental = '<c-space>',
-        -- 		scope_incremental = '<c-s>',
-        -- 		node_decremental = '<M-space>',
-        -- 	},
-        -- },
-        -- TODO: textobjects
+      local treesitter = require 'nvim-treesitter'
+      treesitter.setup {}
+      local languages = {
+        'tsx',
+        'typescript',
+        'bash',
+        'html',
+        'javascript',
+        'css',
+        'lua',
+        'json',
+        'markdown',
+        'markdown_inline',
+        'prisma',
+        'vim',
+        'vimdoc',
+        'c',
+        'nix',
+        'go',
+        'gomod',
+        'zig',
       }
+      treesitter.install(languages)
+
+      vim.api.nvim_create_autocmd('FileType', {
+        group = vim.api.nvim_create_augroup('UserTreesitter', { clear = true }),
+        callback = function(args)
+          local lang = vim.treesitter.language.get_lang(vim.bo[args.buf].filetype)
+          if lang and vim.list_contains(languages, lang) and vim.treesitter.language.add(lang) then
+            vim.treesitter.start(args.buf, lang)
+            vim.bo[args.buf].indentexpr = "v:lua.require'nvim-treesitter'.indentexpr()"
+          end
+        end,
+      })
     end,
   },
 }
