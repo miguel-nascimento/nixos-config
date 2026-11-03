@@ -44,7 +44,7 @@ end, { desc = '[F]ile [E]xplorer' })
 nnoremap('<leader>ft', '<cmd>Neotree position=right<cr>', { desc = '[F]ile [T]ree' })
 
 -- Turn off highlighted results
-nnoremap('<leader>no', '<cmd>noh<cr>')
+nnoremap('<leader>no', '<cmd>noh<cr>', { desc = '[N]o highlight: clear search [O]ff' })
 
 -- Diagnostic keymaps
 nnoremap('<leader>e', vim.diagnostic.open_float, { desc = 'Show diagnostic [E]rror messages' })
