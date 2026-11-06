@@ -83,12 +83,48 @@ in
 
   programs.zsh.shellAliases.tailscale = "/Applications/Tailscale.app/Contents/MacOS/Tailscale";
 
+  # The key's passphrase lives in the login Keychain. launchd's ssh-agent
+  # (SSH_AUTH_SOCK, inherited by every shell and GUI app) gets the key at login,
+  # so git signing never needs a prompt, even from agents' shells with no TTY.
+  launchd.agents.ssh-add-keychain = {
+    enable = true;
+    config = {
+      ProgramArguments = [
+        "/usr/bin/ssh-add"
+        "--apple-load-keychain"
+        "-q"
+      ];
+      RunAtLoad = true;
+      StandardErrorPath = "/tmp/ssh-add-keychain.log";
+    };
+  };
+
+  # git signs through this: if the agent lost the key it reloads it from the
+  # Keychain, and stdin is /dev/null so a missing key fails at once instead of
+  # ssh-keygen reading a passphrase from an agent's open stdin pipe forever.
+  # A real terminal still prompts on /dev/tty. Verification passes payloads on
+  # stdin, so only `-Y sign` is redirected.
+  programs.git.signing.signer = toString (
+    pkgs.writeShellScript "ssh-keygen-sign" ''
+      if [ "$1" = -Y ] && [ "$2" = sign ]; then
+        /usr/bin/ssh-add -l >/dev/null 2>&1 ||
+          /usr/bin/ssh-add --apple-load-keychain -q </dev/null >/dev/null 2>&1
+        exec ${pkgs.openssh}/bin/ssh-keygen "$@" </dev/null
+      fi
+      exec ${pkgs.openssh}/bin/ssh-keygen "$@"
+    ''
+  );
+
   # macOS SSH with Keychain integration
   programs.ssh = {
     enable = true;
     enableDefaultConfig = false;
     settings."*" = {
       AddKeysToAgent = "yes";
+      # UseKeychain is Apple-only; nix's ssh would reject the config without this
+      IgnoreUnknown = "UseKeychain";
+      UseKeychain = "yes";
+      IdentityFile = "~/.ssh/id_ed25519";
       Compression = false;
       ControlMaster = "no";
       ControlPath = "~/.ssh/master-%r@%n:%p";
@@ -99,10 +135,5 @@ in
       ServerAliveInterval = 0;
       UserKnownHostsFile = "~/.ssh/known_hosts";
     };
-    extraConfig = ''
-      Host *
-        UseKeychain yes
-        IdentityFile ~/.ssh/id_ed25519
-    '';
   };
 }
