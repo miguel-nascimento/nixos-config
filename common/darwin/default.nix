@@ -50,6 +50,7 @@
       "bitwarden"
       "discord"
       "ghostty"
+      "granola"
       "iina"
       "linear"
       "notion-calendar"
@@ -58,6 +59,8 @@
       "raycast"
       "slack"
       "tailscale-app"
+      "transmission"
+      "jordanbaird-ice"
     ];
   };
 
