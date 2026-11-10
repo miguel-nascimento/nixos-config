@@ -6,6 +6,7 @@
     inputs.agenix.darwinModules.default
     ./obsidian-livesync.nix
     ./notes-sync.nix
+    ./home-assistant.nix
   ];
 
   power.clamshell = true;

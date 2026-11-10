@@ -8,6 +8,11 @@ A MacBook Pro with the lid closed, reached over Tailscale. It runs:
   `https://miguel-m4.boreray-eel.ts.net:6984`, for the tailnet only.
 - **notes-sync**, which runs every hour: if `~/notes` changed, it commits, pulls with rebase and pushes.
   The log is at `~/Library/Logs/notes-sync.log`. Run it now with `notes-sync`.
+- **Home Assistant** ([home-assistant.nix](./home-assistant.nix)), the nixpkgs
+  package as a launchd agent started at login, data in `~/.homeassistant`.
+  `tailscale serve` puts it at `https://miguel-m4.boreray-eel.ts.net:8123`.
+  Zigbee goes through ZHA on the SMLIGHT SLZB-06Mu stick, plugged in by USB
+  (`/dev/cu.usbmodem2101`, in USB mode, not LAN).
 - **Obsidian**, opened at login. Its LiveSync writes what the other devices
   sync into `~/notes`, and notes-sync puts that into git.
 
@@ -74,6 +79,18 @@ CouchDB login, stay out of git.
 2. Create a new empty vault `notes` in Obsidian.
 3. Install Self-hosted LiveSync from Community plugins.
 4. Use the setup URI as in step 2.3.
+
+## Home Assistant
+
+Nix owns `configuration.yaml` (a symlink into the store). The rest is made in
+the UI and kept in `~/.homeassistant`: dashboards, integrations, devices,
+automations, scenes and scripts.
+
+A new integration needs its Python packages in the build. Add it to
+`extraComponents` in `home-assistant.nix` and switch, then set it up in the UI.
+
+Logs are at `~/Library/Logs/home-assistant.log`. Restart with
+`launchctl kickstart -k gui/$(id -u)/org.nixos.home-assistant`.
 
 ## Troubleshooting
 
