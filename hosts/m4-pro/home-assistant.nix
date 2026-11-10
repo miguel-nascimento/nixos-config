@@ -33,10 +33,11 @@ let
     "google_translate"
     "isal"
     "met"
+    "mqtt"
     "radio_browser"
     "shopping_list"
     "sun"
-    "zha"
+    "switch_as_x"
   ];
 
   package =

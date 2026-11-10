@@ -7,6 +7,7 @@
     ./obsidian-livesync.nix
     ./notes-sync.nix
     ./home-assistant.nix
+    ./zigbee2mqtt.nix
   ];
 
   power.clamshell = true;

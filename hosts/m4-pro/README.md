@@ -11,8 +11,11 @@ A MacBook Pro with the lid closed, reached over Tailscale. It runs:
 - **Home Assistant** ([home-assistant.nix](./home-assistant.nix)), the nixpkgs
   package as a launchd agent started at login, data in `~/.homeassistant`.
   `tailscale serve` puts it at `https://miguel-m4.boreray-eel.ts.net:8123`.
-  Zigbee goes through ZHA on the SMLIGHT SLZB-06Mu stick, plugged in by USB
-  (`/dev/cu.usbmodem2101`, in USB mode, not LAN).
+- **Zigbee2MQTT** + **Mosquitto** ([zigbee2mqtt.nix](./zigbee2mqtt.nix)): the Zigbee
+  network on the SMLIGHT SLZB-06Mu stick (USB, `/dev/cu.usbmodem2101`, EmberZNet 8.0.2,
+  `adapter: ember`), published to Home Assistant over MQTT on localhost.
+  Its UI is at `https://miguel-m4.boreray-eel.ts.net:8124`; its data (including the
+  network key) is in `~/.zigbee2mqtt`, backed up in `~/Backups`.
 - **Obsidian**, opened at login. Its LiveSync writes what the other devices
   sync into `~/notes`, and notes-sync puts that into git.
 
