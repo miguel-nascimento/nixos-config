@@ -16,7 +16,8 @@ let
       cd ${notes}
       git add -A
       if ! git diff --cached --quiet; then
-        git commit --quiet -m "vault backup: $(date '+%Y-%m-%d %H:%M:%S')"
+        # Unsigned: the key may be locked when nobody is at the Mac
+        git -c commit.gpgsign=false commit --quiet -m "vault backup: $(date '+%Y-%m-%d %H:%M:%S')"
       fi
       if ! git pull --quiet --rebase --autostash; then
         git rebase --abort || true
