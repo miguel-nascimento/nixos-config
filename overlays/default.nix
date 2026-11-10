@@ -21,9 +21,5 @@
       system = final.stdenv.hostPlatform.system;
       config.allowUnfree = true;
     };
-    staging = import inputs.nixpkgs-staging {
-      system = final.stdenv.hostPlatform.system;
-      config.allowUnfree = true;
-    };
   };
 }

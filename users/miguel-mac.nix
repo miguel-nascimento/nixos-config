@@ -1,24 +1,9 @@
 {
-  outputs,
   inputs,
   pkgs,
   ...
 }:
 let
-  zmx = pkgs.stdenv.mkDerivation {
-    pname = "zmx";
-    version = "0.4.0";
-    src = pkgs.fetchurl {
-      url = "https://zmx.sh/a/zmx-0.4.0-macos-aarch64.tar.gz";
-      sha256 = "5b9bfd7358e904f1b5238421ddf5a87ab1445f483cb8e29e3d46519922c4bd8a";
-    };
-    sourceRoot = ".";
-    dontConfigure = true;
-    dontBuild = true;
-    installPhase = ''
-      install -Dm755 zmx $out/bin/zmx
-    '';
-  };
   qmd = inputs.qmd.packages.aarch64-darwin.default.overrideAttrs (old: {
     nativeBuildInputs =
       old.nativeBuildInputs
@@ -50,20 +35,8 @@ in
     ../common/home-manager/programs/hyperfine.nix
     ../common/home-manager/programs/video.nix
     ../common/home-manager/programs/ghostty.nix
+    ../common/home-manager/programs/apple-keychain.nix
   ];
-
-  # TODO: would be nice to share the same nixpkgs config as `mkHost.nix`
-  nixpkgs = {
-    # You can add overlays here
-    overlays = [ outputs.overlays.unstable-packages ];
-    # Configure your nixpkgs instance
-    config = {
-      # Disable if you don't want unfree packages
-      allowUnfree = true;
-      # Workaround for https://github.com/nix-community/home-manager/issues/2942
-      allowUnfreePredicate = (_: true);
-    };
-  };
 
   home = {
     username = "miguel";
@@ -71,10 +44,7 @@ in
     # https://nixos.wiki/wiki/FAQ/When_do_I_update_stateVersion
     stateVersion = "22.11";
 
-    packages = [
-      qmd
-      zmx
-    ];
+    packages = [ qmd ];
 
     sessionVariables = {
       NIXPKGS_ALLOW_UNFREE = "1";
@@ -83,47 +53,11 @@ in
 
   programs.zsh.shellAliases.tailscale = "/Applications/Tailscale.app/Contents/MacOS/Tailscale";
 
-  # The key's passphrase lives in the login Keychain. launchd's ssh-agent
-  # (SSH_AUTH_SOCK, inherited by every shell and GUI app) gets the key at login,
-  # so git signing never needs a prompt, even from agents' shells with no TTY.
-  launchd.agents.ssh-add-keychain = {
-    enable = true;
-    config = {
-      ProgramArguments = [
-        "/usr/bin/ssh-add"
-        "--apple-load-keychain"
-        "-q"
-      ];
-      RunAtLoad = true;
-      StandardErrorPath = "/tmp/ssh-add-keychain.log";
-    };
-  };
-
-  # git signs through this: if the agent lost the key it reloads it from the
-  # Keychain, and stdin is /dev/null so a missing key fails at once instead of
-  # ssh-keygen reading a passphrase from an agent's open stdin pipe forever.
-  # A real terminal still prompts on /dev/tty. Verification passes payloads on
-  # stdin, so only `-Y sign` is redirected.
-  programs.git.signing.signer = toString (
-    pkgs.writeShellScript "ssh-keygen-sign" ''
-      if [ "$1" = -Y ] && [ "$2" = sign ]; then
-        /usr/bin/ssh-add -l >/dev/null 2>&1 ||
-          /usr/bin/ssh-add --apple-load-keychain -q </dev/null >/dev/null 2>&1
-        exec ${pkgs.openssh}/bin/ssh-keygen "$@" </dev/null
-      fi
-      exec ${pkgs.openssh}/bin/ssh-keygen "$@"
-    ''
-  );
-
-  # macOS SSH with Keychain integration
   programs.ssh = {
     enable = true;
     enableDefaultConfig = false;
+    useAppleKeychain = true;
     settings."*" = {
-      AddKeysToAgent = "yes";
-      # UseKeychain is Apple-only; nix's ssh would reject the config without this
-      IgnoreUnknown = "UseKeychain";
-      UseKeychain = "yes";
       IdentityFile = "~/.ssh/id_ed25519";
       Compression = false;
       ControlMaster = "no";

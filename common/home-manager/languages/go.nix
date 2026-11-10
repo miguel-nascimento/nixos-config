@@ -1,7 +1,7 @@
 { pkgs, ... }:
 {
   home.packages = with pkgs; [
-    staging.go
+    unstable.go
     gopls
     cmake
     gofumpt

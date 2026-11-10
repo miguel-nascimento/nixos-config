@@ -8,7 +8,7 @@
     unstable.typescript_5 # typescript-tools requires the JavaScript tsserver
     unstable.node-gyp
     unstable.deno
-    staging.bun
+    unstable.bun
     unstable.oxlint
     unstable.oxfmt
   ];

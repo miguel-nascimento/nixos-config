@@ -5,7 +5,6 @@
     # Nixpkgs
     nixpkgs.url = "github:nixos/nixpkgs/nixos-26.05";
     nixpkgs-unstable.url = "github:nixos/nixpkgs/nixos-unstable";
-    nixpkgs-staging.url = "github:nixos/nixpkgs/staging-next";
     agenix.url = "github:ryantm/agenix";
 
     hardware.url = "github:nixos/nixos-hardware"; # TODO: maybe I can remove this?
@@ -34,7 +33,6 @@
     let
       inherit (self) outputs;
       mkHost = import "${self}/lib/mkHost.nix" { inherit inputs outputs; };
-      mkDarwin = import "${self}/lib/mkDarwin.nix" { inherit inputs outputs; };
     in
     {
       overlays = import "${self}/overlays" { inherit inputs; };
@@ -59,13 +57,15 @@
       };
 
       darwinConfigurations = {
-        m1-air = mkDarwin {
+        m1-air = mkHost {
+          system = "aarch64-darwin";
+          users = [ "miguel" ];
           hostname = "m1-air";
-          user = "miguel";
         };
-        m4-pro = mkDarwin {
+        m4-pro = mkHost {
+          system = "aarch64-darwin";
+          users = [ "miguel" ];
           hostname = "m4-pro";
-          user = "miguel";
           # Stays home, reached over Tailscale, so it never sleeps
           modules = [
             {
@@ -74,16 +74,18 @@
             }
           ];
         };
-        m5 = mkDarwin {
+        m5 = mkHost {
+          system = "aarch64-darwin";
+          users = [ "miguel" ];
           hostname = "m5";
-          user = "miguel";
         };
       };
 
       homeConfigurations = {
         miguel = home-manager.lib.homeManagerConfiguration {
           modules = [ "${self}/users/miguel/home.nix" ];
-          pkgs = nixpkgs.legacyPackages.x86_64-linux;
+          # pendragon's packages: same nixpkgs, overlays and allowUnfree
+          pkgs = self.nixosConfigurations.pendragon.pkgs;
           extraSpecialArgs = {
             inherit inputs outputs;
           };
