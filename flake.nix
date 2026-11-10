@@ -66,13 +66,8 @@
           system = "aarch64-darwin";
           users = [ "miguel" ];
           hostname = "m4-pro";
-          # Stays home, reached over Tailscale, so it never sleeps
-          modules = [
-            {
-              power.sleep.computer = "never";
-              power.sleep.display = 10;
-            }
-          ];
+          # The home server: lid closed, reached over Tailscale
+          modules = [ "${self}/hosts/m4-pro" ];
         };
         m5 = mkHost {
           system = "aarch64-darwin";

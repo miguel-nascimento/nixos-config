@@ -5,5 +5,7 @@
     ./raycast.nix
     ./trackpad.nix
     ./openssh.nix
+    ./couchdb.nix
+    ./clamshell.nix
   ];
 }
