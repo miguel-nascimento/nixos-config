@@ -28,6 +28,16 @@ let
       admin off
       https_port ${toString httpsPort}
       auto_https disable_redirects
+      # Tailscale says who the client is (PROXY protocol), so the X-Forwarded-For
+      # sent upstream carries the tailnet IP and not 127.0.0.1
+      servers {
+        listener_wrappers {
+          proxy_protocol {
+            allow 127.0.0.1/32
+          }
+          tls
+        }
+      }
     }
 
     (tailnet) {
@@ -67,6 +77,6 @@ in
 
   # The tailnet's https port, passed through untouched to Caddy
   system.userActivation.text = lib.mkAfter ''
-    ${tailscale} serve --bg --tcp=443 tcp://127.0.0.1:${toString httpsPort} >/dev/null
+    ${tailscale} serve --bg --tcp=443 --proxy-protocol=2 tcp://127.0.0.1:${toString httpsPort} >/dev/null
   '';
 }

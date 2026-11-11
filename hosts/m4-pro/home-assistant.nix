@@ -76,6 +76,28 @@ let
   config = {
     # Name, location and units are set in the UI (Settings → System → General)
     default_config = { };
+    # No login inside the tailnet: a Tailscale IP is already an authenticated
+    # device, so it signs straight in as miguel. Everything else (Alexa's
+    # token, the LAN) still goes through the normal password login. HA only
+    # listens on 127.0.0.1 and takes the client IP from X-Forwarded-For, set
+    # by tailscale serve (:8123) and by Caddy (casa.miguelnascimento.dev).
+    homeassistant.auth_providers =
+      let
+        tailnet = [
+          "100.64.0.0/10"
+          "fd7a:115c:a1e0::/48"
+        ];
+        miguel = "8cd4a9921c6d474eaed9002f5ef71a05";
+      in
+      [
+        {
+          type = "trusted_networks";
+          trusted_networks = tailnet;
+          trusted_users = lib.genAttrs tailnet (_: [ miguel ]);
+          allow_bypass_login = true;
+        }
+        { type = "homeassistant"; }
+      ];
     # Network settings live in the UI (Settings → System → Network) since 2026.10:
     # listen on 127.0.0.1 only and trust it as a proxy, for tailscale serve
     "automation ui" = "!include automations.yaml";
