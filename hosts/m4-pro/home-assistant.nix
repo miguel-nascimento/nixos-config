@@ -16,7 +16,7 @@
 let
   configDir = "/Users/${user}/.homeassistant";
   port = 8123;
-  # The one path the internet can reach, for the Alexa skill's Lambda (~/dev/ha-alexa).
+  # The one path the internet can reach, for the Alexa skill's Lambda (~/ha/alexa).
   # It still needs the token of the "Alexa" user, which isn't an admin.
   alexaPath = "/api/alexa/smart_home";
   alexaPort = 10000;
