@@ -8,6 +8,7 @@
     ./notes-sync.nix
     ./home-assistant.nix
     ./zigbee2mqtt.nix
+    ./caddy.nix
   ];
 
   power.clamshell = true;

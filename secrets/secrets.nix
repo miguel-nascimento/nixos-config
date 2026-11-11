@@ -4,6 +4,10 @@ let
 in
 {
   "tailscale.age".publicKeys = [ miguel ];
+  "cloudflare-dns.age".publicKeys = [
+    miguel
+    m4-pro
+  ];
   "couchdb-admin.age".publicKeys = [
     miguel
     m4-pro
