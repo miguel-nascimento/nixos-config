@@ -49,7 +49,7 @@ in
     };
     dataDir = lib.mkOption {
       type = lib.types.path;
-      default = "/var/lib/couchdb";
+      default = "/var/db/couchdb";
     };
     adminFile = lib.mkOption {
       type = lib.types.path;
@@ -69,19 +69,16 @@ in
     users.users._couchdb = {
       uid = 460;
       gid = 460;
-      home = cfg.dataDir;
-      createHome = true;
+      # No home folder: macOS would fill it with Desktop, Library and friends
+      home = null;
       shell = "/usr/bin/false";
       isHidden = true;
       description = "CouchDB";
     };
 
     system.activationScripts.postActivation.text = ''
-      mkdir -p ${cfg.dataDir}
-      chown -R _couchdb:_couchdb ${cfg.dataDir}
-      chmod 700 ${cfg.dataDir}
-      touch /var/log/couchdb.log
-      chown _couchdb:_couchdb /var/log/couchdb.log
+      install -d -m 700 -o _couchdb -g _couchdb ${cfg.dataDir}
+      [ -e /var/log/couchdb.log ] || install -m 600 -o _couchdb -g _couchdb /dev/null /var/log/couchdb.log
     '';
 
     launchd.daemons.couchdb.serviceConfig = {
