@@ -87,10 +87,10 @@ let
     adaptive_lighting = [
       {
         name = "Spots";
-        lights = [
-          "light.spot_mesa"
-          "light.spot_lazer"
-        ];
+        # The Zigbee group of all six bulbs: one groupcast keeps them on the
+        # same color however they were turned on (Todos os Spots, Todas as
+        # luzes, Spot Mesa/Lazer or the bed switch)
+        lights = [ "light.todos_os_spots" ];
         min_color_temp = 2000;
         max_color_temp = 5500;
         min_brightness = 100;
