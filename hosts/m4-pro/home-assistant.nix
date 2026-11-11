@@ -144,6 +144,26 @@ in
     StandardErrorPath = "/Users/${user}/Library/Logs/home-assistant.log";
   };
 
+  # Snapshots the HA and Zigbee2MQTT config into the private repo ~/ha
+  # (github.com/miguel-nascimento/ha) every hour, so a clone restores the house
+  launchd.user.agents.ha-backup.serviceConfig = {
+    ProgramArguments = [
+      "${pkgs.bash}/bin/bash"
+      "/Users/${user}/ha/backup.sh"
+    ];
+    # Apple's ssh (/usr/bin) is the one that unlocks the key from the Keychain
+    EnvironmentVariables.PATH =
+      lib.makeBinPath [
+        pkgs.git
+        pkgs.rsync
+        pkgs.coreutils
+      ]
+      + ":/usr/bin:/bin";
+    StartInterval = 3600;
+    StandardOutPath = "/Users/${user}/Library/Logs/ha-backup.log";
+    StandardErrorPath = "/Users/${user}/Library/Logs/ha-backup.log";
+  };
+
   system.userActivation.text = lib.mkAfter ''
     ${tailscale} serve --bg --https=${toString port} http://127.0.0.1:${toString port} >/dev/null
     ${tailscale} funnel --bg --https=${toString alexaPort} --set-path=${alexaPath} http://127.0.0.1:${toString port}${alexaPath} >/dev/null
