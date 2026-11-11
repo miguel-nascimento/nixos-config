@@ -76,24 +76,36 @@ let
   config = {
     # Name, location and units are set in the UI (Settings → System → General)
     default_config = { };
-    # No login inside the tailnet: a Tailscale IP is already an authenticated
-    # device, so it signs straight in as miguel. Everything else (Alexa's
-    # token, the LAN) still goes through the normal password login. HA only
-    # listens on 127.0.0.1 and takes the client IP from X-Forwarded-For, set
-    # by tailscale serve (:8123) and by Caddy (casa.miguelnascimento.dev).
+    # Miguel's own devices sign in without a password: each one's Tailscale
+    # address is fixed and only that device can send from it. Anyone else on
+    # the tailnet (parents, shared devices) and anything outside it gets the
+    # normal login with their own user. Not the whole 100.64.0.0/10 or
+    # fd7a:115c:a1e0::/48: every tailnet, and the Funnel ingress nodes, use those.
+    # HA only listens on 127.0.0.1 and takes the client IP from
+    # X-Forwarded-For, set by tailscale serve (:8123) and Caddy (casa.*).
     homeassistant.auth_providers =
       let
-        tailnet = [
-          "100.64.0.0/10"
-          "fd7a:115c:a1e0::/48"
+        miguelDevices = [
+          "100.69.231.16" # miguel-m4-pro (this Mac)
+          "fd7a:115c:a1e0::7d01:e718"
+          "100.64.127.102" # miguel-m5
+          "fd7a:115c:a1e0::5238:7f69"
+          "100.113.213.77" # miguel-m1
+          "fd7a:115c:a1e0:ab12:4843:cd96:6271:d54d"
+          "100.109.81.119" # miguel (Windows)
+          "fd7a:115c:a1e0::7b01:5179"
+          "100.75.107.44" # iPhone
+          "fd7a:115c:a1e0::438:6b2d"
+          "100.89.40.101" # iPhone
+          "fd7a:115c:a1e0:ab12:4843:cd96:6259:2865"
         ];
         miguel = "8cd4a9921c6d474eaed9002f5ef71a05";
       in
       [
         {
           type = "trusted_networks";
-          trusted_networks = tailnet;
-          trusted_users = lib.genAttrs tailnet (_: [ miguel ]);
+          trusted_networks = miguelDevices;
+          trusted_users = lib.genAttrs miguelDevices (_: [ miguel ]);
           allow_bypass_login = true;
         }
         { type = "homeassistant"; }
