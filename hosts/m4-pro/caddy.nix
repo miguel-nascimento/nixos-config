@@ -2,6 +2,10 @@
 # point at this Mac's Tailscale IP, so they only work inside the tailnet; the
 # certificates come from Let's Encrypt through Cloudflare's DNS (DNS-01), so
 # nothing has to be reachable from the internet.
+#
+# macOS only lets non-root processes bind ports below 1024 on all interfaces,
+# so Caddy listens on 127.0.0.1 and Tailscale passes the tailnet's port 443
+# through to it as raw TCP (TLS still ends in Caddy, with its certificate).
 {
   config,
   pkgs,
@@ -11,8 +15,8 @@
   ...
 }:
 let
-  # This Mac on the tailnet (tailscale ip -4); Caddy listens only there
-  tailscaleIp = "100.69.231.16";
+  tailscale = "/Applications/Tailscale.app/Contents/MacOS/Tailscale";
+  httpsPort = 8443;
 
   caddy = pkgs.caddy.withPlugins {
     plugins = [ "github.com/caddy-dns/cloudflare@v0.2.4" ];
@@ -22,10 +26,12 @@ let
   caddyfile = pkgs.writeText "Caddyfile" ''
     {
       admin off
+      https_port ${toString httpsPort}
+      auto_https disable_redirects
     }
 
     (tailnet) {
-      bind ${tailscaleIp}
+      bind 127.0.0.1
       tls {
         dns cloudflare {env.CF_API_TOKEN}
         resolvers 1.1.1.1
@@ -51,13 +57,16 @@ in
     owner = user;
   };
 
-  # Until Tailscale is up the bind fails; launchd starts it again
   launchd.user.agents.caddy.serviceConfig = {
     ProgramArguments = [ "${start}" ];
     RunAtLoad = true;
     KeepAlive = true;
-    ThrottleInterval = 30;
     StandardOutPath = "/Users/${user}/Library/Logs/caddy.log";
     StandardErrorPath = "/Users/${user}/Library/Logs/caddy.log";
   };
+
+  # The tailnet's https port, passed through untouched to Caddy
+  system.userActivation.text = lib.mkAfter ''
+    ${tailscale} serve --bg --tcp=443 tcp://127.0.0.1:${toString httpsPort} >/dev/null
+  '';
 }
