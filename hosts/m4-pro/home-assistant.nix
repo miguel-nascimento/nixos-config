@@ -76,36 +76,20 @@ let
   config = {
     # Name, location and units are set in the UI (Settings → System → General)
     default_config = { };
-    # Miguel's own devices sign in without a password: each one's Tailscale
-    # address is fixed and only that device can send from it. Anyone else on
-    # the tailnet (parents, shared devices) and anything outside it gets the
-    # normal login with their own user. Not the whole 100.64.0.0/10 or
-    # fd7a:115c:a1e0::/48: every tailnet, and the Funnel ingress nodes, use those.
+    # No login inside the tailnet: any Tailscale device signs straight in as
+    # miguel. Outside it (Alexa's token, the LAN) the password login stays.
+    # IPv4 only: the Funnel ingress nodes use fd7a:115c:a1e0::/48 addresses.
     # HA only listens on 127.0.0.1 and takes the client IP from
     # X-Forwarded-For, set by tailscale serve (:8123) and Caddy (casa.*).
     homeassistant.auth_providers =
       let
-        miguelDevices = [
-          "100.69.231.16" # miguel-m4-pro (this Mac)
-          "fd7a:115c:a1e0::7d01:e718"
-          "100.64.127.102" # miguel-m5
-          "fd7a:115c:a1e0::5238:7f69"
-          "100.113.213.77" # miguel-m1
-          "fd7a:115c:a1e0:ab12:4843:cd96:6271:d54d"
-          "100.109.81.119" # miguel (Windows)
-          "fd7a:115c:a1e0::7b01:5179"
-          "100.75.107.44" # iPhone
-          "fd7a:115c:a1e0::438:6b2d"
-          "100.89.40.101" # iPhone
-          "fd7a:115c:a1e0:ab12:4843:cd96:6259:2865"
-        ];
-        miguel = "8cd4a9921c6d474eaed9002f5ef71a05";
+        tailnet = "100.64.0.0/10";
       in
       [
         {
           type = "trusted_networks";
-          trusted_networks = miguelDevices;
-          trusted_users = lib.genAttrs miguelDevices (_: [ miguel ]);
+          trusted_networks = [ tailnet ];
+          trusted_users.${tailnet} = [ "8cd4a9921c6d474eaed9002f5ef71a05" ]; # miguel
           allow_bypass_login = true;
         }
         { type = "homeassistant"; }
