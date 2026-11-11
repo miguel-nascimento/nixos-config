@@ -16,6 +16,10 @@
 let
   configDir = "/Users/${user}/.homeassistant";
   port = 8123;
+  # The one path the internet can reach, for the Alexa skill's Lambda (~/dev/ha-alexa).
+  # It still needs the token of the "Alexa" user, which isn't an admin.
+  alexaPath = "/api/alexa/smart_home";
+  alexaPort = 10000;
   tailscale = "/Applications/Tailscale.app/Contents/MacOS/Tailscale";
 
   # nixpkgs only marks Home Assistant for Linux, but it builds and runs on macOS
@@ -27,6 +31,7 @@ let
   # Integrations need their Python packages in the build: Home Assistant
   # can't pip install into the Nix store. Add one here before setting it up in the UI.
   extraComponents = [
+    "alexa"
     "analytics"
     "backup"
     "bluetooth"
@@ -71,6 +76,18 @@ let
     "automation ui" = "!include automations.yaml";
     "scene ui" = "!include scenes.yaml";
     "script ui" = "!include scripts.yaml";
+    # Lights only, and not the Tecla Cama relays: they feed the spots, and the
+    # spot groups already switch them on when needed
+    alexa.smart_home = {
+      locale = "pt-BR";
+      filter = {
+        include_domains = [ "light" ];
+        exclude_entities = [
+          "light.hobeian_zg_301z_2ch_luz"
+          "light.hobeian_zg_301z_2ch_luz_2"
+        ];
+      };
+    };
   };
 
   # Same trick as the NixOS module: unquote the !include tags
@@ -104,5 +121,6 @@ in
 
   system.userActivation.text = lib.mkAfter ''
     ${tailscale} serve --bg --https=${toString port} http://127.0.0.1:${toString port} >/dev/null
+    ${tailscale} funnel --bg --https=${toString alexaPort} --set-path=${alexaPath} http://127.0.0.1:${toString port}${alexaPath} >/dev/null
   '';
 }
