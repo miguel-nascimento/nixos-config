@@ -157,6 +157,7 @@ in
         pkgs.git
         pkgs.rsync
         pkgs.coreutils
+        pkgs.age
       ]
       + ":/usr/bin:/bin";
     StartInterval = 3600;
