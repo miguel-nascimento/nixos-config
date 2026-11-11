@@ -45,6 +45,10 @@ let
     "switch_as_x"
   ];
 
+  # Not in Home Assistant itself: linked into custom_components at start, with
+  # their Python packages added to the build below
+  customComponents = [ unsupported.home-assistant-custom-components.adaptive_lighting ];
+
   package =
     (unsupported.home-assistant.override {
       inherit extraComponents;
@@ -53,7 +57,8 @@ let
         ps:
         lib.filter (p: !lib.hasPrefix "matter" (p.pname or "")) (
           unsupported.home-assistant.getPackages "default_config" ps
-        );
+        )
+        ++ lib.concatMap (c: c.dependencies or c.propagatedBuildInputs or [ ]) customComponents;
       packageOverrides = _: super: {
         # Their tests hang, need Linux (inotify) or time out on macOS
         snitun = super.snitun.overridePythonAttrs { doCheck = false; };
@@ -76,6 +81,23 @@ let
     "automation ui" = "!include automations.yaml";
     "scene ui" = "!include scenes.yaml";
     "script ui" = "!include scripts.yaml";
+    # f.lux for the spots: white in the day, warm at night, following the sun.
+    # Color only (brightness stays full); a color set by hand wins until the
+    # spot is turned off. Its switches are switch.adaptive_lighting_*_spots.
+    adaptive_lighting = [
+      {
+        name = "Spots";
+        lights = [
+          "light.spot_mesa"
+          "light.spot_lazer"
+        ];
+        min_color_temp = 2000;
+        max_color_temp = 5500;
+        min_brightness = 100;
+        max_brightness = 100;
+        take_over_control = true;
+      }
+    ];
     # Lights only, and not the Tecla Cama relays: they feed the spots, and the
     # spot groups already switch them on when needed
     alexa.smart_home = {
@@ -97,7 +119,10 @@ let
   '';
 
   start = pkgs.writeShellScript "home-assistant" ''
-    mkdir -p ${configDir}
+    mkdir -p ${configDir}/custom_components
+    ${lib.concatMapStrings (c: ''
+      for d in ${c}/custom_components/*; do ln -sfn "$d" ${configDir}/custom_components/; done
+    '') customComponents}
     ln -sf ${configFile} ${configDir}/configuration.yaml
     for f in automations scenes scripts; do
       [ -s ${configDir}/$f.yaml ] || echo '[]' > ${configDir}/$f.yaml
