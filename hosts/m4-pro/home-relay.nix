@@ -18,6 +18,8 @@
 #   tailscale serve  --bg --tcp=443 --proxy-protocol=2 tcp://192.168.31.207:18443
 #   tailscale funnel --bg --https=10000 --set-path=/api/alexa/smart_home \
 #     http://192.168.31.207:18123/api/alexa/smart_home
+# and LuCI's HTTPS bound to the LAN only (uhttpd listen_https 192.168.31.1:443),
+# or it holds port 443 on every address and Tailscale can't take the tailnet's.
 { pkgs, lib, ... }:
 let
   router = "192.168.31.1";
