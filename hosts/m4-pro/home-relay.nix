@@ -1,5 +1,5 @@
-# How the house is reached (full write-up: ~/notes/ax3000t-stock-backup-2026-11-11/
-# NETWORKING.md; router side: ~/notes/ax3000t-stock-backup-2026-11-11/setup.sh).
+# How the house is reached (full write-up: ~/notes/ax3000t/
+# NETWORKING.md; router side: ~/notes/ax3000t/setup.sh).
 #
 # casa.* / executor.* (Caddy) resolve publicly to this Mac's LAN address,
 # 192.168.31.207 (pinned in the router's DHCP). At home any device reaches it
