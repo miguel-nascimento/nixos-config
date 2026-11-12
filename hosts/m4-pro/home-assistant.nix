@@ -99,10 +99,10 @@ let
     "automation ui" = "!include automations.yaml";
     "scene ui" = "!include scenes.yaml";
     "script ui" = "!include scripts.yaml";
-    # f.lux for the spots: white and full in the day, warm and dim at night,
-    # following the sun. A color set by hand wins until the spot is turned
-    # off. Its switches are switch.adaptive_lighting_*_spots; sleep mode (2000K
-    # and very dim, to push bedtime) is switched on at night by an automation.
+    # Adaptive Lighting with its defaults: the spots follow the sun, white
+    # and full by day, ramping to warm and dim towards solar midnight. A
+    # color set by hand wins until the spot is turned off. Its switches are
+    # switch.adaptive_lighting_*_spots.
     adaptive_lighting = [
       {
         name = "Spots";
@@ -110,15 +110,6 @@ let
         # same color however they were turned on (Todos os Spots, Todas as
         # luzes, Spot Mesa/Lazer or the bed switch)
         lights = [ "light.todos_os_spots" ];
-        min_color_temp = 2000;
-        max_color_temp = 5500;
-        min_brightness = 20;
-        max_brightness = 100;
-        sleep_brightness = 5;
-        # White only: the bulbs' RGB looks bad
-        sleep_rgb_or_color_temp = "color_temp";
-        sleep_color_temp = 2000;
-        take_over_control = true;
       }
     ];
     # Lights only, and not the Tecla Cama relays: they feed the spots, and the
