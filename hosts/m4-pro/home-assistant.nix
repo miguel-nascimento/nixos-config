@@ -101,8 +101,8 @@ let
     "script ui" = "!include scripts.yaml";
     # f.lux for the spots: white and full in the day, warm and dim at night,
     # following the sun. A color set by hand wins until the spot is turned
-    # off. Its switches are switch.adaptive_lighting_*_spots; sleep mode (dim
-    # deep orange, to push bedtime) is switched on at night by an automation.
+    # off. Its switches are switch.adaptive_lighting_*_spots; sleep mode (2000K
+    # and very dim, to push bedtime) is switched on at night by an automation.
     adaptive_lighting = [
       {
         name = "Spots";
@@ -115,8 +115,9 @@ let
         min_brightness = 20;
         max_brightness = 100;
         sleep_brightness = 5;
-        sleep_rgb_or_color_temp = "rgb_color";
-        sleep_rgb_color = [ 255 56 0 ];
+        # White only: the bulbs' RGB looks bad
+        sleep_rgb_or_color_temp = "color_temp";
+        sleep_color_temp = 2000;
         take_over_control = true;
       }
     ];
