@@ -1,7 +1,8 @@
 # Home Assistant, the nixpkgs package, shaped like NixOS's services.home-assistant
 # (wiki.nixos.org/wiki/Home_Assistant). nix-darwin has no such module, so this is
 # the small part of it a Mac needs: the package, a declared configuration.yaml
-# and a launchd agent. Served to the tailnet at https://miguel-m4.boreray-eel.ts.net:8123.
+# and a launchd agent. Served to the personal tailnet by the router, at
+# https://ax3000t.tail17d63.ts.net:8123 and casa.miguelnascimento.dev (home-relay.nix).
 #
 # Nix owns configuration.yaml. Everything made in the UI stays editable there:
 # dashboards, integrations and devices live in .storage, and automations,
@@ -16,11 +17,6 @@
 let
   configDir = "/Users/${user}/.homeassistant";
   port = 8123;
-  # The one path the internet can reach, for the Alexa skill's Lambda (~/ha/alexa).
-  # It still needs the token of the "Alexa" user, which isn't an admin.
-  alexaPath = "/api/alexa/smart_home";
-  alexaPort = 10000;
-  tailscale = "/Applications/Tailscale.app/Contents/MacOS/Tailscale";
 
   # nixpkgs only marks Home Assistant for Linux, but it builds and runs on macOS
   unsupported = import inputs.nixpkgs-unstable {
@@ -80,7 +76,8 @@ let
     # miguel. Outside it (Alexa's token, the LAN) the password login stays.
     # IPv4 only: the Funnel ingress nodes use fd7a:115c:a1e0::/48 addresses.
     # HA only listens on 127.0.0.1 and takes the client IP from
-    # X-Forwarded-For, set by tailscale serve (:8123) and Caddy (casa.*).
+    # X-Forwarded-For, set by the router's tailscale serve (:8123) and Caddy
+    # (casa.*), through the relays in home-relay.nix.
     homeassistant.auth_providers =
       let
         tailnet = "100.64.0.0/10";
@@ -95,7 +92,7 @@ let
         { type = "homeassistant"; }
       ];
     # Network settings live in the UI (Settings → System → Network) since 2026.10:
-    # listen on 127.0.0.1 only and trust it as a proxy, for tailscale serve
+    # listen on 127.0.0.1 only and trust it as a proxy, for the relays
     "automation ui" = "!include automations.yaml";
     "scene ui" = "!include scenes.yaml";
     "script ui" = "!include scripts.yaml";
@@ -145,6 +142,8 @@ let
   '';
 in
 {
+  imports = [ ./home-relay.nix ];
+
   environment.systemPackages = [ package ];
 
   # Starts with the user, like Obsidian and notes-sync
@@ -179,8 +178,4 @@ in
     StandardErrorPath = "/Users/${user}/Library/Logs/ha-backup.log";
   };
 
-  system.userActivation.text = lib.mkAfter ''
-    ${tailscale} serve --bg --https=${toString port} http://127.0.0.1:${toString port} >/dev/null
-    ${tailscale} funnel --bg --https=${toString alexaPort} --set-path=${alexaPath} http://127.0.0.1:${toString port}${alexaPath} >/dev/null
-  '';
 }
