@@ -127,9 +127,9 @@ let
           "light.hobeian_zg_301z_2ch_luz_2"
         ];
       };
-      # "Alexa, ativar cor automática": spots back on Adaptive Lighting
+      # "Alexa, ativar luz automática": spots back on Adaptive Lighting
       entity_config."script.spots_cor_automatica" = {
-        name = "Cor automática";
+        name = "Luz automática";
         display_categories = "SCENE_TRIGGER";
       };
     };
