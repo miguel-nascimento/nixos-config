@@ -8,6 +8,10 @@ in
     miguel
     m4-pro
   ];
+  "camera-quarto.age".publicKeys = [
+    miguel
+    m4-pro
+  ];
   "couchdb-admin.age".publicKeys = [
     miguel
     m4-pro

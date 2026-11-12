@@ -9,6 +9,7 @@
     ./home-assistant.nix
     ./zigbee2mqtt.nix
     ./caddy.nix
+    ./go2rtc.nix
   ];
 
   power.clamshell = true;
