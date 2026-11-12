@@ -121,10 +121,16 @@ let
       locale = "pt-BR";
       filter = {
         include_domains = [ "light" ];
+        include_entities = [ "script.spots_cor_automatica" ];
         exclude_entities = [
           "light.hobeian_zg_301z_2ch_luz"
           "light.hobeian_zg_301z_2ch_luz_2"
         ];
+      };
+      # "Alexa, ativar cor automática": spots back on Adaptive Lighting
+      entity_config."script.spots_cor_automatica" = {
+        name = "Cor automática";
+        display_categories = "SCENE_TRIGGER";
       };
     };
   };
