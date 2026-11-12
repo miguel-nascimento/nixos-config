@@ -72,21 +72,27 @@ let
   config = {
     # Name, location and units are set in the UI (Settings → System → General)
     default_config = { };
-    # No login inside the tailnet: any Tailscale device signs straight in as
-    # miguel. Outside it (Alexa's token, the LAN) the password login stays.
+    # No login at home: any device on the personal tailnet or the house's
+    # Wi-Fi signs straight in as miguel. Elsewhere (Alexa's token) the
+    # password login stays.
     # IPv4 only: the Funnel ingress nodes use fd7a:115c:a1e0::/48 addresses.
     # HA only listens on 127.0.0.1 and takes the client IP from
     # X-Forwarded-For, set by the router's tailscale serve (:8123) and Caddy
     # (casa.*), through the relays in home-relay.nix.
     homeassistant.auth_providers =
       let
-        tailnet = "100.64.0.0/10";
+        # The personal tailnet and the house's LAN (casa.* from home Wi-Fi,
+        # through the LAN relay in home-relay.nix)
+        trusted = [
+          "100.64.0.0/10"
+          "192.168.31.0/24"
+        ];
       in
       [
         {
           type = "trusted_networks";
-          trusted_networks = [ tailnet ];
-          trusted_users.${tailnet} = [ "8cd4a9921c6d474eaed9002f5ef71a05" ]; # miguel
+          trusted_networks = trusted;
+          trusted_users = lib.genAttrs trusted (_: [ "8cd4a9921c6d474eaed9002f5ef71a05" ]); # miguel
           allow_bypass_login = true;
         }
         { type = "homeassistant"; }

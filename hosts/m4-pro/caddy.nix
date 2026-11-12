@@ -1,12 +1,12 @@
 # Caddy gives the house services names on miguelnascimento.dev. The DNS records
-# point at the router's Tailscale IP (100.95.148.68), so they only work inside
-# the personal tailnet; the
-# certificates come from Let's Encrypt through Cloudflare's DNS (DNS-01), so
-# nothing has to be reachable from the internet.
+# point at this Mac's LAN address (192.168.31.207), reachable at home and, away,
+# through the router's subnet route on the personal tailnet. The certificates
+# come from Let's Encrypt through Cloudflare's DNS (DNS-01), so nothing has to
+# be reachable from the internet.
 #
-# macOS only lets non-root processes bind ports below 1024 on all interfaces,
-# so Caddy listens on 127.0.0.1; the router's Tailscale passes the tailnet's
-# port 443 through as raw TCP, via home-relay.nix (TLS still ends in Caddy).
+# Caddy runs as the user, so it listens on 127.0.0.1; haproxy (home-relay.nix)
+# takes the LAN's port 443 and passes it through as raw TCP with the client's
+# address (TLS still ends in Caddy).
 {
   config,
   pkgs,
