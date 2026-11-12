@@ -99,9 +99,10 @@ let
     "automation ui" = "!include automations.yaml";
     "scene ui" = "!include scenes.yaml";
     "script ui" = "!include scripts.yaml";
-    # f.lux for the spots: white in the day, warm at night, following the sun.
-    # Color only (brightness stays full); a color set by hand wins until the
-    # spot is turned off. Its switches are switch.adaptive_lighting_*_spots.
+    # f.lux for the spots: white and full in the day, warm and dim at night,
+    # following the sun. A color set by hand wins until the spot is turned
+    # off. Its switches are switch.adaptive_lighting_*_spots; sleep mode (dim
+    # deep orange, to push bedtime) is switched on at night by an automation.
     adaptive_lighting = [
       {
         name = "Spots";
@@ -111,8 +112,11 @@ let
         lights = [ "light.todos_os_spots" ];
         min_color_temp = 2000;
         max_color_temp = 5500;
-        min_brightness = 100;
+        min_brightness = 20;
         max_brightness = 100;
+        sleep_brightness = 5;
+        sleep_rgb_or_color_temp = "rgb_color";
+        sleep_rgb_color = [ 255 56 0 ];
         take_over_control = true;
       }
     ];
