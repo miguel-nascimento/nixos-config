@@ -10,6 +10,7 @@
     ./zigbee2mqtt.nix
     ./caddy.nix
     ./go2rtc.nix
+    ./atuin.nix
   ];
 
   power.clamshell = true;

@@ -52,6 +52,11 @@ let
       import tailnet
       reverse_proxy 127.0.0.1:8123
     }
+
+    atuin.miguelnascimento.dev {
+      import tailnet
+      reverse_proxy 127.0.0.1:8888
+    }
   '';
 
   start = pkgs.writeShellScript "caddy" ''
