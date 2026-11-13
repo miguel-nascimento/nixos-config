@@ -73,6 +73,7 @@
           system = "aarch64-darwin";
           users = [ "miguel" ];
           hostname = "m5";
+          modules = [ "${self}/hosts/m5" ];
         };
       };
 
