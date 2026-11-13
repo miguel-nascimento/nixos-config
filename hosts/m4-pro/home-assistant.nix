@@ -39,6 +39,7 @@ let
     "shopping_list"
     "sun"
     "switch_as_x"
+    "wake_on_lan"
   ];
 
   # Not in Home Assistant itself: linked into custom_components at start, with
@@ -115,13 +116,28 @@ let
         lights = [ "light.todos_os_spots" ];
       }
     ];
+    # The PC (Windows, router LAN 2): turning it on sends a Wake-on-LAN
+    # magic packet; its state is a ping. It can't be turned off from here.
+    # Same as ~/notes/ax3000t/ligar-pc.sh.
+    switch = [
+      {
+        platform = "wake_on_lan";
+        name = "PC";
+        mac = "a8:a1:59:6e:4f:21";
+        host = "192.168.31.244"; # pinned in the router's DHCP (pc-miguel)
+        broadcast_address = "192.168.31.255";
+      }
+    ];
     # Lights only, and not the Tecla Cama relays: they feed the spots, and the
     # spot groups already switch them on when needed
     alexa.smart_home = {
       locale = "pt-BR";
       filter = {
         include_domains = [ "light" ];
-        include_entities = [ "script.spots_cor_automatica" ];
+        include_entities = [
+          "script.spots_cor_automatica"
+          "switch.pc" # "Alexa, liga o PC"
+        ];
         exclude_entities = [
           "light.hobeian_zg_301z_2ch_luz"
           "light.hobeian_zg_301z_2ch_luz_2"
