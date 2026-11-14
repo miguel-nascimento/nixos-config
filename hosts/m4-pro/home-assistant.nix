@@ -7,6 +7,10 @@
 # Nix owns configuration.yaml. Everything made in the UI stays editable there:
 # dashboards, integrations and devices live in .storage, and automations,
 # scenes and scripts in their own yaml files next to it.
+#
+# The config dir is the ha repo itself (whitebase/ha/homeassistant, its
+# .gitignore keeps history, logins and caches out), so a change in the UI is a
+# change in git, and ha-backup below commits it.
 {
   pkgs,
   lib,
@@ -15,7 +19,7 @@
   ...
 }:
 let
-  configDir = "/Users/${user}/.homeassistant";
+  configDir = "/Users/${user}/dev/whitebase/ha/homeassistant";
   port = 8123;
 
   # nixpkgs only marks Home Assistant for Linux, but it builds and runs on macOS
@@ -111,8 +115,8 @@ let
       {
         name = "Spots";
         # The Zigbee group of all six bulbs: one groupcast keeps them on the
-        # same color however they were turned on (Todos os Spots, Todas as
-        # luzes, Spot Mesa/Lazer or the bed switch)
+        # same color however they were turned on (Luz, Todas as luzes,
+        # Spot Mesa/Lazer or the bed switch)
         lights = [ "light.todos_os_spots" ];
       }
     ];
@@ -143,10 +147,15 @@ let
           "light.hobeian_zg_301z_2ch_luz_2"
         ];
       };
-      # "Alexa, ativar luz automática": spots back on Adaptive Lighting
-      entity_config."script.spots_cor_automatica" = {
-        name = "Luz automática";
-        display_categories = "SCENE_TRIGGER";
+      entity_config = {
+        # "Alexa, ativar luz automática": spots back on Adaptive Lighting
+        "script.spots_cor_automatica" = {
+          name = "Luz automática";
+          display_categories = "SCENE_TRIGGER";
+        };
+        # "Alexa, apaga o closet" must only match the closet's own light
+        # (light.hobeian_zg_301z, "Closet"), so this bulb has no "closet" for her
+        "light.tz3210_ljoasixl_ts0505b".name = "Spot Perto do Armário";
       };
     };
   };
@@ -185,12 +194,13 @@ in
     StandardErrorPath = "/Users/${user}/Library/Logs/home-assistant.log";
   };
 
-  # Snapshots the HA and Zigbee2MQTT config into the private repo ~/ha
-  # (github.com/miguel-nascimento/ha) every hour, so a clone restores the house
+  # Commits the HA config (live in the repo) and a sealed copy of the
+  # Zigbee2MQTT one to github.com/miguel-nascimento/ha every hour, so a clone
+  # restores the house
   launchd.user.agents.ha-backup.serviceConfig = {
     ProgramArguments = [
       "${pkgs.bash}/bin/bash"
-      "/Users/${user}/ha/backup.sh"
+      "/Users/${user}/dev/whitebase/ha/backup.sh"
     ];
     # Apple's ssh (/usr/bin) is the one that unlocks the key from the Keychain
     EnvironmentVariables.PATH =
