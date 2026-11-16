@@ -19,10 +19,6 @@ in
   # Emissor de NFS-e (hosts/m4-pro/emissor-nfse.nix). The .pfx is binary, so encrypt the file itself:
   #   age -r "<miguel>" -r "<m4-pro>" -o nfse-certificate.age certificado.pfx
   # and the password with `agenix -e nfse-certificate-password.age`.
-  "nfse-api-token.age".publicKeys = [
-    miguel
-    m4-pro
-  ];
   "nfse-certificate.age".publicKeys = [
     miguel
     m4-pro

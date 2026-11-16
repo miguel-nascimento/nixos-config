@@ -17,10 +17,9 @@ A MacBook Pro with the lid closed, reached over Tailscale. It runs:
   Its UI is at `https://miguel-m4.boreray-eel.ts.net:8124`; its data (including the
   network key) is in `~/.zigbee2mqtt`, backed up in `~/Backups`.
 - **Emissor de NFS-e** ([emissor-nfse.nix](./emissor-nfse.nix)): issues NFS-e on the government
-  API with the company's A1 certificate, at `https://nfse.miguelnascimento.dev` (Caddy, LAN and
-  tailnet only). A launchd agent; the SQLite database is in `~/.local/share/emissor-nfse`, the log at
-  `~/Library/Logs/emissor-nfse.log`. Off until `secrets/nfse-certificate.age` exists. Check it with
-  `curl -H "Authorization: Bearer $(agenix -d nfse-api-token.age)" https://nfse.miguelnascimento.dev/health`.
+  API with the company's A1 certificate. Claude Code runs it as an MCP server (`emissor-nfse-mcp`,
+  registered with `claude mcp add --scope user emissor-nfse -- emissor-nfse-mcp`); each nota's PDF and
+  XML land in iCloud Drive/notas-fiscais. Nothing listens on the network.
 - **Obsidian**, opened at login. Its LiveSync writes what the other devices
   sync into `~/notes`, and notes-sync puts that into git.
 

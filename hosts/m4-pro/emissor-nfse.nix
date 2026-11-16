@@ -1,9 +1,9 @@
-# Emissor de NFS-e Nacional (github.com/gabrielbuzziv/emissor-nfse-nacional, our self-hosted fork): issues NFS-e
-# straight on the government API with the company's A1 certificate. One Node process with a SQLite database in
-# ~/.local/share/emissor-nfse; Caddy serves it at https://nfse.miguelnascimento.dev (caddy.nix).
+# Emissor de NFS-e Nacional (github.com/miguel-nascimento/emissor-nfse-nacional, private; fork of
+# gabrielbuzziv/emissor-nfse-nacional): issues NFS-e straight on the government API with the company's A1
+# certificate. Claude Code runs it as an MCP server (`emissor-nfse-mcp`, stdio): nothing listens on the network.
+# Each nota's PDF and XML go to iCloud Drive/notas-fiscais; the SQLite database is in ~/.local/share/emissor-nfse.
 #
-# It stays off until the certificate is in secrets/ (see secrets/secrets.nix) and the issuer below is filled in.
-# Get the API token with `agenix -d nfse-api-token.age` in secrets/.
+# Until secrets/nfse-certificate.age exists, the `saude` tool says there is no certificate.
 {
   config,
   lib,
@@ -21,34 +21,50 @@ in
 {
   imports = [ inputs.emissor-nfse.darwinModules.default ];
 
-  age.secrets = {
-    nfse-api-token = secret "nfse-api-token";
-  }
-  // lib.optionalAttrs hasCertificate {
-    # The .pfx itself: `age -R <(ssh-keygen ... ) -o nfse-certificate.age certificado.pfx`, see secrets/secrets.nix
+  age.secrets = lib.optionalAttrs hasCertificate {
     nfse-certificate = secret "nfse-certificate";
     nfse-certificate-password = secret "nfse-certificate-password";
   };
 
   services.emissor-nfse = {
-    enable = hasCertificate;
-    # "production" once a test nota went through, and after wiping the test notas (README, step 5)
+    enable = true;
+    # "production" once a test nota went through
     environment = "restricted";
     issuer = {
       # MIGUEL GOMES DO NASCIMENTO LTDA, ME in the Simples, Igaraçu do Tietê/SP
       cnpj = "46255572000112";
       cityCode = "3520004";
       simplesOption = "3";
-      # TODO(miguel): nominal Simples rate of the bracket, from the accountant (Picolli); not on the notas, which are
-      # all service exports
+      # TODO(miguel): the rate on the last nota's XML (consultar_nota_governo once the certificate is in)
       simplesTotalTaxPercent = "";
     };
-    port = 8787;
-    publicUrl = "https://nfse.miguelnascimento.dev";
     certificateFile = config.age.secrets.nfse-certificate.path or "";
     certificatePasswordFile = config.age.secrets.nfse-certificate-password.path or "";
-    apiTokenFile = config.age.secrets.nfse-api-token.path;
     dataDir = "/Users/${user}/.local/share/emissor-nfse";
-    logFile = "/Users/${user}/Library/Logs/emissor-nfse.log";
+    notasDir = "/Users/${user}/Library/Mobile Documents/com~apple~CloudDocs/notas-fiscais";
+
+    presets.bitcomplete = {
+      # As on the notas issued on the gov portal (Oct 2026): no NIF ("not required")
+      taker = {
+        noNifReason = "2";
+        name = "BITCOMPLETE";
+        address = {
+          country = "CA";
+          postalCode = "M6H 1X6";
+          city = "Toronto";
+          region = "ON";
+          street = "197 Hallam St";
+          number = "197";
+          district = "Dovercourt";
+        };
+      };
+      serviceCode = "010101";
+      nbsCode = "115021000";
+      description = "Analise e desenvolvimento de sistemas";
+      export = {
+        resultCountry = "CA";
+        currency = "USD";
+      };
+    };
   };
 }

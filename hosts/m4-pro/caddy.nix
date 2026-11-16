@@ -57,11 +57,6 @@ let
       import tailnet
       reverse_proxy 127.0.0.1:8888
     }
-
-    nfse.miguelnascimento.dev {
-      import tailnet
-      reverse_proxy 127.0.0.1:8787
-    }
   '';
 
   start = pkgs.writeShellScript "caddy" ''
