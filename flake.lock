@@ -34,6 +34,26 @@
         "type": "github"
       }
     },
+    "emissor-nfse": {
+      "inputs": {
+        "nixpkgs": [
+          "nixpkgs"
+        ]
+      },
+      "locked": {
+        "lastModified": 1794842602,
+        "ref": "self-host-effect",
+        "rev": "3228e3785c7a32b1cfe06a7173c5dc4aba3ad084",
+        "revCount": 6,
+        "type": "git",
+        "url": "ssh://git@github.com/miguel-nascimento/emissor-nfse-nacional"
+      },
+      "original": {
+        "ref": "self-host-effect",
+        "type": "git",
+        "url": "ssh://git@github.com/miguel-nascimento/emissor-nfse-nacional"
+      }
+    },
     "flake-compat": {
       "flake": false,
       "locked": {
@@ -306,6 +326,7 @@
     "root": {
       "inputs": {
         "agenix": "agenix",
+        "emissor-nfse": "emissor-nfse",
         "hardware": "hardware",
         "herdr": "herdr",
         "home-manager": "home-manager",

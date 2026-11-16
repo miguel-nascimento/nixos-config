@@ -23,7 +23,7 @@
     herdr.url = "github:ogulcancelik/herdr";
 
     # NFS-e emitter, self-hosted on the m4 (hosts/m4-pro/emissor-nfse.nix)
-    emissor-nfse.url = "github:miguel-nascimento/emissor-nfse-nacional/self-host-effect";
+    emissor-nfse.url = "git+ssh://git@github.com/miguel-nascimento/emissor-nfse-nacional?ref=self-host-effect"; # private repo
     emissor-nfse.inputs.nixpkgs.follows = "nixpkgs";
   };
 
