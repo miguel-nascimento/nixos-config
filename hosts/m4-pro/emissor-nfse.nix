@@ -42,6 +42,8 @@ in
     certificatePasswordFile = config.age.secrets.nfse-certificate-password.path or "";
     dataDir = "/Users/${user}/.local/share/emissor-nfse";
     notasDir = "/Users/${user}/Library/Mobile Documents/com~apple~CloudDocs/notas-fiscais";
+    # Fetches the official PDF of notas issued while the government's DANFSe service was down (every 30 min)
+    pdfsLogFile = "/Users/${user}/Library/Logs/emissor-nfse-pdfs.log";
 
     presets.bitcomplete = {
       # Exactly as on the Oct 2026 nota issued on the gov portal: no NIF ("not required")
