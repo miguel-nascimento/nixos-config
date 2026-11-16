@@ -1,7 +1,7 @@
 # How the house is reached (full write-up: ~/notes/ax3000t/
 # NETWORKING.md; router side: ~/notes/ax3000t/setup.sh).
 #
-# casa.* / executor.* (Caddy) resolve publicly to this Mac's LAN address,
+# casa.* / atuin.* (Caddy) resolve publicly to this Mac's LAN address,
 # 192.168.31.207 (pinned in the router's DHCP). At home any device reaches it
 # directly, whatever tailnet it runs (a work tailnet claims all of
 # 100.64.0.0/10, so tailnet addresses can't work for it). Away, the personal
