@@ -63,7 +63,7 @@ in
       description = "Analise e desenvolvimento de sistemas";
       export = {
         resultCountry = "CA";
-        currency = "USD";
+        currency = "CAD";
       };
     };
   };
