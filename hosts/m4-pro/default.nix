@@ -12,7 +12,6 @@
     ./go2rtc.nix
     ./atuin.nix
     ./emissor-nfse.nix
-    ./cliproxyapi.nix
   ];
 
   power.clamshell = true;
