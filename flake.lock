@@ -41,10 +41,10 @@
         ]
       },
       "locked": {
-        "lastModified": 1794848109,
+        "lastModified": 1794848344,
         "ref": "self-host-effect",
-        "rev": "d622531d9e7f32488959f0161b2db118262acbc9",
-        "revCount": 11,
+        "rev": "d98028027e48a6b4d143ab3f63b2be795acb4077",
+        "revCount": 12,
         "type": "git",
         "url": "ssh://git@github.com/miguel-nascimento/emissor-nfse-nacional"
       },
