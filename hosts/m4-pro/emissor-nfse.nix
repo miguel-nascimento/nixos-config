@@ -35,10 +35,12 @@ in
     # "production" once a test nota went through, and after wiping the test notas (README, step 5)
     environment = "restricted";
     issuer = {
-      # TODO(miguel): the company's data, from the accountant
-      cnpj = "";
-      cityCode = "0000000";
+      # MIGUEL GOMES DO NASCIMENTO LTDA, ME in the Simples, Igaraçu do Tietê/SP
+      cnpj = "46255572000112";
+      cityCode = "3520004";
       simplesOption = "3";
+      # TODO(miguel): nominal Simples rate of the bracket, from the accountant (Picolli); not on the notas, which are
+      # all service exports
       simplesTotalTaxPercent = "";
     };
     port = 8787;
