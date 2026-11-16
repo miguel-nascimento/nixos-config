@@ -21,6 +21,10 @@
 
     qmd.url = "github:tobi/qmd";
     herdr.url = "github:ogulcancelik/herdr";
+
+    # NFS-e emitter, self-hosted on the m4 (hosts/m4-pro/emissor-nfse.nix)
+    emissor-nfse.url = "github:miguel-nascimento/emissor-nfse-nacional/self-host-effect";
+    emissor-nfse.inputs.nixpkgs.follows = "nixpkgs";
   };
 
   outputs =

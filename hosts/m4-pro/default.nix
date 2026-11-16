@@ -11,6 +11,7 @@
     ./caddy.nix
     ./go2rtc.nix
     ./atuin.nix
+    ./emissor-nfse.nix
   ];
 
   power.clamshell = true;
