@@ -29,7 +29,7 @@ through LiveSync.
 ## Apply
 
 ```sh
-cd ~/dev/nixos-config && sudo darwin-rebuild switch --flake .#m4-pro
+cd ~/dev/whitebase/nixos-config && sudo darwin-rebuild switch --flake .#m4-pro
 ```
 
 CouchDB login: user `miguel`. Read the password with
@@ -63,10 +63,10 @@ CouchDB login, stay out of git.
 4. Pick an **end-to-end encryption passphrase** and save it in Bitwarden. Every
    device needs it.
 5. Sync mode: **LiveSync**.
-6. Under Selective sync / ignore patterns, add the files LiveSync shouldn't carry:
-   - `\.blend$`, `\.exr$`: big binaries; they stay in git (LFS)
+6. Under Selective sync / ignore patterns, add what LiveSync shouldn't carry:
    - `^memory/`: every Mac's Claude writes its own copy; syncing them live
      would make conflicts. They still reach git from the m4.
+   - `node_modules/`: installed packages, rebuilt with `npm install`
 7. Let it upload the vault. That's the first sync, or "rebuild everything" /
    send local to remote.
 8. Run the command **Copy settings as a new setup URI**, protected by a

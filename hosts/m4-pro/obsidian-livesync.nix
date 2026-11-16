@@ -4,7 +4,7 @@
 #
 # Obsidian on this Mac is a LiveSync client too: it writes what the other
 # clients sync into ~/notes, where notes-sync.nix commits it to git.
-{ config, inputs, ... }:
+{ config, inputs, pkgs, ... }:
 {
   age.secrets.couchdb-admin = {
     file = "${inputs.self}/secrets/couchdb-admin.age";
@@ -13,12 +13,17 @@
 
   services.couchdb = {
     enable = true;
+    # 3.5.1's JSON parser (jiffy 1.1.2) segfaults on some LiveSync uploads on
+    # macOS; 3.5.2 ships jiffy 2.0.0
+    package = pkgs.unstable.couchdb3;
     adminFile = config.age.secrets.couchdb-admin.path;
     settings = {
       couchdb = {
         single_node = true;
         max_document_size = 50000000;
       };
+      # One node: new databases get one copy, not the default three
+      cluster.n = 1;
       chttpd = {
         require_valid_user = true;
         max_http_request_size = 4294967296;
