@@ -16,7 +16,7 @@ in
     miguel
     m4-pro
   ];
-  # Emissor de NFS-e (hosts/m4-pro/emissor-nfse.nix). The .pfx is binary, so encrypt the file itself:
+  # Emissor de NFS-e (hosts/m4-pro/emissor-nfse.nix). The .pfx/.p12 is binary, so encrypt the file itself:
   #   age -r "<miguel>" -r "<m4-pro>" -o nfse-certificate.age certificado.pfx
   # and the password with `agenix -e nfse-certificate-password.age`.
   "nfse-certificate.age".publicKeys = [
