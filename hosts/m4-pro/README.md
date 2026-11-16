@@ -4,8 +4,8 @@ A MacBook Pro with the lid closed, reached over Tailscale. It runs:
 
 - **CouchDB** for Obsidian's [Self-hosted LiveSync](https://github.com/vrtmrz/obsidian-livesync).
   It's the `couchdb3` package from nixpkgs running as a launchd daemon (no Docker),
-  listening on localhost. `tailscale serve` puts it at
-  `https://miguel-m4.boreray-eel.ts.net:6984`, for the tailnet only.
+  listening on localhost. Caddy puts it at `https://notes.miguelnascimento.dev`,
+  reachable at home and over Tailscale (like `casa.`).
 - **notes-sync**, which runs every hour: if `~/notes` changed, it commits, pulls with rebase and pushes.
   The log is at `~/Library/Logs/notes-sync.log`. Run it now with `notes-sync`.
 - **Home Assistant** ([home-assistant.nix](./home-assistant.nix)), the nixpkgs
@@ -39,7 +39,7 @@ in `secrets/`. Change it with `agenix -e couchdb-admin.age`, then switch.
 Check it's up:
 
 ```sh
-curl -u miguel:<password> https://miguel-m4.boreray-eel.ts.net:6984/_all_dbs   # ["_replicator","_users"]
+curl -u miguel:<password> https://notes.miguelnascimento.dev/_all_dbs   # ["_replicator","_users"]
 ```
 
 ## LiveSync setup
@@ -54,7 +54,7 @@ CouchDB login, stay out of git.
 2. Settings → Community plugins → turn on **Self-hosted LiveSync**.
 3. Its setup wizard → set it up from scratch, **manual setup**:
    - Remote: CouchDB
-   - URI: `https://miguel-m4.boreray-eel.ts.net:6984`
+   - URI: `https://notes.miguelnascimento.dev`
    - Username `miguel`, password from above
    - Database name: `notes`
    - Click the button that checks the connection, then the one that checks
@@ -102,6 +102,6 @@ Logs are at `~/Library/Logs/home-assistant.log`. Restart with
 ## Troubleshooting
 
 - `sudo launchctl kickstart -k system/org.nixos.couchdb` restarts CouchDB. Its log is at `/var/log/couchdb.log`.
-- `tailscale serve status` should list `:6984 → http://127.0.0.1:5984`.
+- Caddy's log is at `~/Library/Logs/caddy.log`.
 - If notes-sync can't pull with rebase, it stops and leaves the repo alone. Fix
   `~/notes` by hand and it picks up again next hour.

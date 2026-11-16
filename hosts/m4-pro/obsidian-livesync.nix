@@ -1,13 +1,10 @@
 # CouchDB for Self-hosted LiveSync (github.com/vrtmrz/obsidian-livesync),
-# settings from its docs/setup_own_server.md, served to the tailnet at
-# https://miguel-m4.boreray-eel.ts.net:6984 with Tailscale's certificate.
+# settings from its docs/setup_own_server.md, served by Caddy (caddy.nix) at
+# https://notes.miguelnascimento.dev.
 #
 # Obsidian on this Mac is a LiveSync client too: it writes what the other
 # clients sync into ~/notes, where notes-sync.nix commits it to git.
 { config, inputs, ... }:
-let
-  tailscale = "/Applications/Tailscale.app/Contents/MacOS/Tailscale";
-in
 {
   age.secrets.couchdb-admin = {
     file = "${inputs.self}/secrets/couchdb-admin.age";
@@ -44,11 +41,6 @@ in
       };
     };
   };
-
-  # tailscaled keeps serve config across restarts; this just declares it
-  system.userActivation.text = ''
-    ${tailscale} serve --bg --https=6984 http://127.0.0.1:${toString config.services.couchdb.port} >/dev/null
-  '';
 
   # Obsidian stays open here so LiveSync keeps ~/notes current
   launchd.user.agents.obsidian.serviceConfig = {

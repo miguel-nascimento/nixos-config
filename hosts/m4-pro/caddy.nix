@@ -45,12 +45,25 @@ let
       tls {
         dns cloudflare {env.CF_API_TOKEN}
         resolvers 1.1.1.1
+        # Caddy's own check that the challenge record is visible never passes
+        # (the record is: verified with dig), so wait a fixed time instead
+        propagation_delay 30s
+        propagation_timeout -1
       }
     }
 
     casa.miguelnascimento.dev {
       import tailnet
       reverse_proxy 127.0.0.1:8123
+    }
+
+    # CouchDB for Obsidian LiveSync (obsidian-livesync.nix); its changes feed
+    # is a long poll, so responses stream through as they come
+    notes.miguelnascimento.dev {
+      import tailnet
+      reverse_proxy 127.0.0.1:5984 {
+        flush_interval -1
+      }
     }
 
     atuin.miguelnascimento.dev {
