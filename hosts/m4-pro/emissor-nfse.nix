@@ -3,7 +3,7 @@
 # certificate. Claude Code runs it as an MCP server (`emissor-nfse-mcp`, stdio): nothing listens on the network.
 # Each nota's PDF and XML go to iCloud Drive/notas-fiscais; the SQLite database is in ~/.local/share/emissor-nfse.
 #
-# Until secrets/nfse-certificate.age exists, the `saude` tool says there is no certificate.
+# An export always takes both values from Miguel: BRL received and CAD billed.
 {
   config,
   lib,
@@ -28,15 +28,15 @@ in
 
   services.emissor-nfse = {
     enable = true;
-    # "production" once a test nota went through
-    environment = "restricted";
+    # Igaraçu do Tietê is not on the government's test environment, so there is no testing there
+    environment = "production";
     issuer = {
       # MIGUEL GOMES DO NASCIMENTO LTDA, ME in the Simples, Igaraçu do Tietê/SP
       cnpj = "46255572000112";
       cityCode = "3520004";
       simplesOption = "3";
-      # TODO(miguel): the rate on the last nota's XML (consultar_nota_governo once the certificate is in)
-      simplesTotalTaxPercent = "";
+      # From the Oct 2026 nota's XML (pTotTribSN)
+      simplesTotalTaxPercent = "5.30";
     };
     certificateFile = config.age.secrets.nfse-certificate.path or "";
     certificatePasswordFile = config.age.secrets.nfse-certificate-password.path or "";
@@ -44,15 +44,15 @@ in
     notasDir = "/Users/${user}/Library/Mobile Documents/com~apple~CloudDocs/notas-fiscais";
 
     presets.bitcomplete = {
-      # As on the notas issued on the gov portal (Oct 2026): no NIF ("not required")
+      # Exactly as on the Oct 2026 nota issued on the gov portal: no NIF ("not required")
       taker = {
         noNifReason = "2";
         name = "BITCOMPLETE";
         address = {
           country = "CA";
-          postalCode = "M6H 1X6";
+          postalCode = "ON M6H 1X6";
           city = "Toronto";
-          region = "ON";
+          region = "ONTARIO";
           street = "197 Hallam St";
           number = "197";
           district = "Dovercourt";
